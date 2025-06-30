@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #eceeff;
+  --color-coral-red: #ff6452;
+  --color-slate-gray: #6d6d6d;
+  --color-pale-blue: #edf0ff;
+  --color-white-400: rgba(255, 255, 255, 0.8);
+
+  --font-montserrat: "Montserrat", "sans-serif";
+  --font-palanquin: "Palanquin", "sans-serif";
+
+  --shadow-3xl: 0 10px 40px rgba(0, 0, 0, 0.1);
+
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-base: 16px;
+  --text-base--line-height: 19.5px;
+  --text-lg: 18px;
+  --text-lg--line-height: 21.94px;
+  --text-xl: 20px;
+  --text-xl--line-height: 24.38px;
+  --text-2xl: 24px;
+  --text-2xl--line-height: 29.26px;
+  --text-3xl: 28px;
+  --text-3xl--line-height: 50px;
+  --text-4xl: 48px;
+  --text-4xl--line-height: 58px;
+  --text-8xl: 96px;
+  --text-8xl--line-height: 106px;
+
+  --breakpoint-wide: 90rem;
+
+  --bg-hero-image: url("assets/images/collection-background.svg");
+  --bg-card-image: url("assets/images/thumbnail-background.svg");
+}
+
+@layer components {
+  .max-container {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .input {
+    @apply sm:flex-1 max-sm:w-full leading-normal text-slate-gray pl-5 max-sm:p-5 outline-none sm:border-none border max-sm:border-slate-gray max-sm:rounded-full text-lg;
+  }
+}
+
+@layer utilities {
+  .padding {
+    @apply sm:px-16 px-8 sm:py-24 py-12;
+  }
+
+  .padding-x {
+    @apply sm:px-16 px-8;
+  }
+
+  .padding-y {
+    @apply sm:py-24 py-12;
+  }
+
+  .padding-l {
+    @apply sm:pl-16 pl-8;
+  }
+
+  .padding-r {
+    @apply sm:pr-16 pr-8;
+  }
+
+  .padding-t {
+    @apply sm:pt-24 pt-12;
+  }
+
+  .padding-b {
+    @apply sm:pb-24 pb-12;
+  }
+
+  .info-text {
+    @apply font-montserrat text-slate-gray text-lg leading-7;
+  }
+
+  .bg-hero {
+    background-image: var(--bg-hero-image);
+  }
+
+  .bg-card {
+    background-image: var(--bg-card-image);
+  }
+
+  .chk {
+    @apply border-2 border-red-700;
+  }
+
+  .nav-transition {
+    transition: height 0.2s ease, background-color 0.2s ease;
+  }
+
+  .nav-below-lg {
+    @apply absolute right-0 top-[100%] flex-col justify-center items-center gap-4;
+  }
+
+  .nav-above-lg {
+    @apply lg:static lg:flex-row lg:items-center lg:gap-2 lg:h-auto lg:bg-transparent lg:w-fit lg:justify-end;
+  }
+}
