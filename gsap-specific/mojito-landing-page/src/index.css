@@ -59,6 +59,10 @@ body {
   mask-size: 50%;
 }
 
+@utility chk {
+  @apply border-2 border-red-500;
+}
+
 @layer components {
   main {
     @apply w-full overflow-x-hidden;
