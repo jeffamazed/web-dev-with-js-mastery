@@ -129,7 +129,7 @@ body {
           }
 
           a {
-            @apply font-semibold opacity-80 2xl:text-start text-center hover:text-yellow;
+            @apply font-semibold opacity-80 2xl:text-start hover:text-yellow transition-colors duration-200;
           }
         }
       }
