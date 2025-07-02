@@ -108,10 +108,10 @@ body {
     }
 
     .body {
-      @apply container mx-auto absolute left-1/2 -translate-x-1/2 lg:bottom-20 top-auto md:top-[30vh] flex justify-between items-end px-5;
+      @apply container mx-auto absolute left-1/2 -translate-x-1/2 lg:bottom-20 top-auto flex justify-between items-end px-5;
 
       .content {
-        @apply flex lg:flex-row flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto;
+        @apply flex md:flex-row flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto;
 
         p:nth-of-type(2) {
           @apply font-modern-negra text-6xl text-yellow max-w-xl;
@@ -125,11 +125,11 @@ body {
           @apply space-y-5 text-lg lg:max-w-2xs md:max-w-xs w-full;
 
           p {
-            @apply text-left;
+            @apply text-center md:text-start;
           }
 
           a {
-            @apply font-semibold opacity-80 2xl:text-start hover:text-yellow transition-colors duration-200;
+            @apply font-semibold opacity-80 2xl:text-start hover:text-yellow transition-colors duration-200 text-center md:text-start block;
           }
         }
       }
