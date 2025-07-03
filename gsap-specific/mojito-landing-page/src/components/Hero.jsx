@@ -58,7 +58,6 @@ const Hero = () => {
         end: endValue,
         scrub: true,
         pin: true,
-        markers: true,
       },
     });
 
@@ -116,7 +115,6 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          className="chk"
         />
       </div>
     </>

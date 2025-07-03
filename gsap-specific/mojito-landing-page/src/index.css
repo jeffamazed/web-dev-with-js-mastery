@@ -8,7 +8,7 @@
 }
 
 @theme {
-  --color-yellow: #e7d393;
+  --color-yellow: #fdee96;
   --color-white-100: #efefef;
   --font-sans: "Mona Sans", sans-serif;
   --font-modern-negra: "Modern Negra", sans-serif;
@@ -144,26 +144,26 @@ body {
     @apply relative min-h-dvh w-full overflow-hidden;
 
     #c-left-leaf {
-      @apply absolute left-0 md:bottom-0 md:top-auto -top-20 md:w-fit w-1/3;
+      @apply absolute left-0 top-1/2 md:top-auto md:bottom-0 md:w-fit w-1/3;
     }
 
     #c-right-leaf {
-      @apply absolute right-0 md:bottom-0 md:top-auto -top-20 md:w-fit w-1/3;
+      @apply absolute right-0 top-1/2 md:top-auto md:bottom-0 md:w-fit w-1/3;
     }
 
     .list {
       @apply container mx-auto relative z-10 flex md:flex-row flex-col justify-between items-start gap-20 pt-40 2xl:px-0 px-5;
 
       .popular {
-        @apply space-y-8 w-full md:w-fit;
+        @apply space-y-8 w-full md:w-fit bg-black/30 p-5 rounded-xl;
       }
 
       .loved {
-        @apply space-y-8 w-full md:w-fit pb-20 md:pb-0;
+        @apply space-y-8 w-full md:w-fit mb-20 md:mb-0 bg-black/30 p-5 rounded-xl;
       }
 
-      h2 {
-        @apply text-xl font-medium;
+      h3 {
+        @apply text-xl font-medium text-center md:text-start;
       }
 
       ul {
@@ -172,7 +172,7 @@ body {
         li {
           @apply flex justify-between items-start;
 
-          h3 {
+          h4 {
             @apply font-modern-negra 2xl:text-3xl text-xl text-yellow;
           }
 
