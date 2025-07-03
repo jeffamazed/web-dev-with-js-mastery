@@ -4,11 +4,10 @@ import extractPriceValue from "../utils/extractPriceValue";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-// EDIT AGAIN IF NECESSARY
 const Cocktails = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const startValue = isMobile ? "10% 30%" : "top 30%";
-  const endValue = isMobile ? "50% 50%" : "bottom 80%";
+  const endValue = isMobile ? "80% 50%" : "bottom 80%";
 
   useGSAP(() => {
     const parallaxTimeline = gsap.timeline({

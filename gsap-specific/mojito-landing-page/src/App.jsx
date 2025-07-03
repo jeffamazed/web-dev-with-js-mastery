@@ -12,7 +12,6 @@ const App = () => {
       <main>
         <Hero />
         <Cocktails />
-        <div className="h-dvh bg-black"></div>
       </main>
     </>
   );
