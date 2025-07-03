@@ -72,7 +72,7 @@ body {
     @apply fixed z-50 w-full;
 
     div {
-      @apply flex md:flex-row flex-col md:justify-between items-center gap-5 py-5 lg:px-0 px-5 container mx-auto;
+      @apply flex md:flex-row flex-col md:justify-between items-center gap-5 py-5 md:px-3 lg:px-2 px-5 container mx-auto;
     }
 
     p {
@@ -195,11 +195,11 @@ body {
       @apply grid grid-cols-1 lg:grid-cols-12 gap-5;
 
       h2 {
-        @apply text-5xl md:text-6xl font-modern-negra max-w-lg;
+        @apply text-5xl md:text-6xl font-modern-negra max-w-lg text-center md:text-start;
       }
 
       .sub-content {
-        @apply md:col-span-4 space-y-5 flex flex-col justify-between;
+        @apply lg:col-span-4 space-y-5 flex flex-col justify-between;
 
         p {
           @apply text-lg;

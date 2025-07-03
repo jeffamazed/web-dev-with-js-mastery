@@ -1,5 +1,5 @@
 import { useGSAP } from "@gsap/react";
-import { SplitText } from "gsap/all";
+import SplitText from "gsap/SplitText";
 import gsap from "gsap";
 import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -57,7 +57,6 @@ const Hero = () => {
         end: endValue,
         scrub: true,
         pin: true,
-        markers: true,
       },
     });
 
