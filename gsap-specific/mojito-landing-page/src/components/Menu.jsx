@@ -6,23 +6,42 @@ import { useMediaQuery } from "react-responsive";
 
 const Menu = () => {
   const contentRef = useRef(null);
+  const directionRef = useRef(null);
+  const sourceRef = useRef(null);
+  const totalCocktails = allCocktails.length;
+
   const [currentI, setCurrentI] = useState(0);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   // animation
   useGSAP(() => {
-    gsap.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 1 });
-    gsap.fromTo(
-      ".cocktail img",
-      { opacity: 0, xPercent: -100 },
-      { xPercent: 0, opacity: 1, duration: 1, ease: "power1.inOut" }
-    );
+    const source = sourceRef.current;
+    const direction = directionRef.current;
+
+    if (source === "tab" && !direction) {
+      gsap.fromTo(
+        ".cocktail img",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.8 }
+      );
+    } else if (source === "button") {
+      gsap.fromTo(
+        ".cocktail img",
+        { opacity: 0, xPercent: direction === "left" ? 100 : -100 },
+        { xPercent: 0, opacity: 1, duration: 0.8, ease: "power1.inOut" }
+      );
+    }
+
+    gsap.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 0.8 });
+
     gsap.fromTo(
       ".details h4, .details p",
       { yPercent: 100, opacity: 0 },
-      { yPercent: 0, opacity: 1, ease: "power1.inOut" }
+      { yPercent: 0, opacity: 0.8, ease: "power1.inOut" }
     );
+  }, [currentI]);
 
+  useGSAP(() => {
     // animate leaves
     gsap
       .timeline({
@@ -35,12 +54,13 @@ const Menu = () => {
       })
       .to("#m-right-leaf", { y: 200 }, 0)
       .to("#m-left-leaf", { scale: 1.4 }, isMobile ? 0.4 : 0.15);
-  }, [currentI]);
+  }, []);
 
-  const totalCocktails = allCocktails.length;
-
-  const goToSlide = (i) => {
+  const goToSlide = (i, direction, source) => {
     const newI = (i + totalCocktails) % totalCocktails;
+
+    directionRef.current = direction;
+    sourceRef.current = source;
 
     setCurrentI(newI);
   };
@@ -89,7 +109,7 @@ const Menu = () => {
               }`}
               type="button"
               key={cocktail.id}
-              onClick={() => goToSlide(i)}
+              onClick={() => goToSlide(i, "", "tab")}
             >
               {cocktail.name}
             </button>
@@ -102,7 +122,7 @@ const Menu = () => {
           <button
             className="text-left"
             type="button"
-            onClick={() => goToSlide(currentI - 1)}
+            onClick={() => goToSlide(currentI - 1, "left", "button")}
           >
             <span>{prevCocktail.name}</span>
             <img
@@ -113,15 +133,16 @@ const Menu = () => {
           </button>
 
           <button
-            className="text-left"
+            className="flex flex-col items-end text-right"
             type="button"
-            onClick={() => goToSlide(currentI + 1)}
+            onClick={() => goToSlide(currentI + 1, "right", "button")}
           >
             <span>{nextCocktail.name}</span>
             <img
               src="./images/right-arrow.png"
               alt="right arrow"
               aria-hidden="true"
+              className=""
             />
           </button>
         </div>
