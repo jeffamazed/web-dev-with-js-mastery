@@ -63,6 +63,10 @@ body {
   @apply border-2 border-red-500;
 }
 
+@utility clarity-bg {
+  @apply bg-black/30 p-5 rounded-xl;
+}
+
 @layer components {
   main {
     @apply w-full overflow-x-hidden;
@@ -155,11 +159,11 @@ body {
       @apply container mx-auto relative z-10 flex md:flex-row flex-col justify-between items-start gap-20 pt-40 2xl:px-0 px-5;
 
       .popular {
-        @apply space-y-8 w-full md:w-fit bg-black/30 p-5 rounded-xl;
+        @apply space-y-8 w-full md:w-fit clarity-bg;
       }
 
       .loved {
-        @apply space-y-8 w-full md:w-fit mb-20 md:mb-0 bg-black/30 p-5 rounded-xl;
+        @apply space-y-8 w-full md:w-fit mb-20 md:mb-0 clarity-bg;
       }
 
       h3 {
@@ -245,10 +249,10 @@ body {
   }
 
   #art {
-    @apply relative flex-center flex-col min-h-dvh p-5 mt-20 relative radial-gradient;
+    @apply relative flex-center flex-col min-h-dvh p-5 mt-20 radial-gradient;
 
     h2 {
-      @apply relative md:text-[20vw] text-8xl text-nowrap leading-none font-modern-negra text-center text-[#505050];
+      @apply relative md:text-[20vw] 2xl:text-[15vw] text-8xl text-nowrap leading-none font-modern-negra text-center text-[#505050];
     }
 
     .content {
@@ -265,7 +269,7 @@ body {
       }
 
       div {
-        @apply md:px-0 px-5 space-y-5 bottom-3 xl:bottom-5 2xl:bottom-10 left-1/2 w-full md:absolute;
+        @apply md:px-0 px-5 space-y-5 bottom-3  left-1/2 w-full md:absolute;
 
         h3 {
           @apply md:text-4xl text-3xl text-center font-serif w-full text-white;
@@ -282,11 +286,11 @@ body {
     @apply relative w-full md:mt-40 mt-0 2xl:px-0 px-5 py-20 radial-gradient;
 
     #m-left-leaf {
-      @apply object-contain absolute -bottom-20 left-0 md:w-fit w-1/3;
+      @apply object-contain absolute -bottom-20 left-0 md:w-fit w-1/3 origin-bottom-left;
     }
 
     #m-right-leaf {
-      @apply object-contain absolute -top-40 right-0 md:w-fit w-1/4;
+      @apply object-contain absolute -top-30 right-0 md:w-fit w-1/4;
     }
 
     .cocktail-tabs {
@@ -325,17 +329,17 @@ body {
       @apply flex max-md:flex-col gap-10 md:items-center justify-between w-full lg:absolute bottom-0;
 
       .info {
-        @apply space-y-4 lg:translate-y-20;
+        @apply lg:translate-y-20;
 
         #title {
-          @apply font-modern-negra md:text-6xl text-3xl text-yellow max-w-40;
+          @apply font-modern-negra md:text-6xl text-3xl mt-3 text-yellow max-w-40 block;
         }
       }
 
       .details {
         @apply space-y-5 md:max-w-md text-left;
 
-        h2 {
+        h4 {
           @apply md:text-5xl text-3xl font-serif;
         }
 

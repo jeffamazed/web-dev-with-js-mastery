@@ -8,7 +8,7 @@ const navLinks = [
     title: "About Us",
   },
   {
-    id: "work",
+    id: "art",
     title: "The Art",
   },
   {
@@ -110,10 +110,10 @@ const storeInfo = {
 };
 
 const openingHours = [
-  { day: "Mon–Thu", time: "11:00am – 12am" },
-  { day: "Fri", time: "11:00am – 2am" },
-  { day: "Sat", time: "9:00am – 2am" },
-  { day: "Sun", time: "9:00am – 1am" },
+  { day: "Mon-Thu", time: "11:00am - 12am" },
+  { day: "Fri", time: "11:00am - 2am" },
+  { day: "Sat", time: "9:00am - 2am" },
+  { day: "Sun", time: "9:00am - 1am" },
 ];
 
 const socials = [
@@ -134,9 +134,9 @@ const socials = [
   },
 ];
 
-const sliderLists = [
+const allCocktails = [
   {
-    id: 1,
+    id: 0,
     name: "Classic Mojito",
     image: "/images/drink1.png",
     title: "Simple Ingredients, Bold Flavor",
@@ -144,15 +144,15 @@ const sliderLists = [
       "Made with tequila, lime juice, and orange liqueur, the Margarita is easy to make and full of character. Add a salted rim for the perfect drink on summer nights.",
   },
   {
-    id: 2,
+    id: 1,
     name: "Raspberry Mojito",
     image: "/images/drink2.png",
     title: "A Zesty Classic That Never Fails",
     description:
-      "The Margarita is a classic that balances tangy lime, smooth tequila, and a touch of sweetness. Shaken, frozen, or on the rocks—it’s always crisp & refreshing.",
+      "The Margarita is a classic that balances tangy lime, smooth tequila, and a touch of sweetness. Shaken, frozen, or on the rocks—it's always crisp & refreshing.",
   },
   {
-    id: 3,
+    id: 2,
     name: "Violet Breeze",
     image: "/images/drink3.png",
     title: "Simple Ingredients, Bold Flavor",
@@ -160,7 +160,7 @@ const sliderLists = [
       "Made with tequila, lime juice, and orange liqueur, the Margarita is easy to make and full of character. Add a salted rim for the perfect drink on summer nights.",
   },
   {
-    id: 4,
+    id: 3,
     name: "Curacao Mojito",
     image: "/images/drink4.png",
     title: "Crafted With Care, Poured With Love",
@@ -179,5 +179,5 @@ export {
   openingHours,
   storeInfo,
   socials,
-  sliderLists,
+  allCocktails,
 };
