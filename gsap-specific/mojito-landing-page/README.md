@@ -1,12 +1,33 @@
-# React + Vite
+# 🍸 Mojito Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A stylish and animated landing page for a cocktail bar, powered by **Vite**, **React**, and **GSAP**.  
+Inspired by tutorials from [JavaScript Mastery](https://www.jsmastery.pro/).
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Scroll-triggered animations with GSAP
+- Smooth transitions and interactive UI
+- Responsive and modern design
+- Built with performance in mind using Vite
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- GSAP
+- React Icons
+
+## 📦 Installation
+
+Clone the repo and run it locally:
+
+```bash
+git clone https://github.com/jeffamazed/web-dev-with-js-mastery.git
+cd web-dev-with-js-mastery/gsap-specific/mojito-landing-page
+npm install
+npm run dev
+```
+
+## 🙏 Credits
+
+- Based on designs and animation techniques by [JavaScript Mastery](https://www.jsmastery.pro/)
