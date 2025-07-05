@@ -1,19 +1,21 @@
 # 🍸 Mojito Landing Page
 
-A stylish and animated landing page for a cocktail bar, powered by **Vite**, **React**, and **GSAP**.  
+A stylish and animated landing page for a cocktail bar, powered by **Vite**, **React**, **Tailwind CSS**, and **GSAP**.  
 Inspired by tutorials from [JavaScript Mastery](https://www.jsmastery.pro/).
 
 ## 🚀 Features
 
 - Scroll-triggered animations with GSAP
+- Utility-first styling with Tailwind CSS
 - Smooth transitions and interactive UI
-- Responsive and modern design
-- Built with performance in mind using Vite
+- Fully responsive design
+- Fast development with Vite
 
 ## 🛠 Tech Stack
 
 - React
 - Vite
+- Tailwind CSS
 - GSAP
 - React Icons
 
