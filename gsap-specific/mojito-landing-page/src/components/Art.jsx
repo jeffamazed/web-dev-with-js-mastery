@@ -3,7 +3,7 @@ import { featureLists, goodLists } from "../constants/index";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-const Art = () => {
+const Art = ({ scrollRef }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useGSAP(() => {
@@ -50,7 +50,7 @@ const Art = () => {
   });
 
   return (
-    <section aria-labelledby="art-heading" id="art">
+    <section ref={scrollRef} aria-labelledby="art-heading" id="art">
       <div className="container mx-auto pt-20">
         <h2 id="art-heading" className="will-fade">
           The ART

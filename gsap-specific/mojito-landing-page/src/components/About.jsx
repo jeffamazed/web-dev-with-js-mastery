@@ -2,7 +2,7 @@ import { useGSAP } from "@gsap/react";
 import SplitText from "gsap/SplitText";
 import gsap from "gsap";
 
-const About = () => {
+const About = ({ scrollRef }) => {
   useGSAP(() => {
     document.fonts.ready.then(() => {
       const titleSplit = new SplitText("#about h2", { type: "words" });
@@ -39,7 +39,7 @@ const About = () => {
   });
 
   return (
-    <section id="about" aria-labelledby="about-heading">
+    <section ref={scrollRef} id="about" aria-labelledby="about-heading">
       <div className="mb-16 md:px-0 px-5">
         <div className="content">
           <header className="lg:col-span-8">

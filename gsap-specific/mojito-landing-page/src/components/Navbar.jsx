@@ -1,8 +1,10 @@
 import gsap from "gsap";
 import { navLinks } from "../constants";
 import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
 
-const Navbar = () => {
+const Navbar = ({ scrollRefs }) => {
+  const navRef = useRef(null);
   useGSAP(() => {
     const navTween = gsap.timeline({
       scrollTrigger: {
@@ -12,7 +14,7 @@ const Navbar = () => {
     });
 
     navTween.fromTo(
-      "nav",
+      navRef.current,
       { backgroundColor: "transparent" },
       {
         backgroundColor: "#00000050",
@@ -22,9 +24,20 @@ const Navbar = () => {
       }
     );
   });
+
+  const handleScrollIntoView = (target) => {
+    const section = scrollRefs[target];
+    if (!section?.current) return;
+
+    const sectionTop =
+      section.current.getBoundingClientRect().top + window.scrollY;
+    const navHeight = navRef.current.getBoundingClientRect().height;
+
+    window.scrollTo({ top: sectionTop - navHeight, behavior: "smooth" });
+  };
   return (
     <header>
-      <nav>
+      <nav ref={navRef}>
         <div>
           <a href="#home" className="flex items-center gap-2">
             <img src="./images/logo.png" alt="Velvet Pour Logo" />
@@ -33,7 +46,12 @@ const Navbar = () => {
           <ul>
             {navLinks.map((link) => (
               <li key={link.id}>
-                <a href={`#${link.id}`}>{link.title}</a>
+                <button
+                  onClick={() => handleScrollIntoView(link.id)}
+                  type="button"
+                >
+                  {link.title}
+                </button>
               </li>
             ))}
           </ul>

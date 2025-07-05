@@ -4,7 +4,7 @@ import extractPriceValue from "../utils/extractPriceValue";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-const Cocktails = () => {
+const Cocktails = ({ scrollRef }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const startValue = isMobile ? "10% 30%" : "top 30%";
   const endValue = isMobile ? "80% 50%" : "bottom 80%";
@@ -34,6 +34,7 @@ const Cocktails = () => {
     <section
       aria-labelledby="cocktails-menu-heading"
       id="cocktails"
+      ref={scrollRef}
       className="noisy"
     >
       <h2 className="sr-only" id="cocktails-menu-heading">

@@ -18,7 +18,7 @@ const Nav = ({ sectionRefs }) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  });
+  }, []);
 
   const handleScrollIntoView = (target) => {
     const sectionRef = sectionRefs[target];

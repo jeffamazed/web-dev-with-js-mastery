@@ -7,19 +7,28 @@ import About from "./components/About";
 import Art from "./components/Art";
 import Menu from "./components/Menu";
 import Contact from "./components/Contact";
+import { useRef } from "react";
+
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const App = () => {
+  const scrollRefs = {
+    about: useRef(null),
+    art: useRef(null),
+    cocktails: useRef(null),
+    contact: useRef(null),
+  };
+
   return (
     <>
-      <Navbar />
+      <Navbar scrollRefs={scrollRefs} />
       <main>
         <Hero />
-        <Cocktails />
-        <About />
-        <Art />
+        <Cocktails scrollRef={scrollRefs.cocktails} />
+        <About scrollRef={scrollRefs.about} />
+        <Art scrollRef={scrollRefs.art} />
         <Menu />
-        <Contact />
+        <Contact scrollRef={scrollRefs.contact} />
       </main>
     </>
   );
