@@ -115,6 +115,7 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
+          tabIndex={-1}
         />
       </div>
     </>
