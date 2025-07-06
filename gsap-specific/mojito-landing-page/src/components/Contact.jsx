@@ -56,7 +56,7 @@ const Contact = ({ scrollRef }) => {
   });
 
   return (
-    <footer ref={scrollRef} id="contact" className="chk">
+    <footer ref={scrollRef} id="contact">
       <img
         src="./images/footer-right-leaf.png"
         alt="right leaf"
