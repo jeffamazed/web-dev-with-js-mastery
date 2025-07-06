@@ -113,7 +113,11 @@ const Contact = ({ scrollRef }) => {
                 rel="noopener noreferrer"
                 aria-label={social.name}
               >
-                <img src={social.icon} alt={social.name} />
+                <img
+                  className="hover:animate-pulse will-change-transform transition-transform duration-200"
+                  src={social.icon}
+                  alt={social.name}
+                />
               </a>
             ))}
           </div>

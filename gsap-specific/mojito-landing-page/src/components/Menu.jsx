@@ -28,7 +28,7 @@ const Menu = () => {
     } else if (source === "button") {
       cocktailAnim = gsap.fromTo(
         ".cocktail img",
-        { opacity: 0, xPercent: direction === "left" ? 100 : -100 },
+        { opacity: 0, xPercent: direction === "left" ? -100 : 100 },
         { xPercent: 0, opacity: 1, duration: 0.8, ease: "power1.inOut" }
       );
     }
