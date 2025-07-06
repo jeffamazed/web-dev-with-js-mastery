@@ -10,76 +10,74 @@ const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useGSAP(() => {
-    let heroSplit;
-    let paragraphSplit;
-    let anim1;
-    let anim2;
-    document.fonts.ready.then(() => {
-      heroSplit = new SplitText("#title-heading", {
-        type: "chars, words",
-      });
-      paragraphSplit = new SplitText(".subtitle", { type: "lines" });
+    const ctx = gsap.context(() => {
+      let heroSplit;
+      let paragraphSplit;
 
-      // applying class to each char because animating each char
-      heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
+      document.fonts.ready.then(() => {
+        heroSplit = new SplitText("#title-heading", {
+          type: "chars, words",
+        });
+        paragraphSplit = new SplitText(".subtitle", { type: "lines" });
 
-      anim1 = gsap.from(heroSplit.chars, {
-        yPercent: 100,
-        duration: 1.8,
-        ease: "expo.out",
-        stagger: 0.06,
-      });
+        // applying class to each char because animating each char
+        heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
 
-      anim2 = gsap.from(paragraphSplit.lines, {
-        opacity: 0,
-        yPercent: 100,
-        duration: 1.8,
-        ease: "expo.out",
-        stagger: 0.06,
-        delay: 1,
+        gsap.from(heroSplit.chars, {
+          yPercent: 100,
+          duration: 1.8,
+          ease: "expo.out",
+          stagger: 0.06,
+        });
+
+        gsap.from(paragraphSplit.lines, {
+          opacity: 0,
+          yPercent: 100,
+          duration: 1.8,
+          ease: "expo.out",
+          stagger: 0.06,
+          delay: 1,
+        });
+        ctx.add(() => {
+          heroSplit.revert();
+          paragraphSplit.revert();
+        });
       });
-    });
-    // animate leaves
-    const leavesTimeline = gsap
-      .timeline({
+      // animate leaves
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: "#hero",
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        })
+        .to(".right-leaf", { y: 200 }, 0)
+        .to(".left-leaf", { y: -200 }, 0);
+
+      const startValue = isMobile ? "top 50%" : "center 60%";
+      const endValue = isMobile ? "120% top" : "bottom top";
+
+      // video timeline
+      const videoTimeline = gsap.timeline({
         scrollTrigger: {
-          trigger: "#hero",
-          start: "top top",
-          end: "bottom top",
+          trigger: "video",
+          start: startValue,
+          end: endValue,
           scrub: true,
+          pin: true,
         },
-      })
-      .to(".right-leaf", { y: 200 }, 0)
-      .to(".left-leaf", { y: -200 }, 0);
+      });
 
-    const startValue = isMobile ? "top 50%" : "center 60%";
-    const endValue = isMobile ? "120% top" : "bottom top";
-
-    // video timeline
-    const videoTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: "video",
-        start: startValue,
-        end: endValue,
-        scrub: true,
-        pin: true,
-      },
+      videoRef.current.onloadedmetadata = () => {
+        videoTimeline.to(videoRef.current, {
+          currentTime: videoRef.current.duration,
+        });
+      };
     });
 
-    videoRef.current.onloadedmetadata = () => {
-      videoTimeline.to(videoRef.current, {
-        currentTime: videoRef.current.duration,
-      });
-    };
-
-    return () => {
-      if (anim1) anim1.kill();
-      if (anim2) anim2.kill();
-      if (heroSplit) heroSplit.revert();
-      if (paragraphSplit) paragraphSplit.revert();
-      if (leavesTimeline) leavesTimeline.kill();
-      if (videoTimeline) videoTimeline.kill();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

@@ -10,28 +10,28 @@ const Cocktails = ({ scrollRef }) => {
   const endValue = isMobile ? "80% 50%" : "bottom 80%";
 
   useGSAP(() => {
-    const parallaxTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#cocktails",
-        start: startValue,
-        end: endValue,
-        scrub: true,
-      },
-    });
-
-    parallaxTimeline
-      .from("#c-left-leaf", {
-        x: -100,
-        y: 100,
-      })
-      .from("#c-right-leaf", {
-        x: 100,
-        y: 100,
+    const ctx = gsap.context(() => {
+      const parallaxTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#cocktails",
+          start: startValue,
+          end: endValue,
+          scrub: true,
+        },
       });
 
-    return () => {
-      if (parallaxTimeline) parallaxTimeline.kill();
-    };
+      parallaxTimeline
+        .from("#c-left-leaf", {
+          x: -100,
+          y: 100,
+        })
+        .from("#c-right-leaf", {
+          x: 100,
+          y: 100,
+        });
+    });
+
+    return () => ctx.revert();
   }, []);
 
   return (

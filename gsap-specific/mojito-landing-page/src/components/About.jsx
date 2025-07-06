@@ -4,52 +4,47 @@ import gsap from "gsap";
 
 const About = ({ scrollRef }) => {
   useGSAP(() => {
-    let titleTimeline;
-    let titleSplit;
-    document.fonts.ready.then(() => {
-      titleSplit = new SplitText("#about h2", { type: "words" });
+    const ctx = gsap.context(() => {
+      let titleSplit;
+      document.fonts.ready.then(() => {
+        titleSplit = new SplitText("#about h2", { type: "words" });
 
-      titleTimeline = gsap.timeline({
+        const titleTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#about",
+            start: "top center",
+          },
+        });
+
+        titleTimeline.from(titleSplit.words, {
+          opacity: 0,
+          duration: 1,
+          yPercent: 100,
+          ease: "expo.out",
+          stagger: 0.02,
+        });
+
+        ctx.add(() => titleSplit.revert());
+      });
+
+      const gridTimeline = gsap.timeline({
+        delay: 0.5,
         scrollTrigger: {
           trigger: "#about",
-          start: "top center",
+          start: "top center +=100",
         },
       });
 
-      titleTimeline.from(titleSplit.words, {
+      gridTimeline.from(".top-grid div, .bottom-grid div", {
         opacity: 0,
-        duration: 1,
-        yPercent: 100,
-        ease: "expo.out",
-        stagger: 0.02,
+        duration: 1.5,
+        ease: "power1.inOut",
+        stagger: 0.04,
       });
-    });
-    const gridTimeline = gsap.timeline({
-      delay: 0.5,
-      scrollTrigger: {
-        trigger: "#about",
-        start: "top center +=100",
-      },
-    });
-
-    gridTimeline.from(".top-grid div, .bottom-grid div", {
-      opacity: 0,
-      duration: 1.5,
-      ease: "power1.inOut",
-      stagger: 0.04,
     });
 
     //cleanup
-    return () => {
-      if (gridTimeline) gridTimeline.kill();
-      if (titleTimeline) {
-        titleTimeline.scrollTrigger?.kill();
-        titleTimeline.kill();
-      }
-      if (titleSplit) {
-        titleSplit.revert();
-      }
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

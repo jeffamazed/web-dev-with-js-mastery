@@ -6,27 +6,27 @@ import { useRef } from "react";
 const Navbar = ({ scrollRefs }) => {
   const navRef = useRef(null);
   useGSAP(() => {
-    const navTween = gsap.timeline({
-      scrollTrigger: {
-        trigger: "nav",
-        start: "bottom top",
-      },
+    const ctx = gsap.context(() => {
+      const navTween = gsap.timeline({
+        scrollTrigger: {
+          trigger: "nav",
+          start: "bottom top",
+        },
+      });
+
+      navTween.fromTo(
+        navRef.current,
+        { backgroundColor: "transparent" },
+        {
+          backgroundColor: "#00000050",
+          backdropFilter: "blur(10px)",
+          duration: 1,
+          ease: "power1.inOut",
+        }
+      );
     });
 
-    navTween.fromTo(
-      navRef.current,
-      { backgroundColor: "transparent" },
-      {
-        backgroundColor: "#00000050",
-        backdropFilter: "blur(10px)",
-        duration: 1,
-        ease: "power1.inOut",
-      }
-    );
-
-    return () => {
-      if (navTween) navTween.kill();
-    };
+    return () => ctx.revert();
   }, []);
 
   const handleScrollIntoView = (e, target) => {

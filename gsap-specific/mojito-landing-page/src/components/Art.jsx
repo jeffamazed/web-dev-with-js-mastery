@@ -7,51 +7,52 @@ const Art = ({ scrollRef }) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useGSAP(() => {
-    const start = isMobile ? "top 20%" : "top top";
+    const ctx = gsap.context(() => {
+      const start = isMobile ? "top 20%" : "top top";
 
-    const maskTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#art",
-        start,
-        end: "bottom center",
-        scrub: 1.5,
-        pin: true,
-      },
-    });
-
-    if (!isMobile) {
-      maskTimeline.to(".will-fade", {
-        opacity: 0,
-        stagger: 0.2,
-        ease: "power1.inOut",
-        onUpdate: () => {
-          document.querySelectorAll(".will-fade").forEach((el) => {
-            const opacity = parseFloat(getComputedStyle(el).opacity);
-            el.setAttribute("aria-hidden", opacity < 0.05 ? "true" : "false");
-          });
+      const maskTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: "#art",
+          start,
+          end: "bottom center",
+          scrub: 1.5,
+          pin: true,
         },
       });
-    }
 
-    maskTimeline.to(".masked-img", {
-      scale: 1.3,
-      maskPosition: "center",
-      maskSize: "400%",
-      duration: 1,
-      ease: "power1.inOut",
-    });
-    if (!isMobile) {
-      maskTimeline.to("#masked-content", {
-        opacity: 1,
+      if (!isMobile) {
+        maskTimeline.to(".will-fade", {
+          opacity: 0,
+          stagger: 0.2,
+          ease: "power1.inOut",
+          onUpdate: () => {
+            // handling aria-hidden
+            document.querySelectorAll(".will-fade").forEach((el) => {
+              const opacity = parseFloat(getComputedStyle(el).opacity);
+              el.setAttribute("aria-hidden", opacity < 0.05 ? "true" : "false");
+            });
+          },
+        });
+      }
+
+      maskTimeline.to(".masked-img", {
+        scale: 1.3,
+        maskPosition: "center",
+        maskSize: "400%",
         duration: 1,
         ease: "power1.inOut",
       });
-    }
+      if (!isMobile) {
+        maskTimeline.to("#masked-content", {
+          opacity: 1,
+          duration: 1,
+          ease: "power1.inOut",
+        });
+      }
+    });
 
     //cleanup
-    return () => {
-      if (maskTimeline) maskTimeline.kill();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

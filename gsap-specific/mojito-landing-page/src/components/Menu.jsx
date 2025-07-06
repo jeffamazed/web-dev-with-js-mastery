@@ -15,41 +15,34 @@ const Menu = () => {
 
   // animation
   useGSAP(() => {
-    const source = sourceRef.current;
-    const direction = directionRef.current;
-    let cocktailAnim;
+    const ctx = gsap.context(() => {
+      const source = sourceRef.current;
+      const direction = directionRef.current;
 
-    if (source === "tab" && !direction) {
-      cocktailAnim = gsap.fromTo(
-        ".cocktail img",
-        { opacity: 0 },
-        { opacity: 1, duration: 0.8 }
+      if (source === "tab" && !direction) {
+        gsap.fromTo(
+          ".cocktail img",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.8 }
+        );
+      } else if (source === "button") {
+        gsap.fromTo(
+          ".cocktail img",
+          { opacity: 0, xPercent: direction === "left" ? -100 : 100 },
+          { xPercent: 0, opacity: 1, duration: 0.8, ease: "power1.inOut" }
+        );
+      }
+
+      gsap.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 0.8 });
+
+      gsap.fromTo(
+        ".details h4, .details p",
+        { yPercent: 100, opacity: 0 },
+        { yPercent: 0, opacity: 0.8, ease: "power1.inOut" }
       );
-    } else if (source === "button") {
-      cocktailAnim = gsap.fromTo(
-        ".cocktail img",
-        { opacity: 0, xPercent: direction === "left" ? -100 : 100 },
-        { xPercent: 0, opacity: 1, duration: 0.8, ease: "power1.inOut" }
-      );
-    }
+    });
 
-    const titleAnim = gsap.fromTo(
-      "#title",
-      { opacity: 0 },
-      { opacity: 1, duration: 0.8 }
-    );
-
-    const contentAnim = gsap.fromTo(
-      ".details h4, .details p",
-      { yPercent: 100, opacity: 0 },
-      { yPercent: 0, opacity: 0.8, ease: "power1.inOut" }
-    );
-
-    return () => {
-      if (titleAnim) titleAnim.kill();
-      if (contentAnim) contentAnim.kill();
-      if (cocktailAnim) cocktailAnim.kill();
-    };
+    return () => ctx.revert();
   }, [currentI]);
 
   useGSAP(() => {

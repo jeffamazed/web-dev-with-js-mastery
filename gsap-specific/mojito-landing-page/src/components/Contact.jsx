@@ -5,65 +5,66 @@ import gsap from "gsap";
 
 const Contact = ({ scrollRef }) => {
   useGSAP(() => {
-    let titleSplit;
-    let contentSplit;
-    let splitTimeline;
-    document.fonts.ready.then(() => {
-      titleSplit = new SplitText("#contact h2", {
-        type: "words",
-      });
-      contentSplit = new SplitText("#contact h3, #contact p", {
-        type: "lines",
+    const ctx = gsap.context(() => {
+      let titleSplit;
+      let contentSplit;
+
+      document.fonts.ready.then(() => {
+        titleSplit = new SplitText("#contact h2", {
+          type: "words",
+        });
+        contentSplit = new SplitText("#contact h3, #contact p", {
+          type: "lines",
+        });
+
+        const splitTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: "#contact",
+            start: "top center",
+          },
+          ease: "power1.inOut",
+        });
+
+        splitTimeline
+          .from(titleSplit.words, {
+            opacity: 0,
+            yPercent: -100,
+            stagger: 0.02,
+          })
+          .from(contentSplit.lines, {
+            opacity: 0,
+            yPercent: 100,
+            stagger: 0.02,
+          });
+        ctx.add(() => {
+          titleSplit.revert();
+          contentSplit.revert();
+        });
       });
 
-      splitTimeline = gsap.timeline({
+      const leavesTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: "#contact",
-          start: "top center",
+          start: "35% center",
+          end: "center center",
+          scrub: true,
         },
         ease: "power1.inOut",
       });
 
-      splitTimeline
-        .from(titleSplit.words, {
-          opacity: 0,
-          yPercent: -100,
-          stagger: 0.02,
+      leavesTimeline
+        .to("#f-right-leaf", {
+          y: -80,
+          ease: "power1.inOut",
         })
-        .from(contentSplit.lines, {
-          opacity: 0,
-          yPercent: 100,
-          stagger: 0.02,
+        .to("#f-left-leaf", {
+          y: -50,
+          ease: "power1.inOut",
         });
     });
 
-    const leavesTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#contact",
-        start: "35% center",
-        end: "center center",
-        scrub: true,
-      },
-      ease: "power1.inOut",
-    });
-
-    leavesTimeline
-      .to("#f-right-leaf", {
-        y: -80,
-        ease: "power1.inOut",
-      })
-      .to("#f-left-leaf", {
-        y: -50,
-        ease: "power1.inOut",
-      });
-
     // cleanup
-    return () => {
-      if (titleSplit) titleSplit.revert();
-      if (contentSplit) contentSplit.revert();
-      if (splitTimeline) splitTimeline.kill();
-      if (leavesTimeline) leavesTimeline.kill();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
