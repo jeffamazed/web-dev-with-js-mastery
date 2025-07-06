@@ -8,7 +8,7 @@ import Art from "./components/Art";
 import Menu from "./components/Menu";
 import Contact from "./components/Contact";
 import { useRef } from "react";
-import TopButton from "./components/TopButton";
+import TopLink from "./components/TopLink";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -22,7 +22,10 @@ const App = () => {
 
   return (
     <>
-      <TopButton />
+      {/* dummy top */}
+      <div id="top" className="sr-only" />
+
+      <TopLink />
       <Navbar scrollRefs={scrollRefs} />
       <main>
         <Hero />

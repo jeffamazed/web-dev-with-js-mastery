@@ -4,7 +4,7 @@ import Button from "../components/Button";
 const SuperQuality = () => {
   return (
     <section
-      id="about-us"
+      id="about"
       aria-labelledby="super-quality-heading"
       className="flex justify-between items-center max-lg:flex-col gap-10 w-full max-container"
     >

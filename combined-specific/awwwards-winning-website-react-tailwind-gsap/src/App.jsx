@@ -1,9 +1,9 @@
+import Hero from "./components/Hero";
+
 const App = () => {
   return (
-    <main>
-      <h1 className="text-5xl text-violet-300 font-robert-medium">
-        Welcome to Awwwwards
-      </h1>
+    <main className="relative min-h-dvh w-full overflow-x-hidden">
+      <Hero />
     </main>
   );
 };

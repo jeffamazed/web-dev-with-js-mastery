@@ -25,9 +25,10 @@ const Navbar = ({ scrollRefs }) => {
     );
   });
 
-  const handleScrollIntoView = (target) => {
+  const handleScrollIntoView = (e, target) => {
     const section = scrollRefs[target];
     if (!section?.current) return;
+    e.preventDefault();
 
     const sectionTop =
       section.current.getBoundingClientRect().top + window.scrollY;
@@ -46,12 +47,12 @@ const Navbar = ({ scrollRefs }) => {
           <ul>
             {navLinks.map((link) => (
               <li key={link.id}>
-                <button
-                  onClick={() => handleScrollIntoView(link.id)}
-                  type="button"
+                <a
+                  href={`#${link.id}`}
+                  onClick={(e) => handleScrollIntoView(e, link.id)}
                 >
                   {link.title}
-                </button>
+                </a>
               </li>
             ))}
           </ul>

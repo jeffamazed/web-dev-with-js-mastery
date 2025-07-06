@@ -7,7 +7,7 @@ import {
   CustomerReviews,
   Subscribe,
   Footer,
-  TopButton,
+  TopLink,
 } from "./sections";
 import Nav from "./components/Nav";
 import { useRef } from "react";
@@ -22,8 +22,9 @@ const App = () => {
 
   return (
     <>
+      <div id="top" className="sr-only" />
       <Nav sectionRefs={refs} />
-      <TopButton />
+      <TopLink />
       <main className="relative">
         <div ref={refs.home} className="padding-b xl:pl-16 wide:pr-16">
           <Hero />

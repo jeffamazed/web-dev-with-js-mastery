@@ -71,11 +71,9 @@ const Hero = () => {
   return (
     <>
       <section id="hero" className="noisy" aria-labelledby="title-heading">
-        <header>
-          <h1 id="title-heading" className="title">
-            MOJITO
-          </h1>
-        </header>
+        <h1 id="title-heading" className="title">
+          MOJITO
+        </h1>
 
         <img
           src="./images/hero-left-leaf.png"

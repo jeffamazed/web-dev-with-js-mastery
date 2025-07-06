@@ -1,11 +1,12 @@
 import { headerLogo } from "../assets/images";
 import { hamburger } from "../assets/icons";
 import { navLinks } from "../constants";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Nav = ({ sectionRefs }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAriaHidden, setIsAriaHidden] = useState(true);
+  const headerRef = useRef(null);
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 1024) {
@@ -20,13 +21,21 @@ const Nav = ({ sectionRefs }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const handleScrollIntoView = (target) => {
-    const sectionRef = sectionRefs[target];
-    sectionRef?.current?.scrollIntoView({ behavior: "smooth" });
+  const handleScrollIntoView = (e, target) => {
+    const section = sectionRefs[target];
+    if (!section?.current) return;
+    e.preventDefault();
+
+    const headerHeight = headerRef.current.getBoundingClientRect().height;
+    const sectionTop =
+      section.current.getBoundingClientRect().top + window.scrollY;
+
+    window.scrollTo({ top: sectionTop - headerHeight, behavior: "smooth" });
   };
 
   return (
     <header
+      ref={headerRef}
       className={`padding-x py-8 fixed z-50 w-full bg-transparent hover:bg-white-400 transition-colors duration-200 ease-in hover:drop-shadow-xl ${
         isExpanded ? "bg-white-400" : ""
       }`}
@@ -45,13 +54,13 @@ const Nav = ({ sectionRefs }) => {
         >
           {navLinks.map((link) => (
             <li key={link.label} className="px-4 py-2 text-center">
-              <button
-                type="button"
+              <a
+                href={`#${link.target}`}
                 className="font-montserrat leading-normal text-lg text-slate-gray cursor-pointer hover:text-black transition-colors duration-200"
-                onClick={() => handleScrollIntoView(link.target)}
+                onClick={(e) => handleScrollIntoView(e, link.target)}
               >
                 {link.label}
-              </button>
+              </a>
             </li>
           ))}
         </ul>
