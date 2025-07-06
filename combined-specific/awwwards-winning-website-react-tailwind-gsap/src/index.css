@@ -43,9 +43,12 @@
   --color-blue-300: #4fb7dd;
 
   --color-violet-300: #5724ff;
+  --color-violet-darker: #3b1ab3;
+  --color-violet-lighter: #bda0ff;
 
   --color-yellow-100: #8e983f;
   --color-yellow-300: #edff66;
+  --color-yellow-hover: #f6ff99;
 
   /* use --animate-KEYFRAMES to use */
   @keyframes indicator-line {
@@ -63,6 +66,25 @@
     }
   }
 
+  --animate-spin-sway: spin-sway 1.5s ease-in-out infinite;
+  @keyframes spin-sway {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(1.5deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    75% {
+      transform: rotate(-1.5deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
   /* From Uiverse.io by G4b413l */
   /* https://uiverse.io/G4b413l/tidy-walrus-92 */
 
@@ -75,7 +97,7 @@
       transform: rotate(360deg);
     }
   }
-
+  --animate-wobble1: wobble1 1s ease-in-out infinite;
   @keyframes wobble1 {
     0%,
     100% {
@@ -142,6 +164,7 @@ body {
   b {
     font-family: "Zentry";
     font-feature-settings: "ss01" on;
+    @apply text-violet-lighter;
   }
 }
 
