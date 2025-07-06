@@ -4,10 +4,12 @@ import gsap from "gsap";
 
 const About = ({ scrollRef }) => {
   useGSAP(() => {
+    let titleTimeline;
+    let titleSplit;
     document.fonts.ready.then(() => {
-      const titleSplit = new SplitText("#about h2", { type: "words" });
+      titleSplit = new SplitText("#about h2", { type: "words" });
 
-      const titleTimeline = gsap.timeline({
+      titleTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: "#about",
           start: "top center",
@@ -36,7 +38,19 @@ const About = ({ scrollRef }) => {
       ease: "power1.inOut",
       stagger: 0.04,
     });
-  });
+
+    //cleanup
+    return () => {
+      if (gridTimeline) gridTimeline.kill();
+      if (titleTimeline) {
+        titleTimeline.scrollTrigger?.kill();
+        titleTimeline.kill();
+      }
+      if (titleSplit) {
+        titleSplit.revert();
+      }
+    };
+  }, []);
 
   return (
     <section ref={scrollRef} id="about" aria-labelledby="about-heading">

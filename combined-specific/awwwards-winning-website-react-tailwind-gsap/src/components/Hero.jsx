@@ -3,9 +3,6 @@ import Button from "./Button";
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -43,7 +40,7 @@ const Hero = () => {
       if (hasClicked) {
         gsap.set("#next-video", { visibility: "visible" });
 
-        gsap.to("#next-video", {
+        const anim1 = gsap.to("#next-video", {
           transformOrigin: "center center",
           scale: 1,
           width: "100%",
@@ -54,38 +51,49 @@ const Hero = () => {
           onComplete: () => bgVideoRef.current.pause(),
         });
 
-        gsap.from("#current-video", {
+        const anim2 = gsap.from("#current-video", {
           transformOrigin: "center center",
           scale: 0,
           duration: 1.5,
           ease: "power1.inOut",
         });
+
+        return () => {
+          anim1.kill();
+          anim2.kill();
+        };
       }
     },
+
     { dependencies: [currentIndex], revertOnUpdate: true }
   );
 
   useGSAP(() => {
     gsap.set("#video-frame", {
-      clipPath: "polygon(0 0, 75% 1%, 90% 83%, 4% 97%)",
-      borderRadius: "0 0 50% 18%",
+      clipPath: "polygon(0 0, 80% 0%, 93% 88%, 4% 97%)",
+      borderRadius: "0 0 40% 18%",
     });
 
-    gsap.from("#video-frame", {
+    const anim = gsap.from("#video-frame", {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      borderRadius: "0 0 0 0 ",
-      ease: "power1.inout",
+      borderRadius: "0 0 0 0",
       scrollTrigger: {
         trigger: "#video-frame",
-        start: "40% 30%",
+        start: "top top",
         end: "bottom center",
         scrub: true,
       },
     });
+
+    return () => {
+      anim.scrollTrigger?.kill();
+      anim.kill();
+    };
   }, []);
 
   return (
     <section
+      id="hero"
       className="relative h-dvh w-full overflow-x-hidden"
       aria-labelledby="hero-gaming-heading"
     >
@@ -166,7 +174,7 @@ const Hero = () => {
               id="hero-gaming-heading"
               className="special-font hero-heading text-blue-100"
             >
-              redefi<b>n</b>e{" "}
+              redefi<b>n</b>e
               <span className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-75">
                 g<b>a</b>ming
               </span>

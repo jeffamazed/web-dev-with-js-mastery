@@ -17,33 +17,44 @@ const Menu = () => {
   useGSAP(() => {
     const source = sourceRef.current;
     const direction = directionRef.current;
+    let cocktailAnim;
 
     if (source === "tab" && !direction) {
-      gsap.fromTo(
+      cocktailAnim = gsap.fromTo(
         ".cocktail img",
         { opacity: 0 },
         { opacity: 1, duration: 0.8 }
       );
     } else if (source === "button") {
-      gsap.fromTo(
+      cocktailAnim = gsap.fromTo(
         ".cocktail img",
         { opacity: 0, xPercent: direction === "left" ? 100 : -100 },
         { xPercent: 0, opacity: 1, duration: 0.8, ease: "power1.inOut" }
       );
     }
 
-    gsap.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 0.8 });
+    const titleAnim = gsap.fromTo(
+      "#title",
+      { opacity: 0 },
+      { opacity: 1, duration: 0.8 }
+    );
 
-    gsap.fromTo(
+    const contentAnim = gsap.fromTo(
       ".details h4, .details p",
       { yPercent: 100, opacity: 0 },
       { yPercent: 0, opacity: 0.8, ease: "power1.inOut" }
     );
+
+    return () => {
+      if (titleAnim) titleAnim.kill();
+      if (contentAnim) contentAnim.kill();
+      if (cocktailAnim) cocktailAnim.kill();
+    };
   }, [currentI]);
 
   useGSAP(() => {
     // animate leaves
-    gsap
+    const leavesTimeline = gsap
       .timeline({
         scrollTrigger: {
           trigger: "#menu",
@@ -54,6 +65,10 @@ const Menu = () => {
       })
       .to("#m-right-leaf", { y: 200 }, 0)
       .to("#m-left-leaf", { scale: 1.4 }, isMobile ? 0.4 : 0.15);
+
+    return () => {
+      if (leavesTimeline) leavesTimeline.kill();
+    };
   }, []);
 
   const goToSlide = (i, direction, source) => {

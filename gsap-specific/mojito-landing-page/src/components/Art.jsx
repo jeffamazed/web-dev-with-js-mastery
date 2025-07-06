@@ -47,7 +47,12 @@ const Art = ({ scrollRef }) => {
         ease: "power1.inOut",
       });
     }
-  });
+
+    //cleanup
+    return () => {
+      if (maskTimeline) maskTimeline.kill();
+    };
+  }, []);
 
   return (
     <section ref={scrollRef} aria-labelledby="art-heading" id="art">

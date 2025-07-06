@@ -28,7 +28,11 @@ const Cocktails = ({ scrollRef }) => {
         x: 100,
         y: 100,
       });
-  });
+
+    return () => {
+      if (parallaxTimeline) parallaxTimeline.kill();
+    };
+  }, []);
 
   return (
     <section

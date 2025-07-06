@@ -23,7 +23,11 @@ const Navbar = ({ scrollRefs }) => {
         ease: "power1.inOut",
       }
     );
-  });
+
+    return () => {
+      if (navTween) navTween.kill();
+    };
+  }, []);
 
   const handleScrollIntoView = (e, target) => {
     const section = scrollRefs[target];

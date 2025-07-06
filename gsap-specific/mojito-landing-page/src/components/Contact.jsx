@@ -5,15 +5,18 @@ import gsap from "gsap";
 
 const Contact = ({ scrollRef }) => {
   useGSAP(() => {
+    let titleSplit;
+    let contentSplit;
+    let splitTimeline;
     document.fonts.ready.then(() => {
-      const titleSplit = new SplitText("#contact h2", {
+      titleSplit = new SplitText("#contact h2", {
         type: "words",
       });
-      const contentSplit = new SplitText("#contact h3, #contact p", {
+      contentSplit = new SplitText("#contact h3, #contact p", {
         type: "lines",
       });
 
-      const splitTimeline = gsap.timeline({
+      splitTimeline = gsap.timeline({
         scrollTrigger: {
           trigger: "#contact",
           start: "top center",
@@ -53,7 +56,15 @@ const Contact = ({ scrollRef }) => {
         y: -50,
         ease: "power1.inOut",
       });
-  });
+
+    // cleanup
+    return () => {
+      if (titleSplit) titleSplit.revert();
+      if (contentSplit) contentSplit.revert();
+      if (splitTimeline) splitTimeline.kill();
+      if (leavesTimeline) leavesTimeline.kill();
+    };
+  }, []);
 
   return (
     <footer ref={scrollRef} id="contact">

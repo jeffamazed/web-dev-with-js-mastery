@@ -10,23 +10,27 @@ const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useGSAP(() => {
+    let heroSplit;
+    let paragraphSplit;
+    let anim1;
+    let anim2;
     document.fonts.ready.then(() => {
-      const heroSplit = new SplitText("#title-heading", {
+      heroSplit = new SplitText("#title-heading", {
         type: "chars, words",
       });
-      const paragraphSplit = new SplitText(".subtitle", { type: "lines" });
+      paragraphSplit = new SplitText(".subtitle", { type: "lines" });
 
       // applying class to each char because animating each char
       heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
 
-      gsap.from(heroSplit.chars, {
+      anim1 = gsap.from(heroSplit.chars, {
         yPercent: 100,
         duration: 1.8,
         ease: "expo.out",
         stagger: 0.06,
       });
 
-      gsap.from(paragraphSplit.lines, {
+      anim2 = gsap.from(paragraphSplit.lines, {
         opacity: 0,
         yPercent: 100,
         duration: 1.8,
@@ -36,7 +40,7 @@ const Hero = () => {
       });
     });
     // animate leaves
-    gsap
+    const leavesTimeline = gsap
       .timeline({
         scrollTrigger: {
           trigger: "#hero",
@@ -50,8 +54,9 @@ const Hero = () => {
 
     const startValue = isMobile ? "top 50%" : "center 60%";
     const endValue = isMobile ? "120% top" : "bottom top";
+
     // video timeline
-    const tl = gsap.timeline({
+    const videoTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: "video",
         start: startValue,
@@ -62,9 +67,18 @@ const Hero = () => {
     });
 
     videoRef.current.onloadedmetadata = () => {
-      tl.to(videoRef.current, {
+      videoTimeline.to(videoRef.current, {
         currentTime: videoRef.current.duration,
       });
+    };
+
+    return () => {
+      if (anim1) anim1.kill();
+      if (anim2) anim2.kill();
+      if (heroSplit) heroSplit.revert();
+      if (paragraphSplit) paragraphSplit.revert();
+      if (leavesTimeline) leavesTimeline.kill();
+      if (videoTimeline) videoTimeline.kill();
     };
   }, []);
 

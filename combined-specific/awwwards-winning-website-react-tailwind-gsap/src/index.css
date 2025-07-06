@@ -50,6 +50,8 @@
   --color-yellow-300: #edff66;
   --color-yellow-hover: #f6ff99;
 
+  --breakpoint-about-image-1: 500px;
+
   /* use --animate-KEYFRAMES to use */
   @keyframes indicator-line {
     0% {
@@ -125,6 +127,17 @@
   }
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+  user-select: none;
+}
+
 body,
 #root {
   width: 100dvw;
@@ -169,15 +182,15 @@ body {
 }
 
 @utility hero-heading {
-  @apply uppercase font-zentry font-black text-5xl sm:right-10 sm:text-7xl md:text-9xl lg:text-[12rem];
+  @apply uppercase font-zentry font-black text-8xl md:text-9xl lg:text-[12rem];
 }
 
 @utility about-subtext {
-  @apply absolute bottom-[-80dvh] left-1/2 w-full max-w-96 -translate-x-1/2 text-center font-circular-web text-lg md:max-w-[34rem];
+  @apply absolute bottom-[900px] left-1/2 w-full max-w-96 -translate-x-1/2 text-center font-circular-web text-lg md:max-w-[34rem] z-0;
 }
 
 @utility about-image {
-  @apply absolute left-1/2 top-0 z-20 h-[60vh] w-96 origin-center -translate-x-1/2 overflow-hidden rounded-3xl md:w-[30vw];
+  @apply absolute left-1/2 top-0 z-20 h-[60vh] w-[90vw] about-image-1:w-[60vh] origin-center -translate-x-1/2 overflow-hidden rounded-3xl;
 }
 
 @utility animated-title {
