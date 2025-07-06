@@ -40,7 +40,7 @@ const Navbar = ({ scrollRefs }) => {
     <header>
       <nav ref={navRef}>
         <div>
-          <a href="#home" className="flex items-center gap-2">
+          <a href="#hero" className="flex items-center gap-2">
             <img src="./images/logo.png" alt="Velvet Pour Logo" />
             <span>Velvet Pour</span>
           </a>
