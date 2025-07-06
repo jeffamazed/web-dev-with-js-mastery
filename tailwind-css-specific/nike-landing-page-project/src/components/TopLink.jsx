@@ -5,7 +5,7 @@ const TopLink = () => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisible = () => setVisible(window.pageYOffset > 800);
+    const toggleVisible = () => setVisible(window.pageYOffset > 500);
 
     window.addEventListener("scroll", toggleVisible);
     return () => window.removeEventListener("scroll", toggleVisible);

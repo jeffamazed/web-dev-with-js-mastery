@@ -6,4 +6,3 @@ export { default as SpecialOffers } from "./SpecialOffers";
 export { default as CustomerReviews } from "./CustomerReviews";
 export { default as Subscribe } from "./Subscribe";
 export { default as Footer } from "./Footer";
-export { default as TopLink } from "./TopLink";

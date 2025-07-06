@@ -7,7 +7,7 @@ const TopLink = () => {
 
   useEffect(() => {
     const toggleVisible = () => {
-      setIsVisible(window.scrollY > 800);
+      setIsVisible(window.scrollY > 500);
     };
 
     window.addEventListener("scroll", toggleVisible);

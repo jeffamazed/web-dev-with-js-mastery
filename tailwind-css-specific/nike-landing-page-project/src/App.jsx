@@ -7,10 +7,10 @@ import {
   CustomerReviews,
   Subscribe,
   Footer,
-  TopLink,
 } from "./sections";
 import Nav from "./components/Nav";
 import { useRef } from "react";
+import TopLink from "./components/TopLink";
 
 const App = () => {
   const refs = {
