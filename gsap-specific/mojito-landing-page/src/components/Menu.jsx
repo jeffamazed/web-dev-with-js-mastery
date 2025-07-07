@@ -8,61 +8,71 @@ const Menu = () => {
   const contentRef = useRef(null);
   const directionRef = useRef(null);
   const sourceRef = useRef(null);
+  const cockTailImageRef = useRef(null);
+  const menuRef = useRef(null);
+  const titleRef = useRef(null);
+  const menuRightLeafRef = useRef(null);
+  const menuLeftLeafRef = useRef(null);
   const totalCocktails = allCocktails.length;
 
   const [currentI, setCurrentI] = useState(0);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   // animation
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       const source = sourceRef.current;
       const direction = directionRef.current;
+      const cocktailImg = cockTailImageRef.current;
 
       if (source === "tab" && !direction) {
-        gsap.fromTo(
-          ".cocktail img",
-          { opacity: 0 },
-          { opacity: 1, duration: 0.8 }
-        );
+        gsap.fromTo(cocktailImg, { opacity: 0 }, { opacity: 1, duration: 0.8 });
       } else if (source === "button") {
         gsap.fromTo(
-          ".cocktail img",
+          cocktailImg,
           { opacity: 0, xPercent: direction === "left" ? -100 : 100 },
           { xPercent: 0, opacity: 1, duration: 0.8, ease: "power1.inOut" }
         );
       }
 
-      gsap.fromTo("#title", { opacity: 0 }, { opacity: 1, duration: 0.8 });
+      gsap.fromTo(
+        titleRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.8 }
+      );
 
       gsap.fromTo(
         ".details h4, .details p",
         { yPercent: 100, opacity: 0 },
         { yPercent: 0, opacity: 0.8, ease: "power1.inOut" }
       );
-    });
+    },
+    {
+      scope: menuRef,
+      dependencies: [currentI],
+    }
+  );
 
-    return () => ctx.revert();
-  }, [currentI]);
-
-  useGSAP(() => {
-    // animate leaves
-    const leavesTimeline = gsap
-      .timeline({
-        scrollTrigger: {
-          trigger: "#menu",
-          start: "top center",
-          end: "80% top",
-          scrub: true,
-        },
-      })
-      .to("#m-right-leaf", { y: 200 }, 0)
-      .to("#m-left-leaf", { scale: 1.4 }, isMobile ? 0.4 : 0.15);
-
-    return () => {
-      if (leavesTimeline) leavesTimeline.kill();
-    };
-  }, []);
+  // leaves
+  useGSAP(
+    () => {
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: menuRef.current,
+            start: "top center",
+            end: "80% top",
+            scrub: true,
+          },
+        })
+        .to(menuRightLeafRef.current, { y: 200 }, 0)
+        .to(menuLeftLeafRef.current, { scale: 1.4 }, isMobile ? 0.4 : 0.15);
+    },
+    {
+      scope: menuRef,
+      dependencies: [],
+    }
+  );
 
   const goToSlide = (i, direction, source) => {
     const newI = (i + totalCocktails) % totalCocktails;
@@ -84,16 +94,18 @@ const Menu = () => {
   const nextCocktail = getCocktailAt(1);
 
   return (
-    <section id="menu" aria-labelledby="menu-heading">
+    <section ref={menuRef} id="menu" aria-labelledby="menu-heading">
       <img
         src="./images/slider-left-leaf.png"
         alt="left leaf"
         id="m-left-leaf"
+        ref={menuLeftLeafRef}
       />
       <img
         src="./images/slider-right-leaf.png"
         alt="right leaf"
         id="m-right-leaf"
+        ref={menuRightLeafRef}
       />
 
       <h2 id="menu-heading" className="sr-only">
@@ -150,7 +162,6 @@ const Menu = () => {
               src="./images/right-arrow.png"
               alt="right arrow"
               aria-hidden="true"
-              className=""
             />
           </button>
         </div>
@@ -165,6 +176,7 @@ const Menu = () => {
             src={currentCocktail.image}
             alt={currentCocktail.name}
             className="object-contain"
+            ref={cockTailImageRef}
           />
         </div>
 
@@ -172,7 +184,7 @@ const Menu = () => {
           <header ref={contentRef} className="info">
             <h3 className="text-lg md:text-xl">
               Recipe for:
-              <span id="title">{currentCocktail.name}</span>
+              <span ref={titleRef}>{currentCocktail.name}</span>
             </h3>
           </header>
 

@@ -2,15 +2,21 @@ import { useGSAP } from "@gsap/react";
 import { openingHours, socials } from "../constants";
 import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
+import { useRef } from "react";
 
 const Contact = ({ scrollRef }) => {
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
+  const contactRef = useRef(null);
+  const titleRef = useRef(null);
+  const footerLeftLeafRef = useRef(null);
+  const footerRightLeafRef = useRef(null);
+
+  useGSAP(
+    () => {
       let titleSplit;
       let contentSplit;
 
       document.fonts.ready.then(() => {
-        titleSplit = new SplitText("#contact h2", {
+        titleSplit = new SplitText(titleRef.current, {
           type: "words",
         });
         contentSplit = new SplitText("#contact h3, #contact p", {
@@ -19,7 +25,7 @@ const Contact = ({ scrollRef }) => {
 
         const splitTimeline = gsap.timeline({
           scrollTrigger: {
-            trigger: "#contact",
+            trigger: contactRef.current,
             start: "top center",
           },
           ease: "power1.inOut",
@@ -36,15 +42,11 @@ const Contact = ({ scrollRef }) => {
             yPercent: 100,
             stagger: 0.02,
           });
-        ctx.add(() => {
-          titleSplit.revert();
-          contentSplit.revert();
-        });
       });
 
       const leavesTimeline = gsap.timeline({
         scrollTrigger: {
-          trigger: "#contact",
+          trigger: contactRef.current,
           start: "35% center",
           end: "center center",
           scrub: true,
@@ -53,35 +55,49 @@ const Contact = ({ scrollRef }) => {
       });
 
       leavesTimeline
-        .to("#f-right-leaf", {
+        .to(footerRightLeafRef.current, {
           y: -80,
           ease: "power1.inOut",
         })
-        .to("#f-left-leaf", {
-          y: -50,
+        .to(footerLeftLeafRef.current, {
+          y: -80,
           ease: "power1.inOut",
         });
-    });
 
-    // cleanup
-    return () => ctx.revert();
-  }, []);
+      return () => {
+        if (titleSplit) titleSplit.revert();
+        if (contentSplit) contentSplit.revert();
+      };
+    },
+    {
+      scope: contactRef,
+      dependencies: [],
+    }
+  );
 
   return (
-    <footer ref={scrollRef} id="contact">
+    <footer
+      ref={(el) => {
+        scrollRef.current = el;
+        contactRef.current = el;
+      }}
+      id="contact"
+    >
       <img
         src="./images/footer-right-leaf.png"
         alt="right leaf"
         id="f-right-leaf"
+        ref={footerRightLeafRef}
       />
       <img
         src="./images/footer-left-leaf.png"
         alt="left leaf"
         id="f-left-leaf"
+        ref={footerLeftLeafRef}
       />
 
       <div className="content">
-        <h2>Step Into Our World</h2>
+        <h2 ref={titleRef}>Step Into Our World</h2>
 
         <section aria-labelledby="location-heading">
           <h3 id="location-heading">Visit Our Bar</h3>

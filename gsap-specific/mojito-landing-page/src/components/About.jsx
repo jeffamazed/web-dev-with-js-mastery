@@ -1,17 +1,20 @@
 import { useGSAP } from "@gsap/react";
 import SplitText from "gsap/SplitText";
 import gsap from "gsap";
+import { useRef } from "react";
 
 const About = ({ scrollRef }) => {
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
+  const aboutRef = useRef(null);
+  const titleRef = useRef(null);
+  useGSAP(
+    () => {
       let titleSplit;
       document.fonts.ready.then(() => {
-        titleSplit = new SplitText("#about h2", { type: "words" });
+        titleSplit = new SplitText(titleRef.current, { type: "words" });
 
         const titleTimeline = gsap.timeline({
           scrollTrigger: {
-            trigger: "#about",
+            trigger: aboutRef.current,
             start: "top center",
           },
         });
@@ -23,14 +26,12 @@ const About = ({ scrollRef }) => {
           ease: "expo.out",
           stagger: 0.02,
         });
-
-        ctx.add(() => titleSplit.revert());
       });
 
       const gridTimeline = gsap.timeline({
         delay: 0.5,
         scrollTrigger: {
-          trigger: "#about",
+          trigger: aboutRef.current,
           start: "top center +=100",
         },
       });
@@ -41,19 +42,28 @@ const About = ({ scrollRef }) => {
         ease: "power1.inOut",
         stagger: 0.04,
       });
-    });
 
-    //cleanup
-    return () => ctx.revert();
-  }, []);
+      return () => {
+        if (titleSplit) titleSplit.revert();
+      };
+    },
+    { scope: aboutRef, dependencies: [] }
+  );
 
   return (
-    <section ref={scrollRef} id="about" aria-labelledby="about-heading">
+    <section
+      ref={(el) => {
+        scrollRef.current = el;
+        aboutRef.current = el;
+      }}
+      id="about"
+      aria-labelledby="about-heading"
+    >
       <div className="mb-16 md:px-0 px-5">
         <div className="content">
           <header className="lg:col-span-8">
             <span className="badge">Best Cocktails</span>
-            <h2 id="about-heading">
+            <h2 id="about-heading" ref={titleRef}>
               Where craftsmanship meets elegance{" "}
               <span className="text-white">—</span> from muddle to garnish
             </h2>

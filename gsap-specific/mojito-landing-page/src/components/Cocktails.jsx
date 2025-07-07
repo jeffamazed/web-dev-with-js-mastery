@@ -3,17 +3,21 @@ import { cocktailLists, mockTailLists } from "../constants";
 import extractPriceValue from "../utils/extractPriceValue";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useRef } from "react";
 
 const Cocktails = ({ scrollRef }) => {
+  const cocktailsRef = useRef(null);
+  const cocktailsLeftLeafRef = useRef(null);
+  const cocktailsRightLeafRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const startValue = isMobile ? "10% 30%" : "top 30%";
   const endValue = isMobile ? "80% 50%" : "bottom 80%";
 
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       const parallaxTimeline = gsap.timeline({
         scrollTrigger: {
-          trigger: "#cocktails",
+          trigger: cocktailsRef.current,
           start: startValue,
           end: endValue,
           scrub: true,
@@ -21,24 +25,29 @@ const Cocktails = ({ scrollRef }) => {
       });
 
       parallaxTimeline
-        .from("#c-left-leaf", {
+        .from(cocktailsLeftLeafRef.current, {
           x: -100,
           y: 100,
         })
-        .from("#c-right-leaf", {
+        .from(cocktailsRightLeafRef.current, {
           x: 100,
           y: 100,
         });
-    });
-
-    return () => ctx.revert();
-  }, []);
+    },
+    {
+      scope: cocktailsRef,
+      dependencies: [],
+    }
+  );
 
   return (
     <section
       aria-labelledby="cocktails-menu-heading"
       id="cocktails"
-      ref={scrollRef}
+      ref={(el) => {
+        scrollRef.current = el;
+        cocktailsRef.current = el;
+      }}
       className="noisy"
     >
       <h2 className="sr-only" id="cocktails-menu-heading">
@@ -48,11 +57,13 @@ const Cocktails = ({ scrollRef }) => {
         src="./images/cocktail-left-leaf.png"
         alt="left leaf"
         id="c-left-leaf"
+        ref={cocktailsLeftLeafRef}
       />
       <img
         src="./images/cocktail-right-leaf.png"
         alt="right leaf"
         id="c-right-leaf"
+        ref={cocktailsRightLeafRef}
       />
       <div className="list">
         <article className="popular">

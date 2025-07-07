@@ -5,11 +5,11 @@ import { useRef } from "react";
 
 const Navbar = ({ scrollRefs }) => {
   const navRef = useRef(null);
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       const navTween = gsap.timeline({
         scrollTrigger: {
-          trigger: "nav",
+          trigger: navRef.current,
           start: "bottom top",
         },
       });
@@ -24,10 +24,12 @@ const Navbar = ({ scrollRefs }) => {
           ease: "power1.inOut",
         }
       );
-    });
-
-    return () => ctx.revert();
-  }, []);
+    },
+    {
+      scope: navRef,
+      dependencies: [],
+    }
+  );
 
   const handleScrollIntoView = (e, target) => {
     const section = scrollRefs[target];

@@ -5,17 +5,18 @@ import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 
 const Hero = () => {
-  const videoRef = useRef();
-
+  const videoRef = useRef(null);
+  const heroRef = useRef(null);
+  const titleRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
+  useGSAP(
+    () => {
       let heroSplit;
       let paragraphSplit;
 
       document.fonts.ready.then(() => {
-        heroSplit = new SplitText("#title-heading", {
+        heroSplit = new SplitText(titleRef.current, {
           type: "chars, words",
         });
         paragraphSplit = new SplitText(".subtitle", { type: "lines" });
@@ -38,16 +39,12 @@ const Hero = () => {
           stagger: 0.06,
           delay: 1,
         });
-        ctx.add(() => {
-          heroSplit.revert();
-          paragraphSplit.revert();
-        });
       });
       // animate leaves
       gsap
         .timeline({
           scrollTrigger: {
-            trigger: "#hero",
+            trigger: heroRef.current,
             start: "top top",
             end: "bottom top",
             scrub: true,
@@ -62,7 +59,7 @@ const Hero = () => {
       // video timeline
       const videoTimeline = gsap.timeline({
         scrollTrigger: {
-          trigger: "video",
+          trigger: videoRef.current,
           start: startValue,
           end: endValue,
           scrub: true,
@@ -71,19 +68,31 @@ const Hero = () => {
       });
 
       videoRef.current.onloadedmetadata = () => {
-        videoTimeline.to(videoRef.current, {
-          currentTime: videoRef.current.duration,
-        });
+        const video = videoRef.current;
+        if (video.duration > 0) {
+          videoTimeline.to(video, {
+            currentTime: video.duration,
+          });
+        }
       };
-    });
 
-    return () => ctx.revert();
-  }, []);
+      return () => {
+        if (heroSplit) heroSplit.revert();
+        if (paragraphSplit) paragraphSplit.revert();
+      };
+    },
+    { scope: heroRef, dependencies: [] }
+  );
 
   return (
     <>
-      <section id="hero" className="noisy" aria-labelledby="title-heading">
-        <h1 id="title-heading" className="title">
+      <section
+        id="hero"
+        className="noisy"
+        aria-labelledby="title-heading"
+        ref={heroRef}
+      >
+        <h1 id="title-heading" className="title" ref={titleRef}>
           MOJITO
         </h1>
 
