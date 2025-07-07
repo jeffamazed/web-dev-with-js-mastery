@@ -3,7 +3,7 @@ import { hamburger } from "../assets/icons";
 import { navLinks } from "../constants";
 import { useEffect, useRef, useState } from "react";
 
-const Nav = ({ sectionRefs }) => {
+const Nav = ({ sectionRef }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAriaHidden, setIsAriaHidden] = useState(true);
   const headerRef = useRef(null);
@@ -22,7 +22,7 @@ const Nav = ({ sectionRefs }) => {
   }, []);
 
   const handleScrollIntoView = (e, target) => {
-    const section = sectionRefs[target];
+    const section = sectionRef[target];
     if (!section?.current) return;
     e.preventDefault();
 

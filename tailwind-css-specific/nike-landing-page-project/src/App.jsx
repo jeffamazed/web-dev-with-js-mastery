@@ -9,30 +9,28 @@ import {
   Footer,
 } from "./sections";
 import Nav from "./components/Nav";
-import { useRef } from "react";
+import { createRef, useRef } from "react";
 import TopLink from "./components/TopLink";
+import { navLinks } from "./constants";
 
 const App = () => {
-  const refs = {
-    home: useRef(null),
-    about: useRef(null),
-    products: useRef(null),
-    contact: useRef(null),
-  };
+  const sectionRef = useRef(
+    Object.fromEntries(navLinks.map(({ target }) => [target, createRef()]))
+  ).current;
 
   return (
     <>
       <div id="top" className="sr-only" />
-      <Nav sectionRefs={refs} />
+      <Nav sectionRef={sectionRef} />
       <TopLink />
       <main className="relative">
-        <div ref={refs.home} className="padding-b xl:pl-16 wide:pr-16">
+        <div ref={sectionRef.home} className="padding-b xl:pl-16 wide:pr-16">
           <Hero />
         </div>
-        <div ref={refs.products} className="padding">
+        <div ref={sectionRef.products} className="padding">
           <PopularProducts />
         </div>
-        <div ref={refs.about} className="padding">
+        <div ref={sectionRef.about} className="padding">
           <SuperQuality />
         </div>
         <div className="padding-x py-10">
@@ -44,7 +42,7 @@ const App = () => {
         <div className="bg-pale-blue padding">
           <CustomerReviews />
         </div>
-        <div ref={refs.contact} className="padding-x py-16 sm:py-32">
+        <div ref={sectionRef.contact} className="padding-x py-16 sm:py-32">
           <Subscribe />
         </div>
         <div className="bg-gray-950 padding-x padding-t pb-8">
