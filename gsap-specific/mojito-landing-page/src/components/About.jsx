@@ -6,6 +6,14 @@ import { useRef } from "react";
 const About = ({ scrollRef }) => {
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
+  const pictureGridRef = [
+    useRef(null),
+    useRef(null),
+    useRef(null),
+    useRef(null),
+    useRef(null),
+  ];
+
   useGSAP(
     () => {
       let titleSplit;
@@ -36,12 +44,15 @@ const About = ({ scrollRef }) => {
         },
       });
 
-      gridTimeline.from(".top-grid div, .bottom-grid div", {
-        opacity: 0,
-        duration: 1.5,
-        ease: "power1.inOut",
-        stagger: 0.04,
-      });
+      gridTimeline.from(
+        pictureGridRef.map((ref) => ref.current),
+        {
+          opacity: 0,
+          duration: 1.5,
+          ease: "power1.inOut",
+          stagger: 0.04,
+        }
+      );
 
       return () => {
         if (titleSplit) titleSplit.revert();
@@ -90,19 +101,19 @@ const About = ({ scrollRef }) => {
         </div>
       </div>
       <div className="top-grid">
-        <div className="lg:col-span-3 w-full">
+        <div className="lg:col-span-3 w-full" ref={pictureGridRef[0]}>
           {/* overlay */}
           <div className="noisy" />
           <img src="./images/abt1.png" alt="Bartender bartending" />
         </div>
 
-        <div className="lg:col-span-6">
+        <div className="lg:col-span-6" ref={pictureGridRef[1]}>
           {/* overlay */}
           <div className="noisy" />
           <img src="./images/abt2.png" alt="People having fun" />
         </div>
 
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3" ref={pictureGridRef[2]}>
           {/* overlay */}
           <div className="noisy" />
           <img src="./images/abt5.png" alt="Pro bartender styling" />
@@ -110,13 +121,13 @@ const About = ({ scrollRef }) => {
       </div>
 
       <div className="bottom-grid">
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-8" ref={pictureGridRef[3]}>
           {/* overlay */}
           <div className="noisy" />
           <img src="./images/abt3.png" alt="Drinks in style" />
         </div>
 
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-4" ref={pictureGridRef[4]}>
           {/* overlay */}
           <div className="noisy" />
           <img src="./images/abt4.png" alt="Favorite cocktail" />

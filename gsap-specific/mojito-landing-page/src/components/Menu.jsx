@@ -13,6 +13,8 @@ const Menu = () => {
   const titleRef = useRef(null);
   const menuRightLeafRef = useRef(null);
   const menuLeftLeafRef = useRef(null);
+  const cocktailRecipeDetailRef = [useRef(null), useRef(null)];
+
   const totalCocktails = allCocktails.length;
 
   const [currentI, setCurrentI] = useState(0);
@@ -42,7 +44,7 @@ const Menu = () => {
       );
 
       gsap.fromTo(
-        ".details h4, .details p",
+        cocktailRecipeDetailRef.map((ref) => ref.current),
         { yPercent: 100, opacity: 0 },
         { yPercent: 0, opacity: 0.8, ease: "power1.inOut" }
       );
@@ -184,7 +186,7 @@ const Menu = () => {
           <header ref={contentRef} className="info">
             <h3 className="text-lg md:text-xl">
               Recipe for:
-              <span ref={titleRef}>{currentCocktail.name}</span>
+              <span ref={titleRef}> {currentCocktail.name}</span>
             </h3>
           </header>
 
@@ -192,8 +194,12 @@ const Menu = () => {
             aria-labelledby="cocktail-recipe-heading"
             className="details"
           >
-            <h4 id="cocktail-recipe-heading">{currentCocktail.title}</h4>
-            <p>{currentCocktail.description}</p>
+            <h4 id="cocktail-recipe-heading" ref={cocktailRecipeDetailRef[0]}>
+              {currentCocktail.title}
+            </h4>
+            <p ref={cocktailRecipeDetailRef[1]}>
+              {currentCocktail.description}
+            </p>
           </section>
         </article>
       </div>

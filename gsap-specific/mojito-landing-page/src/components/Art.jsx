@@ -9,6 +9,14 @@ const Art = ({ scrollRef }) => {
   const artRef = useRef(null);
   const maskedContentRef = useRef(null);
   const maskedImageRef = useRef(null);
+  const willFadeRef = [
+    useRef(null),
+    useRef(null),
+    useRef(null),
+    useRef(null),
+    useRef(null),
+    useRef(null),
+  ];
 
   useGSAP(
     () => {
@@ -25,18 +33,26 @@ const Art = ({ scrollRef }) => {
       });
 
       if (!isMobile) {
-        maskTimeline.to(".will-fade", {
-          opacity: 0,
-          stagger: 0.2,
-          ease: "power1.inOut",
-          onUpdate: () => {
-            // handling aria-hidden
-            document.querySelectorAll(".will-fade").forEach((el) => {
-              const opacity = parseFloat(getComputedStyle(el).opacity);
-              el.setAttribute("aria-hidden", opacity < 0.05 ? "true" : "false");
-            });
-          },
-        });
+        maskTimeline.to(
+          willFadeRef.map((ref) => ref.current),
+          {
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power1.inOut",
+            onUpdate: () => {
+              // handling aria-hidden
+              willFadeRef.forEach((ref) => {
+                const opacity = parseFloat(
+                  getComputedStyle(ref.current).opacity
+                );
+                ref.current.setAttribute(
+                  "aria-hidden",
+                  opacity < 0.05 ? "true" : "false"
+                );
+              });
+            },
+          }
+        );
       }
 
       maskTimeline.to(maskedImageRef.current, {
@@ -70,14 +86,16 @@ const Art = ({ scrollRef }) => {
       id="art"
     >
       <div className="container mx-auto pt-20">
-        <h2 id="art-heading" className="will-fade">
+        <h2 id="art-heading" ref={willFadeRef[0]}>
           The ART
         </h2>
 
         <div className="content">
           <div className="pl-[15%] sm:pl-[0%]">
-            <h3 className="will-fade mb-4 text-xl">Why We Stand Out</h3>
-            <ul className="space-y-4 will-fade">
+            <h3 ref={willFadeRef[1]} className="mb-4 text-xl">
+              Why We Stand Out
+            </h3>
+            <ul ref={willFadeRef[2]} className="space-y-4">
               {goodLists.map((feature, i) => (
                 <li key={i} className="flex items-center gap-2">
                   <img src="./images/check.png" alt="check" />
@@ -97,8 +115,10 @@ const Art = ({ scrollRef }) => {
           </div>
 
           <div className="pl-[15%] sm:pl-[0%]">
-            <h3 className="will-fade mb-4 text-xl">What We Offer</h3>
-            <ul className="space-y-4 will-fade">
+            <h3 ref={willFadeRef[3]} className="mb-4 text-xl">
+              What We Offer
+            </h3>
+            <ul ref={willFadeRef[4]} className="space-y-4">
               {featureLists.map((feature, i) => (
                 <li key={i} className="flex items-center justify-start gap-2">
                   <img
@@ -114,7 +134,10 @@ const Art = ({ scrollRef }) => {
         </div>
 
         <div className="masked-container">
-          <h3 className={`will-fade ${!isMobile ? "block" : "hidden"}`}>
+          <h3
+            ref={willFadeRef[5]}
+            className={`${!isMobile ? "block" : "hidden"}`}
+          >
             Sip-Worthy Perfection
           </h3>
           <div

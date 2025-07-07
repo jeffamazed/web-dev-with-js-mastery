@@ -19,9 +19,12 @@ const Contact = ({ scrollRef }) => {
         titleSplit = new SplitText(titleRef.current, {
           type: "words",
         });
-        contentSplit = new SplitText("#contact h3, #contact p", {
-          type: "lines",
-        });
+        contentSplit = new SplitText(
+          contactRef.current.querySelectorAll("h3, p"),
+          {
+            type: "lines",
+          }
+        );
 
         const splitTimeline = gsap.timeline({
           scrollTrigger: {
