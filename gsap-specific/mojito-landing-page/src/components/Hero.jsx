@@ -8,7 +8,6 @@ const Hero = () => {
   const videoRef = useRef(null);
   const heroRef = useRef(null);
   const titleRef = useRef(null);
-  const subtitleRef = [useRef(null), useRef(null)];
   const heroLeftLeafRef = useRef(null);
   const heroRightLeafRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -23,8 +22,10 @@ const Hero = () => {
           type: "chars, words",
         });
         paragraphSplit = new SplitText(
-          subtitleRef.map((ref) => ref.current),
-          { type: "lines" }
+          heroRef.current.querySelectorAll(".subtitle"),
+          {
+            type: "lines",
+          }
         );
 
         // applying class to each char because animating each char
@@ -119,12 +120,12 @@ const Hero = () => {
           <div className="content">
             <div className="space-y-5 hidden md:block">
               <p>Cool. Crisp. Classic.</p>
-              <p ref={subtitleRef[0]}>
+              <p className="subtitle">
                 Sip the Spirit <br /> of Summer
               </p>
             </div>
             <div className="view-cocktails">
-              <p ref={subtitleRef[1]}>
+              <p className="subtitle">
                 Every cocktail on our menu is a blend of premium ingredients,
                 creative flair, and timeless recipe — designed to delight your
                 senses.
