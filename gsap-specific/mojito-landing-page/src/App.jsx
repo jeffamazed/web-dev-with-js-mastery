@@ -7,18 +7,16 @@ import About from "./components/About";
 import Art from "./components/Art";
 import Menu from "./components/Menu";
 import Contact from "./components/Contact";
-import { useRef } from "react";
+import { useRef, createRef } from "react";
 import TopLink from "./components/TopLink";
+import { navLinks } from "./constants";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const App = () => {
-  const scrollRefs = {
-    about: useRef(null),
-    art: useRef(null),
-    cocktails: useRef(null),
-    contact: useRef(null),
-  };
+  const sectionRef = useRef(
+    Object.fromEntries(navLinks.map(({ id }) => [id, createRef()]))
+  ).current;
 
   return (
     <>
@@ -26,14 +24,14 @@ const App = () => {
       <div id="top" className="sr-only" />
 
       <TopLink />
-      <Navbar scrollRefs={scrollRefs} />
+      <Navbar sectionRef={sectionRef} />
       <main>
         <Hero />
-        <Cocktails scrollRef={scrollRefs.cocktails} />
-        <About scrollRef={scrollRefs.about} />
-        <Art scrollRef={scrollRefs.art} />
+        <Cocktails scrollRef={sectionRef.cocktails} />
+        <About scrollRef={sectionRef.about} />
+        <Art scrollRef={sectionRef.art} />
         <Menu />
-        <Contact scrollRef={scrollRefs.contact} />
+        <Contact scrollRef={sectionRef.contact} />
       </main>
     </>
   );

@@ -3,7 +3,7 @@ import { navLinks } from "../constants";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
-const Navbar = ({ scrollRefs }) => {
+const Navbar = ({ sectionRef }) => {
   const navRef = useRef(null);
   useGSAP(
     () => {
@@ -32,7 +32,7 @@ const Navbar = ({ scrollRefs }) => {
   );
 
   const handleScrollIntoView = (e, target) => {
-    const section = scrollRefs[target];
+    const section = sectionRef[target];
     if (!section?.current) return;
     e.preventDefault();
 
