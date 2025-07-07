@@ -1,53 +1,47 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import AnimatedTitle from "./AnimatedTitle";
-import { useEffect } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+import { generateTitle } from "../utils/generateTitle";
 
-const About = () => {
-  useGSAP(() => {
-    const clipAnimation = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#clip",
-        start: "center center",
-        end: "+=800 center",
-        scrub: 0.5,
-        pin: true,
-        pinSpacing: true,
-      },
-    });
+const About = ({ scrollRef }) => {
+  const clipRef = useRef(null);
+  useGSAP(
+    () => {
+      const clipAnimation = gsap.timeline({
+        scrollTrigger: {
+          trigger: clipRef.current,
+          start: "top top",
+          end: "+=1200 center",
+          scrub: 0.5,
+          pin: true,
+          pinSpacing: true,
+        },
+      });
 
-    clipAnimation.to(".mask-clip-path", {
-      width: "100vw",
-      height: "100vh",
-      borderRadius: 0,
-    });
+      clipAnimation.to("#about-preview", {
+        width: "100vw",
+        height: "100vh",
+        borderRadius: 0,
+      });
+    },
+    {
+      scope: clipRef,
+      dependencies: [],
+    }
+  );
 
-    return () => {
-      clipAnimation.scrollTrigger?.kill();
-      clipAnimation.kill();
-    };
-  }, []);
-
-  useEffect(() => {
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("resize", refresh);
-    window.addEventListener("orientationchange", refresh);
-
-    return () => {
-      window.removeEventListener("resize", refresh);
-      window.removeEventListener("orientationchange", refresh);
-    };
-  }, []);
+  const title = "Disc(o)ver the world's<br />l(a)rgest shared adventure";
 
   return (
     <section
       id="about"
-      className="min-h-dvh w-full"
+      className="min-h-dvh w-full chk"
       aria-labelledby="about-heading"
+      ref={scrollRef}
     >
       <div className=" mt-36 flex flex-col items-center gap-5 text-center relative">
-        <header className="flex flex-col gap-5 px-2">
+        <header className="flex flex-col gap-5 w-full">
           <h2
             id="about-heading"
             className="font-general text-sm uppercase md:text-base"
@@ -55,30 +49,20 @@ const About = () => {
             Welcome to Zentry
           </h2>
           <AnimatedTitle
-            title={
-              <>
-                <span className="block">
-                  Disc<b>o</b>ver the world's
-                </span>
-                <span className="block">
-                  l<b>a</b>rgest shared adventure
-                </span>
-              </>
-            }
+            title={generateTitle(title)}
+            containerClass="text-black mt-5 text-center"
           />
         </header>
 
-        <div className="about-subtext"></div>
-
-        <div className="h-dvh w-full chk" id="clip">
-          <div className="mask-clip-path about-image chk" id="about-preview">
+        <div className="h-dvh w-full" id="clip" ref={clipRef}>
+          <div className="mask-clip-path about-image" id="about-preview">
             <img
               src="./img/about.webp"
               alt="Zentry background"
               className="absolute left-0 top-0 size-full object-cover"
             />
           </div>
-          <p className="pt-[63vh] px-2">
+          <p className="pt-[63vh] px-10">
             <span className="block">
               The Game of Games begins—your life, now an epic MMORPG
             </span>

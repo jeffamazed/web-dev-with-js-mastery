@@ -13,8 +13,11 @@ const Hero = () => {
   const totalVideos = 4;
   const totalVideoElUsed = 3;
   const nextVideoRef = useRef(null);
+  const currentVideoRef = useRef(null);
+  const videoFrameRef = useRef(null);
   const bgVideoRef = useRef(null);
   const btnParentRef = useRef(null);
+  const heroRef = useRef(null);
 
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
@@ -38,9 +41,8 @@ const Hero = () => {
   useGSAP(
     () => {
       if (hasClicked) {
-        gsap.set("#next-video", { visibility: "visible" });
-
-        const anim1 = gsap.to("#next-video", {
+        gsap.set(nextVideoRef.current, { visibility: "visible" });
+        gsap.to(nextVideoRef.current, {
           transformOrigin: "center center",
           scale: 1,
           width: "100%",
@@ -51,51 +53,51 @@ const Hero = () => {
           onComplete: () => bgVideoRef.current.pause(),
         });
 
-        const anim2 = gsap.from("#current-video", {
+        gsap.from(currentVideoRef.current, {
           transformOrigin: "center center",
           scale: 0,
           duration: 1.5,
           ease: "power1.inOut",
         });
-
-        return () => {
-          anim1.kill();
-          anim2.kill();
-        };
       }
     },
-
-    { dependencies: [currentIndex], revertOnUpdate: true }
+    {
+      scope: heroRef,
+      dependencies: [currentIndex, hasClicked],
+      revertOnUpdate: true,
+    }
   );
 
-  useGSAP(() => {
-    gsap.set("#video-frame", {
-      clipPath: "polygon(0 0, 80% 0%, 93% 88%, 4% 97%)",
-      borderRadius: "0 0 40% 18%",
-    });
+  useGSAP(
+    () => {
+      gsap.set(videoFrameRef.current, {
+        clipPath: "polygon(0 0, 80% 0%, 93% 88%, 4% 97%)",
+        borderRadius: "0 0 40% 18%",
+      });
 
-    const anim = gsap.from("#video-frame", {
-      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-      borderRadius: "0 0 0 0",
-      scrollTrigger: {
-        trigger: "#video-frame",
-        start: "top top",
-        end: "bottom center",
-        scrub: true,
-      },
-    });
-
-    return () => {
-      anim.scrollTrigger?.kill();
-      anim.kill();
-    };
-  }, []);
+      gsap.from(videoFrameRef.current, {
+        clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        borderRadius: "0 0 0 0",
+        scrollTrigger: {
+          trigger: videoFrameRef.current,
+          start: "10% top",
+          end: "bottom center",
+          scrub: true,
+        },
+      });
+    },
+    {
+      scope: heroRef,
+      dependencies: [],
+    }
+  );
 
   return (
     <section
       id="hero"
       className="relative h-dvh w-full overflow-x-hidden"
       aria-labelledby="hero-gaming-heading"
+      ref={heroRef}
     >
       {isLoading && (
         <div
@@ -113,7 +115,7 @@ const Hero = () => {
         </div>
       )}
       <div
-        id="video-frame"
+        ref={videoFrameRef}
         className="relative z-10 h-dvh w-full overflow-hidden bg-blue-75"
       >
         <div className="size-full">
@@ -134,10 +136,10 @@ const Hero = () => {
               <span className="sr-only">Press to show the next video</span>
 
               <video
+                ref={currentVideoRef}
                 src={getVideoSrc(upcomingVideoIndex)}
                 loop
                 muted
-                id="current-video"
                 className="h-[25dvh] w-[25dvw] origin-center scale-150 object-cover object-center"
                 onLoadedData={handleVideoLoad}
               />
@@ -149,7 +151,6 @@ const Hero = () => {
             src={getVideoSrc(currentIndex)}
             loop
             muted
-            id="next-video"
             aria-hidden={!hasClicked}
             className="absolute-center z-20 invisible object-cover object-center"
             onLoadedData={handleVideoLoad}
@@ -159,7 +160,7 @@ const Hero = () => {
           <video
             ref={bgVideoRef}
             src={getVideoSrc(currentIndex)}
-            autoPlay
+            // autoPlay
             loop
             muted
             className="absolute left-0 top-0 size-full object-cover object-center"
@@ -175,12 +176,12 @@ const Hero = () => {
               className="special-font hero-heading text-blue-100"
             >
               redefi<b>n</b>e
-              <span className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-75">
+              <span className="special-font hero-heading absolute bottom-5 right-5 sm:right-10  z-40 text-blue-75">
                 g<b>a</b>ming
               </span>
             </h1>
-            <p className="mb-5 max-w-64 font-robert-regular text-blue-100 lg:text-lg 2xl:text-xl">
-              <span className="block ">Enter the Metagame Layer</span>
+            <p className="mb-5 max-w-64 font-robert-regular text-blue-100 2xl:text-lg">
+              <span className="block">Enter the Metagame Layer</span>
               <span className="block">Unleash the Play Economy</span>
             </p>
             <Button
