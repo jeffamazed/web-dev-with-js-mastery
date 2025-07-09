@@ -24,7 +24,7 @@ const TopLink = () => {
         aria-label="Back to top"
         onClick={scrollToTop}
       >
-        <FaArrowUp />
+        <FaArrowUp aria-hidden="true" />
       </a>
     )
   );
