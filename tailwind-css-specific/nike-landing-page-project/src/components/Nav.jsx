@@ -2,11 +2,20 @@ import { headerLogo } from "../assets/images";
 import { hamburger } from "../assets/icons";
 import { navLinks } from "../constants";
 import { useEffect, useRef, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 
 const Nav = ({ sectionRef }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAriaHidden, setIsAriaHidden] = useState(true);
+  const [isNavClicked, setIsNavClicked] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   const headerRef = useRef(null);
+
+  useEffect(() => {
+    if (isNavClicked) setIsExpanded(false);
+    setIsNavClicked(false);
+  }, [isNavClicked]);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 1024) {
@@ -32,7 +41,8 @@ const Nav = ({ sectionRef }) => {
 
     window.scrollTo({ top: sectionTop - headerHeight, behavior: "smooth" });
   };
-
+  const handleTabIndex = !isMobile ? 1 : isExpanded ? 1 : -1;
+  console.log(handleTabIndex);
   return (
     <header
       ref={headerRef}
@@ -40,12 +50,15 @@ const Nav = ({ sectionRef }) => {
         isExpanded ? "bg-white-400" : ""
       }`}
     >
-      <nav className="flex justify-between items-center max-container">
+      <nav
+        className="flex justify-between items-center max-container"
+        role="navigation"
+      >
         <a href="/">
           <img src={headerLogo} alt="Logo" width={130} height={29} />
         </a>
         <ul
-          className={`flex-1 flex nav-below-lg nav-above-lg w-full nav-transition ${
+          className={`flex-1 flex nav-below-md nav-above-md w-full nav-transition ${
             isExpanded
               ? "h-[13.75rem] bg-white-400"
               : "h-0 overflow-hidden bg-transparent"
@@ -57,18 +70,24 @@ const Nav = ({ sectionRef }) => {
               <a
                 href={`#${link.target}`}
                 className="font-montserrat leading-normal text-lg text-slate-gray cursor-pointer hover:text-black transition-colors duration-200"
-                onClick={(e) => handleScrollIntoView(e, link.target)}
+                onClick={(e) => {
+                  handleScrollIntoView(e, link.target);
+                  setIsNavClicked(true);
+                }}
+                tabIndex={handleTabIndex}
               >
                 {link.label}
               </a>
             </li>
           ))}
         </ul>
-        <div className="hidden max-lg:block">
+        <div className="hidden max-md:block">
           <button
             type="button"
             className="cursor-pointer"
-            aria-label="Expand hamburger"
+            aria-label={`${
+              isExpanded ? "Collapse Navigation" : "Expand Navigation"
+            }`}
             onClick={() => {
               setIsExpanded((prev) => !prev);
               setIsAriaHidden((prev) => !prev);

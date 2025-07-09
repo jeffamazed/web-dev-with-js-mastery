@@ -71,7 +71,7 @@ const Footer = () => {
       </div>
       <div className="flex justify-between text-white-400 mt-24 max-sm:flex-col max-sm:items-center">
         <a
-          className="flex flex-1 items-center gap-2 font-montserrat"
+          className="flex items-center gap-2 font-montserrat"
           href="/"
           target="_blank"
           rel="noopener noreferrer"
@@ -84,10 +84,10 @@ const Footer = () => {
             height={20}
             className="rounded-full m-0"
           />
-          <p>Copyright. All rights reserved.</p>
+          Copyright. All rights reserved.
         </a>
         <a
-          className="font-montserrat cursor-pointer"
+          className="font-montserrat"
           href="/"
           target="_blank"
           rel="noopener noreferrer"

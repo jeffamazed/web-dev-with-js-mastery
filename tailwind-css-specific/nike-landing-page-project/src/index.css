@@ -100,11 +100,11 @@
     transition: height 0.2s ease, background-color 0.2s ease;
   }
 
-  .nav-below-lg {
+  .nav-below-md {
     @apply absolute right-0 top-[100%] flex-col justify-center items-center gap-4;
   }
 
-  .nav-above-lg {
-    @apply lg:static lg:flex-row lg:items-center lg:gap-2 lg:h-auto lg:bg-transparent lg:w-fit lg:justify-end;
+  .nav-above-md {
+    @apply md:static md:flex-row md:items-center md:gap-2 md:h-auto md:bg-transparent md:w-fit md:justify-end;
   }
 }
