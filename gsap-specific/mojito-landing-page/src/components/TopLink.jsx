@@ -26,7 +26,7 @@ const TopLink = () => {
         onClick={handleBackToTop}
         className="fixed z-50 p-2 text-white/50 bottom-3 right-3 md:bottom-6 md:right-6 text-xl md:text-2xl cursor-pointer border-2 border-transparent rounded-full flex-center hover:border-yellow hover:text-yellow transition-colors duration-200 active:scale-[0.97]"
       >
-        <ImArrowUp />
+        <ImArrowUp aria-hidden="true" />
       </a>
     )
   );
