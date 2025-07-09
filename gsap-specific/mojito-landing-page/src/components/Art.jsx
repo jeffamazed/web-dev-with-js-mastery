@@ -12,46 +12,60 @@ const Art = ({ scrollRef }) => {
 
   useGSAP(
     () => {
-      const start = isMobile ? "top 20%" : "top top";
+      const runAnimation = () => {
+        const start = isMobile ? "top 20%" : "top top";
 
-      const maskTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: artRef.current,
-          start,
-          end: "bottom center",
-          scrub: 1.5,
-          pin: true,
-        },
-      });
-
-      if (!isMobile) {
-        maskTimeline.to(artRef.current.querySelectorAll(".will-fade"), {
-          opacity: 0,
-          stagger: 0.2,
-          ease: "power1.inOut",
-          onUpdate: () => {
-            // handling aria-hidden
-            artRef.current.querySelectorAll(".will-fade").forEach((el) => {
-              const opacity = parseFloat(getComputedStyle(el).opacity);
-              el.setAttribute("aria-hidden", opacity < 0.05 ? "true" : "false");
-            });
+        const maskTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: artRef.current,
+            start,
+            end: "bottom center",
+            scrub: 1.5,
+            pin: true,
           },
         });
-      }
 
-      maskTimeline.to(maskedImageRef.current, {
-        scale: 1.3,
-        maskPosition: "center",
-        maskSize: "400%",
-        duration: 1,
-        ease: "power1.inOut",
-      });
-      if (!isMobile) {
-        maskTimeline.to(maskedContentRef.current, {
-          opacity: 1,
+        if (!isMobile) {
+          maskTimeline.to(artRef.current.querySelectorAll(".will-fade"), {
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power1.inOut",
+            onUpdate: () => {
+              artRef.current.querySelectorAll(".will-fade").forEach((el) => {
+                const opacity = parseFloat(getComputedStyle(el).opacity);
+                el.setAttribute(
+                  "aria-hidden",
+                  opacity < 0.05 ? "true" : "false"
+                );
+              });
+            },
+          });
+        }
+
+        maskTimeline.to(maskedImageRef.current, {
+          scale: 1.3,
+          maskPosition: "center",
+          maskSize: "400%",
           duration: 1,
           ease: "power1.inOut",
         });
+
+        if (!isMobile) {
+          maskTimeline.to(maskedContentRef.current, {
+            opacity: 1,
+            duration: 1,
+            ease: "power1.inOut",
+          });
+        }
+      };
+
+      const image = maskedImageRef.current;
+
+      // to be sure that the image loads properly first before firing off the animation
+      if (image?.complete) {
+        runAnimation();
+      } else {
+        image.onload = runAnimation;
       }
     },
     {
