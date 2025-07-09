@@ -42,7 +42,6 @@ const Cocktails = ({ scrollRef }) => {
 
   return (
     <section
-      aria-labelledby="cocktails-menu-heading"
       id="cocktails"
       ref={(el) => {
         scrollRef.current = el;
@@ -50,9 +49,7 @@ const Cocktails = ({ scrollRef }) => {
       }}
       className="noisy"
     >
-      <h2 className="sr-only" id="cocktails-menu-heading">
-        Crafted for Taste, Served with Style
-      </h2>
+      <h2 className="sr-only">Crafted for Taste, Served with Style</h2>
       <img
         src="./images/cocktail-left-leaf.png"
         alt="left leaf"

@@ -102,19 +102,19 @@ const Contact = ({ scrollRef }) => {
       <div className="content">
         <h2 ref={titleRef}>Step Into Our World</h2>
 
-        <section aria-labelledby="location-heading">
-          <h3 id="location-heading">Visit Our Bar</h3>
+        <section>
+          <h3>Visit Our Bar</h3>
           <p>88 Velvet Oak Ct. #501, Los Angeles, CA 90038</p>
         </section>
 
-        <section aria-labelledby="contact-us-heading">
-          <h3 id="contact-us-heading">Contact Us</h3>
+        <section>
+          <h3>Contact Us</h3>
           <p>(323) 555-0174</p>
           <p>hello@mohitococktail.com</p>
         </section>
 
-        <section aria-labelledby="opening-hours-heading">
-          <h3 id="opening-hours-heading">Open Every Day</h3>
+        <section>
+          <h3>Open Every Day</h3>
           {openingHours.map((time) => (
             <p key={time.day}>
               {time.day} : {time.time}
@@ -122,8 +122,8 @@ const Contact = ({ scrollRef }) => {
           ))}
         </section>
 
-        <section aria-labelledby="socials-contact-heading">
-          <h3 id="socials-contact-heading">Socials</h3>
+        <section>
+          <h3>Socials</h3>
           <div className="flex-center gap-5">
             {socials.map((social) => (
               <a

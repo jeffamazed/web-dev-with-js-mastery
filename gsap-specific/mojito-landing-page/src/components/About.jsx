@@ -62,13 +62,12 @@ const About = ({ scrollRef }) => {
         aboutRef.current = el;
       }}
       id="about"
-      aria-labelledby="about-heading"
     >
       <div className="mb-16 md:px-0 px-5">
         <div className="content">
           <header className="lg:col-span-8">
             <span className="badge">Best Cocktails</span>
-            <h2 id="about-heading" ref={titleRef}>
+            <h2 ref={titleRef}>
               Where craftsmanship meets elegance{" "}
               <span className="text-white">—</span> from muddle to garnish
             </h2>

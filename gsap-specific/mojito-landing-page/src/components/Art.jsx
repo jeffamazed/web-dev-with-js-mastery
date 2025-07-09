@@ -66,13 +66,10 @@ const Art = ({ scrollRef }) => {
         scrollRef.current = el;
         artRef.current = el;
       }}
-      aria-labelledby="art-heading"
       id="art"
     >
       <div className="container mx-auto pt-20">
-        <h2 id="art-heading" className="will-fade">
-          The ART
-        </h2>
+        <h2 className="will-fade">The ART</h2>
 
         <div className="content">
           <div className="pl-[15%] sm:pl-[0%]">

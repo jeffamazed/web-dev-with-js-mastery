@@ -96,7 +96,7 @@ const Menu = () => {
   const nextCocktail = getCocktailAt(1);
 
   return (
-    <section ref={menuRef} id="menu" aria-labelledby="menu-heading">
+    <section ref={menuRef} id="menu">
       <img
         src="./images/slider-left-leaf.png"
         alt="left leaf"
@@ -110,9 +110,7 @@ const Menu = () => {
         ref={menuRightLeafRef}
       />
 
-      <h2 id="menu-heading" className="sr-only">
-        Cocktail Menu
-      </h2>
+      <h2 className="sr-only">Cocktail Menu</h2>
 
       <div className="cocktail-tabs" role="tablist" aria-label="Cocktail tabs">
         {allCocktails.map((cocktail, i) => {
@@ -190,13 +188,8 @@ const Menu = () => {
             </h3>
           </header>
 
-          <section
-            aria-labelledby="cocktail-recipe-heading"
-            className="details"
-          >
-            <h4 id="cocktail-recipe-heading" ref={cocktailRecipeDetailRef[0]}>
-              {currentCocktail.title}
-            </h4>
+          <section className="details">
+            <h4 ref={cocktailRecipeDetailRef[0]}>{currentCocktail.title}</h4>
             <p ref={cocktailRecipeDetailRef[1]}>
               {currentCocktail.description}
             </p>

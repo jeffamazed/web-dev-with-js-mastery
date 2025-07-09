@@ -326,10 +326,10 @@ body {
     }
 
     .recipe {
-      @apply flex max-md:flex-col gap-10 md:items-center justify-between w-full lg:absolute bottom-0;
+      @apply flex max-md:flex-col gap-10 md:items-end justify-between w-full lg:absolute bottom-0;
 
       .info {
-        @apply lg:translate-y-20;
+        @apply bg-white/2 backdrop-blur-sm p-2 rounded-xl w-fit;
 
         #title {
           @apply font-modern-negra md:text-6xl text-3xl mt-3 text-yellow max-w-40 block;
@@ -337,7 +337,7 @@ body {
       }
 
       .details {
-        @apply space-y-5 md:max-w-md text-left;
+        @apply space-y-5 md:max-w-md text-left bg-white/2 backdrop-blur-sm p-2 rounded-xl w-fit;
 
         h4 {
           @apply md:text-5xl text-3xl font-serif;

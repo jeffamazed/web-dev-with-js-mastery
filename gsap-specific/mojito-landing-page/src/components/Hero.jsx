@@ -93,13 +93,8 @@ const Hero = () => {
 
   return (
     <>
-      <section
-        id="hero"
-        className="noisy"
-        aria-labelledby="title-heading"
-        ref={heroRef}
-      >
-        <h1 id="title-heading" className="title" ref={titleRef}>
+      <section id="hero" className="noisy" ref={heroRef}>
+        <h1 className="title" ref={titleRef}>
           MOJITO
         </h1>
 
@@ -144,6 +139,7 @@ const Hero = () => {
           playsInline
           preload="auto"
           tabIndex={-1}
+          aria-hidden="true"
         />
       </div>
     </>
