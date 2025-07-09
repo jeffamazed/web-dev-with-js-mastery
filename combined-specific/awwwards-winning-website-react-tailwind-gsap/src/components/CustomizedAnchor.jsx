@@ -1,0 +1,32 @@
+const CustomizedAnchor = ({
+  href,
+  id,
+  title,
+  rightIcon,
+  leftIcon,
+  containerClass,
+  ariaLabel,
+  tabIndex,
+}) => {
+  return (
+    <a
+      href={href}
+      id={id}
+      className={`relative z-10 w-fit cursor-pointer overflow-hidden rounded-full bg-violet-50 px-6 py-2.5 text-custom-black transition-colors duration-200 ease-in custom-ring text-xs 2xl:text-sm ${containerClass}`}
+      aria-label={ariaLabel}
+      rel="noopener noreferrer"
+      target="_blank"
+      tabIndex={tabIndex}
+    >
+      {leftIcon}
+
+      <span className="relative overflow-hidden font-general uppercase">
+        {title}
+      </span>
+
+      {rightIcon}
+    </a>
+  );
+};
+
+export default CustomizedAnchor;

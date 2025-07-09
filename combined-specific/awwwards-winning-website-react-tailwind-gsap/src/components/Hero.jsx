@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import Button from "./Button";
+
 import { TiLocationArrow } from "react-icons/ti";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import CustomizedAnchor from "./CustomizedAnchor";
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -11,7 +12,7 @@ const Hero = () => {
   const [loadedVideos, setLoadedVideos] = useState(0);
 
   const totalVideos = 4;
-  const totalVideoElUsed = 3;
+  const totalVideoElUsed = 2;
   const nextVideoRef = useRef(null);
   const currentVideoRef = useRef(null);
   const videoFrameRef = useRef(null);
@@ -31,6 +32,8 @@ const Hero = () => {
   };
 
   const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
+  // use poster for still image of the video
+  const getVideoPoster = (index) => `img/hero-${index}.jpg`;
 
   useEffect(() => {
     if (loadedVideos === totalVideoElUsed) {
@@ -124,7 +127,7 @@ const Hero = () => {
             ref={btnParentRef}
           >
             <button
-              className="origin-center scale-50 transition-all opacity-0 duration-500 ease-in hover:scale-100 hover:opacity-100 focus:scale-100 focus:opacity-100 cursor-pointer"
+              className="origin-center scale-50 transition-all opacity-0 duration-300 ease-in hover:scale-100 hover:opacity-100 focus:scale-100 focus:opacity-100 cursor-pointer"
               onClick={handleMiniVdClick}
               type="button"
               aria-label="Press to show the next video"
@@ -137,11 +140,10 @@ const Hero = () => {
 
               <video
                 ref={currentVideoRef}
-                src={getVideoSrc(upcomingVideoIndex)}
+                poster={getVideoPoster(upcomingVideoIndex)}
                 loop
                 muted
                 className="h-[25dvh] w-[25dvw] origin-center scale-150 object-cover object-center"
-                onLoadedData={handleVideoLoad}
               />
             </button>
           </div>
@@ -154,6 +156,7 @@ const Hero = () => {
             aria-hidden={!hasClicked}
             className="absolute-center z-20 invisible object-cover object-center"
             onLoadedData={handleVideoLoad}
+            preload="auto"
           />
 
           {/* back layer video */}
@@ -166,6 +169,7 @@ const Hero = () => {
             className="absolute left-0 top-0 size-full object-cover object-center"
             onLoadedData={handleVideoLoad}
             aria-hidden={hasClicked}
+            preload="auto"
           />
         </div>
 
@@ -173,7 +177,7 @@ const Hero = () => {
           <div className="mt-24 px-5 sm:px-10">
             <h1
               id="hero-gaming-heading"
-              className="special-font hero-heading text-blue-100"
+              className="special-font hero-heading text-blue-100 select-none"
             >
               redefi<b>n</b>e
               <span className="special-font hero-heading absolute bottom-5 right-5 sm:right-10  z-40 text-blue-75">
@@ -181,21 +185,26 @@ const Hero = () => {
               </span>
             </h1>
             <p className="mb-5 max-w-64 font-robert-regular text-blue-100 2xl:text-lg">
-              <span className="block">Enter the Metagame Layer</span>
-              <span className="block">Unleash the Play Economy</span>
+              <span className="block select-none">
+                Enter the Metagame Layer
+              </span>
+              <span className="block select-none">
+                Unleash the Play Economy
+              </span>
             </p>
-            <Button
+            <CustomizedAnchor
+              href="#"
               id="watch-trailer"
               title="Watch Trailer"
-              leftIcon={<TiLocationArrow />}
+              leftIcon={<TiLocationArrow aria-hidden="true" />}
               containerClass="bg-yellow-300 flex-center gap-1 hover:bg-yellow-hover focus:bg-yellow-hover"
             />
           </div>
         </div>
       </div>
-      {/* for bottom layer */}
+      {/* for bottom layer GAMING */}
       <span
-        className="special-font hero-heading absolute bottom-5 right-5 text-black"
+        className="special-font hero-heading absolute bottom-5 right-5 text-custom-black select-none"
         aria-hidden="true"
       >
         g<b>a</b>ming

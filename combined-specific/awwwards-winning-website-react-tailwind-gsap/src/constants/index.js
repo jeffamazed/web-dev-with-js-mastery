@@ -5,3 +5,7 @@ export const navItems = [
   { name: "About", target: "about" },
   { name: "Contact", target: "contact" },
 ];
+
+export const navCollapseDuration = 200;
+
+export const audioButtonLines = [1, 2, 3, 4];

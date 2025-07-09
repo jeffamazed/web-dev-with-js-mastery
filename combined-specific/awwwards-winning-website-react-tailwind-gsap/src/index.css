@@ -50,9 +50,12 @@
   --color-yellow-300: #edff66;
   --color-yellow-hover: #f6ff99;
 
+  --color-custom-black: #0d0d0d;
+
   --breakpoint-about-image-1: 500px;
 
   /* use --animate-KEYFRAMES to use */
+  --animate-indicator-line: indicator-line 0.45s ease infinite;
   @keyframes indicator-line {
     0% {
       height: 4px;
@@ -127,17 +130,6 @@
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span {
-  user-select: none;
-}
-
 body,
 #root {
   width: 100dvw;
@@ -149,16 +141,24 @@ body {
   background-color: #dfdff0;
 }
 
+@utility custom-ring {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-violet-darker ring-offset-2 ring-offset-white;
+}
+
+@utility nav-toggle-button {
+  @apply nav-hover-btn text-xl custom-ring;
+}
+
 @utility border-hsla {
   @apply border border-white/20;
 }
 
 @utility nav-hover-btn {
-  @apply relative ms-10 font-general text-xs uppercase text-blue-50 after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-neutral-800 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom-left hover:after:scale-x-100 dark:after:bg-white cursor-pointer;
+  @apply relative font-general text-xs uppercase text-blue-50 after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-neutral-800 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom-left hover:after:scale-x-100 dark:after:bg-white cursor-pointer;
 }
 
 @utility floating-nav {
-  @apply bg-black rounded-lg border;
+  @apply bg-custom-black;
 }
 
 @utility absolute-center {
@@ -194,7 +194,7 @@ body {
 }
 
 @utility animated-title {
-  @apply flex flex-col gap-1 text-5xl uppercase leading-[.8] text-white px-10 sm:px-32 md:text-6xl lg:text-7xl;
+  @apply flex flex-col gap-1 text-5xl uppercase leading-[.8] text-white px-8 sm:px-32 sm:text-6xl md:text-7xl lg:text-8xl;
 }
 
 @utility animated-word {
@@ -256,12 +256,11 @@ body {
 }
 
 @utility indicator-line {
-  @apply h-1 w-px rounded-full bg-white transition-all duration-200 ease-in-out;
+  @apply h-1 w-[2px] rounded-full bg-white transition-all duration-200 ease-in-out;
 }
 
-@utility indicator-line.active {
-  animation: indicator-line 0.5s ease infinite;
-  animation-delay: calc(var(--animation-order) * 0.1s);
+@utility bgm-active {
+  @apply animate-indicator-line;
 }
 
 /* From Uiverse.io by G4b413l */
