@@ -4,10 +4,7 @@ import Button from "../components/Button";
 
 const SpecialOffers = () => {
   return (
-    <section
-      aria-labelledby="special-offers-heading"
-      className="flex justify-center items-center max-xl:flex-col-reverse gap-10 max-container"
-    >
+    <section className="flex justify-center items-center max-xl:flex-col-reverse gap-10 max-container">
       <div className="flex-1">
         <img
           src={offer}
@@ -18,10 +15,7 @@ const SpecialOffers = () => {
         />
       </div>
       <div className="flex flex-1 flex-col items-center xl:items-start text-center xl:text-start">
-        <h2
-          id="special-offers-heading"
-          className="font-palanquin text-4xl capitalize font-bold lg:max-w-3xl w-full"
-        >
+        <h2 className="font-palanquin text-4xl capitalize font-bold lg:max-w-3xl w-full">
           <span className="text-coral-red">Special </span>
           Offer
         </h2>

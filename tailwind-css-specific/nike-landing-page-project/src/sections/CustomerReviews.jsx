@@ -3,16 +3,10 @@ import { reviews } from "../constants";
 
 const CustomerReviews = () => {
   return (
-    <section
-      aria-labelledby="customer-reviews-heading"
-      className="max-container"
-    >
-      <h3
-        id="customer-reviews-heading"
-        className="font-palanquin text-center text-4xl font-bold"
-      >
+    <section className="max-container">
+      <h2 className="font-palanquin text-center text-4xl font-bold">
         Our <span className="text-coral-red">Customers </span>Speak for Us
-      </h3>
+      </h2>
       <p className="info-text mx-auto mt-4 max-w-lg text-center">
         Hear genuine stories from our satisfied customers about their
         exceptional experiences with us.

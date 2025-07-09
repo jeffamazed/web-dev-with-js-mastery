@@ -6,13 +6,8 @@ const Footer = () => {
   return (
     <footer className="max-container">
       <div className="flex justify-between items-start gap-20 flex-wrap max-lg:flex-col">
-        <section
-          aria-labelledby="footer-main-heading"
-          className="flex flex-col items-start"
-        >
-          <h2 className="sr-only" id="footer-main-heading">
-            Back to School Starts at Nike
-          </h2>
+        <section className="flex flex-col items-start">
+          <h2 className="sr-only">Back to School Starts at Nike</h2>
 
           <a href="/" aria-label="Go to Nike homepage">
             <img src={footerLogo} alt="Nike logo" width={150} height={47} />
@@ -26,6 +21,7 @@ const Footer = () => {
               <a
                 key={icon.alt}
                 href={icon.href}
+                aria-label={icon.name}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex justify-center items-center w-12 h-12 bg-white rounded-full"
@@ -35,23 +31,12 @@ const Footer = () => {
             ))}
           </div>
         </section>
-        <section
-          aria-labelledby="explore-heading"
-          className="flex flex-1 justify-between lg:gap-10 gap-20 flex-wrap"
-        >
-          <h2 id="explore-heading" className="sr-only">
-            Explore Nike
-          </h2>
+        <section className="flex flex-1 justify-between lg:gap-10 gap-20 flex-wrap">
+          <h2 className="sr-only">Explore Nike</h2>
           {footerLinks.map((section) => {
-            const id = `${section.title
-              .toLowerCase()
-              .replace(/ /g, "-")}-heading`;
             return (
-              <section aria-labelledby={id} key={section.title}>
-                <h3
-                  className="text-white font-montserrat text-2xl leading-normal font-medium mb-6"
-                  id={id}
-                >
+              <section key={section.title}>
+                <h3 className="text-white font-montserrat text-2xl leading-normal font-medium mb-6">
                   {section.title}
                 </h3>
                 <ul>
@@ -75,7 +60,6 @@ const Footer = () => {
           href="/"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Copyright"
         >
           <img
             src={copyrightSign}

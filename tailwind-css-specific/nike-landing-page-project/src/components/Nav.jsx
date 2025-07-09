@@ -42,7 +42,7 @@ const Nav = ({ sectionRef }) => {
     window.scrollTo({ top: sectionTop - headerHeight, behavior: "smooth" });
   };
   const handleTabIndex = !isMobile ? 1 : isExpanded ? 1 : -1;
-  console.log(handleTabIndex);
+
   return (
     <header
       ref={headerRef}
@@ -50,10 +50,7 @@ const Nav = ({ sectionRef }) => {
         isExpanded ? "bg-white-400" : ""
       }`}
     >
-      <nav
-        className="flex justify-between items-center max-container"
-        role="navigation"
-      >
+      <nav className="flex justify-between items-center max-container">
         <a href="/">
           <img src={headerLogo} alt="Logo" width={130} height={29} />
         </a>

@@ -14,17 +14,11 @@ const Hero = () => {
       id="home"
       className="flex flex-col xl:flex-row justify-center min-h-screen gap-10 max-container w-full"
     >
-      <section
-        aria-labelledby="hero-heading"
-        className="w-full pt-45 relative xl:w-2/5 flex flex-col justify-center items-start px-8 sm:px-16 xl:px-0"
-      >
+      <section className="w-full pt-45 relative xl:w-2/5 flex flex-col justify-center items-start px-8 sm:px-16 xl:px-0">
         <p className="text-xl font-montserrat text-coral-red">
           Our Summer Collection
         </p>
-        <h1
-          id="hero-heading"
-          className="mt-10 font-palanquin text-8xl max-sm:text-[72px] max-sm:leading-[82px] font-bold"
-        >
+        <h1 className="mt-10 font-palanquin text-8xl max-sm:text-[72px] max-sm:leading-[82px] font-bold">
           <span className="block xl:bg-white xl:whitespace-nowrap relative z-10 pr-10">
             The New Arrival
           </span>
@@ -35,13 +29,8 @@ const Hero = () => {
           your active life.
         </p>
         <Button label="Shop now" iconURL={arrowRight} />
-        <section
-          aria-labelledby="statistics-heading"
-          className="flex justify-start items-start flex-wrap mt-20 gap-16"
-        >
-          <h2 id="statistics-heading" className="sr-only">
-            Our Statistics
-          </h2>
+        <section className="flex justify-start items-start flex-wrap mt-20 gap-16">
+          <h2 className="sr-only">Our Statistics</h2>
           {statistics.map((stat) => (
             <dl key={stat.label}>
               <dt className="text-4xl font-palanquin ">
@@ -55,13 +44,8 @@ const Hero = () => {
         </section>
       </section>
 
-      <section
-        aria-labelledby="showcase-heading"
-        className="relative flex-1 flex justify-center items-center max-xl:py-40 bg-primary bg-hero bg-cover bg-center"
-      >
-        <h2 id="showcase-heading" className="sr-only">
-          Shoe Showcase
-        </h2>
+      <section className="relative flex-1 flex justify-center items-center max-xl:py-40 bg-primary bg-hero bg-cover bg-center">
+        <h2 className="sr-only">Shoe Showcase</h2>
         <img
           src={bigShoeImage}
           alt="shoe collection"

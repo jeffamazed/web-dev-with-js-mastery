@@ -5,14 +5,10 @@ const SuperQuality = () => {
   return (
     <section
       id="about"
-      aria-labelledby="super-quality-heading"
       className="flex justify-between items-center max-lg:flex-col gap-10 w-full max-container"
     >
       <div className="flex flex-1 flex-col text-center  lg:text-start items-center lg:items-start">
-        <h2
-          id="super-quality-heading"
-          className="font-palanquin text-4xl font-bold lg:max-w-lg"
-        >
+        <h2 className="font-palanquin text-4xl font-bold lg:max-w-lg">
           We Provide You
           <span className="text-coral-red"> Super Quality </span>
           Shoes
