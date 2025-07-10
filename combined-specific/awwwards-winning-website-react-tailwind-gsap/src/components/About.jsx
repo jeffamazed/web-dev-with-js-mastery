@@ -1,51 +1,74 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import AnimatedTitle from "./AnimatedTitle";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { generateTitle } from "../utils/generateTitle";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useMediaQuery } from "react-responsive";
 
 const About = ({ scrollRef }) => {
   const clipRef = useRef(null);
+  const aboutPreviewRef = useRef(null);
+
+  const bp1 = useMediaQuery({ minWidth: 640 });
+  const bp2 = useMediaQuery({ minWidth: 768 });
+  const bp3 = useMediaQuery({ minWidth: 1080 });
+  const imgWidth = useMemo(
+    () => (bp3 ? "40%" : bp2 ? "50%" : bp1 ? "55%" : "90%"),
+    [bp1, bp2, bp3]
+  );
+  const imgHeight = "60%";
+
   useGSAP(
     () => {
-      const clipAnimation = gsap.timeline({
+      const about = aboutPreviewRef.current;
+      const clip = clipRef.current;
+      if (!about || !clip) return;
+
+      // kill previous scrolltrigger and twens to prevent duplicates
+      gsap.killTweensOf(about);
+      ScrollTrigger.getById("about-trigger")?.kill();
+
+      const timeline = gsap.timeline({
         scrollTrigger: {
-          trigger: clipRef.current,
+          id: "about-trigger",
+          trigger: clip,
           start: "top top",
-          end: "+=1200 center",
-          scrub: 0.5,
+          end: "+=800 center",
+          scrub: 1,
           pin: true,
           pinSpacing: true,
         },
       });
 
-      clipAnimation.to("#about-preview", {
-        width: "100dvw",
-        height: "100dvh",
-        borderRadius: 0,
-      });
+      timeline.fromTo(
+        about,
+        {
+          height: imgHeight,
+          width: imgWidth,
+          borderRadius: "16px",
+        },
+        {
+          width: "100%",
+          height: "100%",
+          borderRadius: 0,
+        }
+      );
     },
+
     {
       scope: clipRef,
-      dependencies: [],
+      dependencies: [imgWidth, imgHeight],
     }
   );
 
   const title = "Disc(o)ver the world's<br />l(a)rgest shared adventure";
 
   return (
-    <section
-      id="about"
-      className="min-h-dvh w-full"
-      aria-labelledby="about-heading"
-      ref={scrollRef}
-    >
+    <section id="about" className="min-h-dvh w-full" ref={scrollRef}>
       <div className="mt-36 flex flex-col items-center gap-6 text-center relative">
         <header className="flex flex-col gap-5 w-full">
-          <h2
-            id="about-heading"
-            className="font-general text-sm uppercase md:text-base text-custom-black"
-          >
+          <h2 className="font-general text-sm uppercase md:text-base text-custom-black">
             Welcome to Zentry
           </h2>
           <AnimatedTitle
@@ -54,15 +77,15 @@ const About = ({ scrollRef }) => {
           />
         </header>
 
-        <figure className="h-dvh w-full" id="clip" ref={clipRef}>
-          <div className="mask-clip-path about-image" id="about-preview">
+        <figure className="h-dvh w-dvw" id="clip" ref={clipRef}>
+          <div className={`mask-clip-path about-image`} ref={aboutPreviewRef}>
             <img
               src="./img/about.webp"
               alt="Zentry background"
               className="absolute left-0 top-0 size-full object-cover"
             />
           </div>
-          <figcaption className="pt-[63vh] max-w-2xl mx-auto text-custom-black text-sm lg:text-base px-8">
+          <figcaption className="pt-[63dvh] max-w-2xl mx-auto text-custom-black text-sm lg:text-base px-8">
             <span className="block">
               The Game of Games begins—your life, now an epic MMORPG.
             </span>
