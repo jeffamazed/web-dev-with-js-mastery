@@ -2,10 +2,14 @@ import About from "./components/About";
 import Hero from "./components/Hero";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef, createRef } from "react";
+import { useRef, createRef } from "react";
 import Navbar from "./components/Navbar";
-import { navItems } from "./constants";
+
 import Features from "./components/Features";
+import { navItems } from "./constants";
+import Story from "./components/Story";
+import useScrollTriggerRefresh from "./customHooks/useScrollTriggerRefresh";
+import useWindowSize from "./customHooks/useWindowSize";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,18 +19,9 @@ const App = () => {
     Object.fromEntries(navItems.map(({ target }) => [target, createRef()]))
   ).current;
 
-  // handle scrolltrigger refresh
-  useEffect(() => {
-    const refresh = () => ScrollTrigger.refresh();
+  useScrollTriggerRefresh();
+  const windowSize = useWindowSize();
 
-    window.addEventListener("resize", refresh);
-    window.addEventListener("orientationchange", refresh);
-
-    return () => {
-      window.removeEventListener("resize", refresh);
-      window.removeEventListener("orientationchange", refresh);
-    };
-  }, []);
   return (
     <>
       <Navbar sectionRef={sectionRef} />
@@ -34,6 +29,7 @@ const App = () => {
         <Hero />
         <About scrollRef={sectionRef.about} />
         <Features />
+        <Story windowSize={windowSize} />
       </main>
     </>
   );

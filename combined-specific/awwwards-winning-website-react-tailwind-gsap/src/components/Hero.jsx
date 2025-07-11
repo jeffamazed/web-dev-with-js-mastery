@@ -99,7 +99,6 @@ const Hero = () => {
     <section
       id="hero"
       className="relative h-dvh w-full overflow-x-hidden"
-      aria-labelledby="hero-gaming-heading"
       ref={heroRef}
     >
       {isLoading && (
@@ -175,16 +174,13 @@ const Hero = () => {
 
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
-            <h1
-              id="hero-gaming-heading"
-              className="special-font hero-heading text-blue-100 select-none"
-            >
+            <h1 className="special-font hero-heading text-blue-100 select-none">
               redefi<b>n</b>e
               <span className="special-font hero-heading absolute bottom-5 right-5 sm:right-10  z-40 text-blue-75">
                 g<b>a</b>ming
               </span>
             </h1>
-            <p className="mb-5 max-w-64 font-robert-regular text-blue-100 2xl:text-lg">
+            <p className="mb-5 max-w-64 font-robert-regular text-blue-100 text-sm lg:text-base">
               <span className="block select-none">
                 Enter the Metagame Layer
               </span>

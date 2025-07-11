@@ -7,9 +7,10 @@ import {
 import { useMediaQuery } from "react-responsive";
 import CustomizedAnchor from "./CustomizedAnchor";
 import { useWindowScroll } from "react-use";
-import { audioButtonLines, navCollapseDuration, navItems } from "../constants";
+
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { audioButtonLines, navCollapseDuration, navItems } from "../constants";
 
 const Navbar = ({ sectionRef }) => {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -20,9 +21,10 @@ const Navbar = ({ sectionRef }) => {
   const navContainerRef = useRef(null);
   const audioElementRef = useRef(null);
   const collapseBtnRef = useRef(null);
-  const isCollapseBtnClickedRef = useRef(false);
   const expandBtnRef = useRef(null);
-  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const userTogglingNav = useRef(false);
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+
   const { y: currentScrollY } = useWindowScroll();
 
   // handling nav visibility
@@ -57,8 +59,9 @@ const Navbar = ({ sectionRef }) => {
 
   useGSAP(
     () => {
+      const movement = isNavVisible ? "0" : "-110%";
       gsap.to(navContainerRef.current, {
-        y: isNavVisible ? 0 : -100,
+        y: movement,
         opacity: isNavVisible ? 1 : 0,
         duration: navCollapseDuration / 1000,
       });
@@ -68,22 +71,13 @@ const Navbar = ({ sectionRef }) => {
 
   // handle keyboard focus when nav is expanded
   useEffect(() => {
-    if (
-      isNavExpanded &&
-      isMobile &&
-      collapseBtnRef.current &&
-      !isCollapseBtnClickedRef.current
-    ) {
+    if (!userTogglingNav.current) return;
+    userTogglingNav.current = false;
+
+    if (isNavExpanded && isMobile && collapseBtnRef.current) {
       collapseBtnRef.current.focus();
-      isCollapseBtnClickedRef.current = true;
-    } else if (
-      !isNavExpanded &&
-      isMobile &&
-      expandBtnRef.current &&
-      isCollapseBtnClickedRef.current
-    ) {
+    } else if (!isNavExpanded && isMobile && expandBtnRef.current) {
       expandBtnRef.current.focus();
-      isCollapseBtnClickedRef.current = false;
     }
   }, [isNavExpanded, isMobile]);
 
@@ -105,15 +99,14 @@ const Navbar = ({ sectionRef }) => {
 
   const handleExpandNav = () => {
     setIsNavExpanded((prev) => !prev);
+    userTogglingNav.current = true;
   };
-
   const handleTabIndex = isNavExpanded && isNavVisible ? 0 : -1;
   const navAnchorTabIndex = !isMobile
     ? 1
     : !isNavExpanded && isNavVisible
     ? 1
     : -1;
-  console.log(handleTabIndex);
 
   return (
     <div
@@ -121,11 +114,7 @@ const Navbar = ({ sectionRef }) => {
       className="fixed top-4 z-50 h-16 transition-all duration-700 inset-x-2 sm:inset-x-6 rounded-lg"
     >
       <header className="absolute top-1/2 w-full -translate-y-1/2 h-16 overflow-hidden">
-        <nav
-          className="flex size-full items-center justify-between p-4"
-          role="navigation"
-          aria-label="Main navigation"
-        >
+        <nav className="flex size-full items-center justify-between p-4">
           {/* for sr users */}
           <span className="sr-only">
             This site uses a scroll-sensitive navigation bar. The navigation
@@ -141,7 +130,7 @@ const Navbar = ({ sectionRef }) => {
                 href="#"
                 title="Products"
                 rightIcon={<TiLocationArrow aria-hidden="true" />}
-                containerClass="bg-blue-50 flex items-center justify-center gap-1 hover:bg-blue-75 focus:bg-blue-75"
+                containerClass="bg-violet-50 flex items-center justify-center gap-1 hover:bg-blue-75 focus:bg-blue-75"
                 tabIndex={navAnchorTabIndex}
               />
             </div>
@@ -174,7 +163,6 @@ const Navbar = ({ sectionRef }) => {
                     className="nav-hover-btn custom-ring"
                     href={`#${target}`}
                     onClick={(e) => handleScrollIntoView(e, target)}
-                    aria-label={name}
                     tabIndex={handleTabIndex}
                   >
                     {name}

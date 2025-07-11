@@ -10,12 +10,13 @@ const About = ({ scrollRef }) => {
   const clipRef = useRef(null);
   const aboutPreviewRef = useRef(null);
 
-  const bp1 = useMediaQuery({ minWidth: 640 });
-  const bp2 = useMediaQuery({ minWidth: 768 });
-  const bp3 = useMediaQuery({ minWidth: 1080 });
+  const bp1 = useMediaQuery({ minWidth: 500 });
+  const bp2 = useMediaQuery({ minWidth: 640 });
+  const bp3 = useMediaQuery({ minWidth: 768 });
+  const bp4 = useMediaQuery({ minWidth: 1080 });
   const imgWidth = useMemo(
-    () => (bp3 ? "40%" : bp2 ? "50%" : bp1 ? "55%" : "90%"),
-    [bp1, bp2, bp3]
+    () => (bp4 ? "40%" : bp3 ? "45%" : bp2 ? "60%" : bp1 ? "80%" : "90%"),
+    [bp1, bp2, bp3, bp4]
   );
   const imgHeight = "60%";
 
@@ -25,7 +26,7 @@ const About = ({ scrollRef }) => {
       const clip = clipRef.current;
       if (!about || !clip) return;
 
-      // kill previous scrolltrigger and twens to prevent duplicates
+      // kill previous scrolltrigger and tweens to prevent duplicates
       gsap.killTweensOf(about);
       ScrollTrigger.getById("about-trigger")?.kill();
 
@@ -68,12 +69,13 @@ const About = ({ scrollRef }) => {
     <section id="about" className="min-h-dvh w-full" ref={scrollRef}>
       <div className="mt-36 flex flex-col items-center gap-6 text-center relative">
         <header className="flex flex-col gap-5 w-full">
-          <h2 className="font-general text-sm uppercase md:text-base text-custom-black">
+          <h2 className="font-general text-xs uppercase lg:text-sm text-custom-black">
             Welcome to Zentry
           </h2>
           <AnimatedTitle
             title={generateTitle(title)}
-            containerClass="text-custom-black mt-5 text-center"
+            containerClass="text-custom-black"
+            id="about-title"
           />
         </header>
 
@@ -85,7 +87,7 @@ const About = ({ scrollRef }) => {
               className="absolute left-0 top-0 size-full object-cover"
             />
           </div>
-          <figcaption className="pt-[63dvh] max-w-2xl mx-auto text-custom-black text-sm lg:text-base px-8">
+          <figcaption className="pt-[63dvh] max-w-xl mx-auto text-custom-black text-xs lg:text-sm px-8">
             <span className="block">
               The Game of Games begins—your life, now an epic MMORPG.
             </span>
