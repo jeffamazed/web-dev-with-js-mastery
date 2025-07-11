@@ -12,6 +12,9 @@ const Art = ({ scrollRef }) => {
 
   useGSAP(
     () => {
+      const image = maskedImageRef.current;
+      if (!image) return;
+
       const runAnimation = () => {
         const start = isMobile ? "top 20%" : "top top";
 
@@ -35,7 +38,7 @@ const Art = ({ scrollRef }) => {
                 const opacity = parseFloat(getComputedStyle(el).opacity);
                 el.setAttribute(
                   "aria-hidden",
-                  opacity < 0.05 ? "true" : "false"
+                  opacity < 0.05 ? "true" : "false",
                 );
               });
             },
@@ -59,8 +62,6 @@ const Art = ({ scrollRef }) => {
         }
       };
 
-      const image = maskedImageRef.current;
-
       // to be sure that the image loads properly first before firing off the animation
       if (image?.complete) {
         runAnimation();
@@ -71,7 +72,7 @@ const Art = ({ scrollRef }) => {
     {
       scope: artRef,
       dependencies: [],
-    }
+    },
   );
 
   return (
