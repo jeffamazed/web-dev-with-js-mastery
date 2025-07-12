@@ -1,21 +1,36 @@
 import { useGSAP } from "@gsap/react";
 import SplitText from "gsap/SplitText";
 import gsap from "gsap";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const Hero = () => {
+const Hero = ({ windowSize }) => {
   const videoRef = useRef(null);
   const heroRef = useRef(null);
   const titleRef = useRef(null);
   const heroLeftLeafRef = useRef(null);
   const heroRightLeafRef = useRef(null);
+  const originalSubRef = useRef([]);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  useEffect(() => {
+    const subEls = heroRef.current?.querySelectorAll(".subtitle");
+
+    if (subEls) {
+      originalSubRef.current = Array.from(subEls).map((el) => el.innerHTML);
+    }
+  }, []);
 
   useGSAP(
     () => {
+      if (!originalSubRef.current.length) return;
       let heroSplit;
       let paragraphSplit;
+
+      heroRef.current
+        .querySelectorAll(".subtitle")
+        .forEach((el, i) => (el.innerHTML = originalSubRef.current[i]));
 
       document.fonts.ready.then(() => {
         heroSplit = new SplitText(titleRef.current, {
@@ -47,10 +62,20 @@ const Hero = () => {
           delay: 1,
         });
       });
+
       // animate leaves
+
+      // fresh scrolltrigger
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.vars.group === "hero-group-trigger") {
+          trigger.kill();
+        }
+      });
+
       gsap
         .timeline({
           scrollTrigger: {
+            group: "hero-group-trigger",
             trigger: heroRef.current,
             start: "top top",
             end: "bottom top",
@@ -66,6 +91,7 @@ const Hero = () => {
       // video timeline
       const videoTimeline = gsap.timeline({
         scrollTrigger: {
+          group: "hero-group-trigger",
           trigger: videoRef.current,
           start: startValue,
           end: endValue,
@@ -84,11 +110,17 @@ const Hero = () => {
       };
 
       return () => {
-        if (heroSplit) heroSplit.revert();
-        if (paragraphSplit) paragraphSplit.revert();
+        if (heroSplit) {
+          heroSplit.revert();
+          heroSplit = null;
+        }
+        if (paragraphSplit) {
+          paragraphSplit.revert();
+          paragraphSplit = null;
+        }
       };
     },
-    { scope: heroRef, dependencies: [] }
+    { scope: heroRef, dependencies: [windowSize, isMobile] }
   );
 
   return (
@@ -116,11 +148,12 @@ const Hero = () => {
             <div className="space-y-5 hidden md:block">
               <p>Cool. Crisp. Classic.</p>
               <p className="subtitle">
-                Sip the Spirit <br /> of Summer
+                <span className="block">Sip the Spirit</span>
+                <span className="block">of Summer</span>
               </p>
             </div>
             <div className="view-cocktails">
-              <p className="subtitle">
+              <p className={`subtitle mx-auto w-fit md:w-full`}>
                 Every cocktail on our menu is a blend of premium ingredients,
                 creative flair, and timeless recipe — designed to delight your
                 senses.

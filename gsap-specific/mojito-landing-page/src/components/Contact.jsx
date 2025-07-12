@@ -2,70 +2,119 @@ import { useGSAP } from "@gsap/react";
 import { openingHours, socials } from "../constants";
 import { SplitText } from "gsap/SplitText";
 import gsap from "gsap";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const Contact = ({ scrollRef }) => {
+const Contact = ({ scrollRef, windowSize }) => {
   const contactRef = useRef(null);
   const titleRef = useRef(null);
   const footerLeftLeafRef = useRef(null);
   const footerRightLeafRef = useRef(null);
+  const originalContentRef = useRef([]);
+
+  useEffect(() => {
+    const contact = contactRef.current;
+    const title = titleRef.current;
+    if (!contact || !title) return;
+
+    const contentElements = contact.querySelectorAll("h3, p");
+
+    const allElements = [title, ...Array.from(contentElements)];
+
+    // Store their innerHTML into the ref
+    originalContentRef.current = allElements.map((el) => el.innerHTML);
+  }, []);
 
   useGSAP(
     () => {
+      const contact = contactRef.current;
+      const title = titleRef.current;
+      const leftLeaf = footerLeftLeafRef.current;
+      const rightLeaf = footerRightLeafRef.current;
+      if (!contact || !title || !leftLeaf || !rightLeaf) return;
+
+      const contentElements = [
+        titleRef.current,
+        ...contactRef.current.querySelectorAll("h3, p"),
+      ];
+
+      contentElements.forEach((el, i) => {
+        if (originalContentRef.current[i]) {
+          el.innerHTML = originalContentRef.current[i];
+        }
+      });
+
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (trigger.vars.group === "contact-trigger") {
+          trigger.kill();
+        }
+      });
+
       let titleSplit;
       let contentSplit;
 
-      document.fonts.ready.then(() => {
-        titleSplit = new SplitText(titleRef.current, {
-          type: "words",
-        });
-        contentSplit = new SplitText(
-          contactRef.current.querySelectorAll("h3, p"),
-          {
-            type: "lines",
-          }
-        );
+      const initAnimations = async () => {
+        await document.fonts.ready;
 
-        const splitTimeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: contactRef.current,
-            start: "top center",
-          },
-          ease: "power1.inOut",
+        titleSplit = new SplitText(title, { type: "words" });
+        contentSplit = new SplitText(contact.querySelectorAll("h3, p"), {
+          type: "lines",
         });
 
-        splitTimeline
-          .from(titleSplit.words, {
-            opacity: 0,
-            yPercent: -100,
-            stagger: 0.02,
-          })
-          .from(contentSplit.lines, {
-            opacity: 0,
-            yPercent: 100,
-            stagger: 0.02,
+        setTimeout(() => {
+          const splitTimeline = gsap.timeline({
+            scrollTrigger: {
+              trigger: contact,
+              start: "top center",
+              group: "contact-trigger",
+            },
+            ease: "power1.inOut",
           });
-      });
 
-      const leavesTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: contactRef.current,
-          start: "35% center",
-          end: "center center",
-          scrub: true,
-        },
-        ease: "power1.inOut",
-      });
+          splitTimeline
+            .fromTo(
+              titleSplit.words,
+              {
+                opacity: 0,
+                yPercent: -100,
+                stagger: 0.02,
+              },
+              {
+                opacity: 1,
+                yPercent: 0,
+              }
+            )
+            .fromTo(
+              contentSplit.lines,
+              {
+                opacity: 0,
+                yPercent: 100,
+                stagger: 0.02,
+              },
+              {
+                opacity: 1,
+                yPercent: 0,
+              }
+            );
 
-      leavesTimeline
-        .to(footerRightLeafRef.current, {
-          y: -80,
-          ease: "power1.inOut",
-        })
-        .to(footerLeftLeafRef.current, {
-          y: -80,
-          ease: "power1.inOut",
-        });
+          // animate leaves
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: contact,
+                start: "top center",
+                end: "center center",
+                scrub: true,
+                group: "contact-trigger",
+              },
+              ease: "power1.inOut",
+            })
+            .fromTo(rightLeaf, { y: 0 }, { y: -100 })
+            .fromTo(leftLeaf, { y: 0 }, { y: -100 });
+        }, 200);
+      };
+
+      initAnimations();
 
       return () => {
         if (titleSplit) titleSplit.revert();
@@ -74,7 +123,7 @@ const Contact = ({ scrollRef }) => {
     },
     {
       scope: contactRef,
-      dependencies: [],
+      dependencies: [windowSize],
     }
   );
 

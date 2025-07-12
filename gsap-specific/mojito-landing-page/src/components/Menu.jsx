@@ -68,11 +68,16 @@ const Menu = () => {
           },
         })
         .to(menuRightLeafRef.current, { y: 200 }, 0)
-        .to(menuLeftLeafRef.current, { scale: 1.4 }, isMobile ? 0.4 : 0.15);
+        .fromTo(
+          menuLeftLeafRef.current,
+          { scale: 1 },
+          { scale: 1.5 },
+          isMobile ? 0.4 : 0.15
+        );
     },
     {
       scope: menuRef,
-      dependencies: [],
+      dependencies: [isMobile],
     }
   );
 

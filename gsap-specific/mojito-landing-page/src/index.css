@@ -43,6 +43,14 @@ body {
   color: transparent;
 }
 
+@utility mobile-align {
+  @apply text-center;
+}
+
+@utility desktop-align {
+  @apply text-start;
+}
+
 @utility radial-gradient {
   background: radial-gradient(
     circle at center,
@@ -55,8 +63,6 @@ body {
 @utility masked-img {
   mask-image: url("/images/mask-img.png");
   mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: 50%;
 }
 
 @utility chk {
@@ -73,10 +79,10 @@ body {
   }
 
   nav {
-    @apply fixed z-50 w-full;
+    @apply fixed z-50 w-full md:flex md:items-center md:px-5;
 
     div {
-      @apply flex md:flex-row flex-col md:justify-between items-center gap-5 py-5 md:px-3 lg:px-2 px-5 container mx-auto;
+      @apply relative z-10 flex flex-row justify-between items-center gap-5 py-5 md:px-3 lg:px-2 px-5 container mx-auto;
     }
 
     span {
@@ -121,16 +127,8 @@ body {
           @apply font-modern-negra text-6xl text-yellow max-w-xl;
         }
 
-        p:last-of-type {
-          @apply 2xl:text-start text-center;
-        }
-
         .view-cocktails {
           @apply space-y-5 text-lg lg:max-w-2xs md:max-w-xs w-full;
-
-          p {
-            @apply text-center md:text-start;
-          }
 
           a {
             @apply font-semibold opacity-80 2xl:text-start hover:text-yellow transition-colors duration-200 text-center md:text-start block;
@@ -256,7 +254,7 @@ body {
     }
 
     .content {
-      @apply flex flex-col sm:flex-row justify-between md:mb-16 md:mt-0 mt-40 gap-10;
+      @apply flex flex-col sm:flex-row justify-between md:mb-16 md:mt-0 mt-55 gap-10;
     }
 
     .cocktail-img {
@@ -269,7 +267,7 @@ body {
       }
 
       div {
-        @apply md:px-0 px-5 space-y-5 bottom-3  left-1/2 w-full md:absolute;
+        @apply md:px-0 px-5 space-y-5 bottom-0 left-1/2 w-full md:absolute;
 
         h3 {
           @apply md:text-4xl text-3xl text-center font-serif w-full text-white;
@@ -337,7 +335,7 @@ body {
       }
 
       .details {
-        @apply space-y-5 md:max-w-md text-left bg-white/2 backdrop-blur-sm p-2 rounded-xl w-fit;
+        @apply space-y-5 md:max-w-sm xl:max-w-md text-left bg-white/2 backdrop-blur-sm p-2 rounded-xl w-fit;
 
         h4 {
           @apply md:text-5xl text-3xl font-serif;
@@ -351,7 +349,7 @@ body {
   }
 
   #contact {
-    @apply relative md:mt-20 mt-0 px-4 text-center w-full overflow-hidden radial-gradient pt-20 lg:pt-25;
+    @apply relative md:mt-20 mt-0 px-4 text-center w-full radial-gradient pt-20 lg:pt-25;
 
     #f-left-leaf {
       @apply absolute bottom-0 left-0 pointer-events-none lg:w-fit w-1/3;

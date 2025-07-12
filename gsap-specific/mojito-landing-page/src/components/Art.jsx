@@ -3,9 +3,10 @@ import { featureLists, goodLists } from "../constants/index";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
-const Art = ({ scrollRef }) => {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
+const Art = ({ scrollRef, windowSize }) => {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
   const artRef = useRef(null);
   const maskedContentRef = useRef(null);
   const maskedImageRef = useRef(null);
@@ -13,13 +14,25 @@ const Art = ({ scrollRef }) => {
   useGSAP(
     () => {
       const image = maskedImageRef.current;
-      if (!image) return;
+      const willFades = artRef.current.querySelectorAll(".will-fade");
+
+      if (!image || !willFades) return;
 
       const runAnimation = () => {
         const start = isMobile ? "top 20%" : "top top";
 
+        const toKill = [
+          artRef.current,
+          maskedImageRef.current,
+          maskedContentRef.current,
+        ];
+
+        gsap.killTweensOf(toKill);
+        ScrollTrigger.getById("art-trigger")?.kill();
+
         const maskTimeline = gsap.timeline({
           scrollTrigger: {
+            id: "art-trigger",
             trigger: artRef.current,
             start,
             end: "bottom center",
@@ -29,36 +42,59 @@ const Art = ({ scrollRef }) => {
         });
 
         if (!isMobile) {
-          maskTimeline.to(artRef.current.querySelectorAll(".will-fade"), {
-            opacity: 0,
-            stagger: 0.2,
-            ease: "power1.inOut",
-            onUpdate: () => {
-              artRef.current.querySelectorAll(".will-fade").forEach((el) => {
-                const opacity = parseFloat(getComputedStyle(el).opacity);
-                el.setAttribute(
-                  "aria-hidden",
-                  opacity < 0.05 ? "true" : "false",
-                );
-              });
+          maskTimeline.fromTo(
+            willFades,
+            {
+              opacity: 1,
             },
-          });
+            {
+              opacity: 0,
+              stagger: 0.2,
+              ease: "power1.inOut",
+              onUpdate: () => {
+                artRef.current.querySelectorAll(".will-fade").forEach((el) => {
+                  const opacity = parseFloat(getComputedStyle(el).opacity);
+                  el.setAttribute(
+                    "aria-hidden",
+                    opacity < 0.05 ? "true" : "false"
+                  );
+                });
+              },
+            }
+          );
+        } else {
+          gsap.set(willFades, { opacity: 1 });
         }
 
-        maskTimeline.to(maskedImageRef.current, {
-          scale: 1.3,
-          maskPosition: "center",
-          maskSize: "400%",
-          duration: 1,
-          ease: "power1.inOut",
-        });
-
-        if (!isMobile) {
-          maskTimeline.to(maskedContentRef.current, {
-            opacity: 1,
+        maskTimeline.fromTo(
+          maskedImageRef.current,
+          {
+            maskSize: "50%",
+            maskPosition: "center",
+          },
+          {
+            scale: 1.3,
+            maskPosition: "center",
+            maskSize: "400%",
             duration: 1,
             ease: "power1.inOut",
-          });
+          }
+        );
+
+        if (!isMobile) {
+          maskTimeline.fromTo(
+            maskedContentRef.current,
+            {
+              opacity: 0,
+            },
+            {
+              opacity: 1,
+              duration: 1,
+              ease: "power1.inOut",
+            }
+          );
+        } else {
+          gsap.set(maskedContentRef.current, { opacity: 1 });
         }
       };
 
@@ -71,8 +107,8 @@ const Art = ({ scrollRef }) => {
     },
     {
       scope: artRef,
-      dependencies: [],
-    },
+      dependencies: [windowSize],
+    }
   );
 
   return (
@@ -130,10 +166,9 @@ const Art = ({ scrollRef }) => {
             Sip-Worthy Perfection
           </h3>
           <div
-            id="masked-content"
             ref={maskedContentRef}
             className={`flex flex-col items-center ${
-              !isMobile ? "opacity-0 absolute -translate-x-1/2" : "mt-10"
+              !isMobile ? "absolute -translate-x-1/2" : "mt-10"
             }`}
           >
             <h3>Made with Craft, Poured with Passion</h3>
