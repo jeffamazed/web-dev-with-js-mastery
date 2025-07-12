@@ -10,7 +10,7 @@ import Contact from "./components/Contact";
 import { useRef, createRef } from "react";
 import TopLink from "./components/TopLink";
 import { navLinks } from "./constants";
-import useWindowSize from "./customHooks/useWindowSize";
+import useResponsive from "./customHooks/useResponsive";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -18,7 +18,7 @@ const App = () => {
   const sectionRef = useRef(
     Object.fromEntries(navLinks.map(({ id }) => [id, createRef()]))
   ).current;
-  const windowSize = useWindowSize();
+  const responsive = useResponsive();
 
   return (
     <>
@@ -28,12 +28,12 @@ const App = () => {
       <TopLink />
       <Navbar sectionRef={sectionRef} />
       <main>
-        <Hero windowSize={windowSize} />
+        <Hero responsive={responsive} />
         <Cocktails scrollRef={sectionRef.cocktails} />
         <About scrollRef={sectionRef.about} />
-        <Art scrollRef={sectionRef.art} windowSize={windowSize} />
+        <Art scrollRef={sectionRef.art} responsive={responsive} />
         <Menu />
-        <Contact scrollRef={sectionRef.contact} windowSize={windowSize} />
+        <Contact scrollRef={sectionRef.contact} responsive={responsive} />
       </main>
     </>
   );

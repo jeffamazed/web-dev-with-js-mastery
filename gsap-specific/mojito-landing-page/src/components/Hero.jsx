@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const Hero = ({ windowSize }) => {
+const Hero = ({ responsive }) => {
   const videoRef = useRef(null);
   const heroRef = useRef(null);
   const titleRef = useRef(null);
@@ -13,6 +13,7 @@ const Hero = ({ windowSize }) => {
   const heroRightLeafRef = useRef(null);
   const originalSubRef = useRef([]);
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const cocktailsHeight = responsive.cocktailsHeight;
 
   useEffect(() => {
     const subEls = heroRef.current?.querySelectorAll(".subtitle");
@@ -24,7 +25,23 @@ const Hero = ({ windowSize }) => {
 
   useGSAP(
     () => {
-      if (!originalSubRef.current.length) return;
+      const title = titleRef.current;
+      const hero = heroRef.current;
+      const rightLeaf = heroRightLeafRef.current;
+      const leftLeaf = heroLeftLeafRef.current;
+      const video = videoRef.current;
+
+      if (
+        !originalSubRef.current.length ||
+        !title ||
+        !hero ||
+        !rightLeaf ||
+        !leftLeaf ||
+        !video ||
+        !cocktailsHeight
+      )
+        return;
+
       let heroSplit;
       let paragraphSplit;
 
@@ -33,15 +50,12 @@ const Hero = ({ windowSize }) => {
         .forEach((el, i) => (el.innerHTML = originalSubRef.current[i]));
 
       document.fonts.ready.then(() => {
-        heroSplit = new SplitText(titleRef.current, {
+        heroSplit = new SplitText(title, {
           type: "chars, words",
         });
-        paragraphSplit = new SplitText(
-          heroRef.current.querySelectorAll(".subtitle"),
-          {
-            type: "lines",
-          }
-        );
+        paragraphSplit = new SplitText(hero.querySelectorAll(".subtitle"), {
+          type: "lines",
+        });
 
         // applying class to each char because animating each char
         heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
@@ -76,23 +90,23 @@ const Hero = ({ windowSize }) => {
         .timeline({
           scrollTrigger: {
             group: "hero-group-trigger",
-            trigger: heroRef.current,
+            trigger: hero,
             start: "top top",
             end: "bottom top",
             scrub: true,
           },
         })
-        .to(heroRightLeafRef.current, { y: 200 }, 0)
-        .to(heroLeftLeafRef.current, { y: -200 }, 0);
+        .to(rightLeaf, { y: 200 }, 0)
+        .to(leftLeaf, { y: -200 }, 0);
 
       const startValue = isMobile ? "top 50%" : "center 60%";
-      const endValue = isMobile ? "120% top" : "bottom top";
+      const endValue = `bottom+=${cocktailsHeight} bottom`;
 
       // video timeline
       const videoTimeline = gsap.timeline({
         scrollTrigger: {
           group: "hero-group-trigger",
-          trigger: videoRef.current,
+          trigger: video,
           start: startValue,
           end: endValue,
           scrub: true,
@@ -100,8 +114,7 @@ const Hero = ({ windowSize }) => {
         },
       });
 
-      videoRef.current.onloadedmetadata = () => {
-        const video = videoRef.current;
+      video.onloadedmetadata = () => {
         if (video.duration > 0) {
           videoTimeline.to(video, {
             currentTime: video.duration,
@@ -120,7 +133,10 @@ const Hero = ({ windowSize }) => {
         }
       };
     },
-    { scope: heroRef, dependencies: [windowSize, isMobile] }
+    {
+      scope: heroRef,
+      dependencies: [responsive, isMobile],
+    }
   );
 
   return (

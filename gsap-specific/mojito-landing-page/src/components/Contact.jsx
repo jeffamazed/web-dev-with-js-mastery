@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { useRef, useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const Contact = ({ scrollRef, windowSize }) => {
+const Contact = ({ scrollRef, responsive }) => {
   const contactRef = useRef(null);
   const titleRef = useRef(null);
   const footerLeftLeafRef = useRef(null);
@@ -123,7 +123,7 @@ const Contact = ({ scrollRef, windowSize }) => {
     },
     {
       scope: contactRef,
-      dependencies: [windowSize],
+      dependencies: [responsive],
     }
   );
 

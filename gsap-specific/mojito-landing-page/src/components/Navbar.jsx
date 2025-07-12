@@ -3,7 +3,7 @@ import { navLinks } from "../constants";
 import { useGSAP } from "@gsap/react";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { BiExpandAlt } from "react-icons/bi";
+import { BiCollapseAlt, BiExpandAlt } from "react-icons/bi";
 
 const Navbar = ({ sectionRef }) => {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
@@ -86,16 +86,18 @@ const Navbar = ({ sectionRef }) => {
               aria-controls="navbar-menu"
               aria-expanded={isNavExpanded}
             >
-              <BiExpandAlt aria-hidden="true" />
+              {isNavExpanded ? (
+                <BiCollapseAlt aria-hidden="true" />
+              ) : (
+                <BiExpandAlt aria-hidden="true" />
+              )}
             </button>
           )}
         </div>
         <ul
           id="navbar-menu"
           className={`size-full absolute top-[100%] transition duration-200 ${
-            isNavExpanded
-              ? "translate-y-0 opacity-100"
-              : "-translate-y-[100%] opacity-0"
+            isNavExpanded ? "translate-y-0" : "-translate-y-[100%] opacity-0"
           } md:static md:w-fit`}
         >
           {navLinks.map((link) => (
@@ -103,6 +105,7 @@ const Navbar = ({ sectionRef }) => {
               <a
                 href={`#${link.id}`}
                 onClick={(e) => handleScrollIntoView(e, link.id)}
+                tabIndex={isNavExpanded ? "1" : "-1"}
               >
                 {link.title}
               </a>

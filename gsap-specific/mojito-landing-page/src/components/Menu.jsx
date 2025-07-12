@@ -148,6 +148,7 @@ const Menu = () => {
             className="text-left"
             type="button"
             onClick={() => goToSlide(currentI - 1, "left", "button")}
+            aria-label={isMobile ? `${prevCocktail.name}` : ""}
           >
             <span>{prevCocktail.name}</span>
             <img
@@ -161,6 +162,7 @@ const Menu = () => {
             className="flex flex-col items-end text-right"
             type="button"
             onClick={() => goToSlide(currentI + 1, "right", "button")}
+            aria-label={isMobile ? `${nextCocktail.name}` : ""}
           >
             <span>{nextCocktail.name}</span>
             <img

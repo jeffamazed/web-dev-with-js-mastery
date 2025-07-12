@@ -309,7 +309,7 @@ body {
           @apply text-white hover:text-yellow cursor-pointer transition-colors max-w-36;
 
           span {
-            @apply text-3xl font-modern-negra leading-none hidden md:block text-nowrap;
+            @apply text-3xl font-modern-negra leading-none hidden md:block;
           }
         }
       }

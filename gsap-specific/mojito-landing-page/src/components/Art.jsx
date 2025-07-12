@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { useRef } from "react";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
-const Art = ({ scrollRef, windowSize }) => {
+const Art = ({ scrollRef, responsive }) => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const artRef = useRef(null);
   const maskedContentRef = useRef(null);
@@ -15,17 +15,15 @@ const Art = ({ scrollRef, windowSize }) => {
     () => {
       const image = maskedImageRef.current;
       const willFades = artRef.current.querySelectorAll(".will-fade");
+      const art = artRef.current;
+      const content = maskedContentRef.current;
 
-      if (!image || !willFades) return;
+      if (!image || !willFades || !art || !content) return;
 
       const runAnimation = () => {
         const start = isMobile ? "top 20%" : "top top";
 
-        const toKill = [
-          artRef.current,
-          maskedImageRef.current,
-          maskedContentRef.current,
-        ];
+        const toKill = [art, image, willFades, content];
 
         gsap.killTweensOf(toKill);
         ScrollTrigger.getById("art-trigger")?.kill();
@@ -33,7 +31,7 @@ const Art = ({ scrollRef, windowSize }) => {
         const maskTimeline = gsap.timeline({
           scrollTrigger: {
             id: "art-trigger",
-            trigger: artRef.current,
+            trigger: art,
             start,
             end: "bottom center",
             scrub: 1.5,
@@ -67,7 +65,7 @@ const Art = ({ scrollRef, windowSize }) => {
         }
 
         maskTimeline.fromTo(
-          maskedImageRef.current,
+          image,
           {
             maskSize: "50%",
             maskPosition: "center",
@@ -83,7 +81,7 @@ const Art = ({ scrollRef, windowSize }) => {
 
         if (!isMobile) {
           maskTimeline.fromTo(
-            maskedContentRef.current,
+            content,
             {
               opacity: 0,
             },
@@ -94,7 +92,7 @@ const Art = ({ scrollRef, windowSize }) => {
             }
           );
         } else {
-          gsap.set(maskedContentRef.current, { opacity: 1 });
+          gsap.set(content, { opacity: 1 });
         }
       };
 
@@ -107,7 +105,7 @@ const Art = ({ scrollRef, windowSize }) => {
     },
     {
       scope: artRef,
-      dependencies: [windowSize],
+      dependencies: [responsive],
     }
   );
 
