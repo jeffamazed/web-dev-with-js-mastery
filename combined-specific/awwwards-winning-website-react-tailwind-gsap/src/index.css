@@ -104,18 +104,18 @@
     }
   }
 
-  /* From Uiverse.io by G4b413l */
-  /* https://uiverse.io/G4b413l/tidy-walrus-92 */
-
-  @keyframes spin78236 {
+  --animate-in-out: in-out 1.5s ease-in-out infinite;
+  @keyframes in-out {
     0% {
-      transform: rotate(0deg);
+      transform: scale(1);
     }
-
-    100% {
-      transform: rotate(360deg);
+    50% {
+      transform: scale(1.01);
     }
   }
+
+  /* From Uiverse.io by G4b413l */
+  /* https://uiverse.io/G4b413l/tidy-walrus-92 */
   --animate-wobble1: wobble1 1s ease-in-out infinite;
   @keyframes wobble1 {
     0%,

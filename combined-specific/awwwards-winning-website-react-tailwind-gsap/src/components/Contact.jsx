@@ -37,7 +37,7 @@ const Contact = ({ windowSize, scrollRef }) => {
           <ImageClipBox
             src="./img/swordman.webp"
             alt="Contact image 3"
-            clipClass="sword-man-clip-path md:scale-125"
+            clipClass="sword-man-clip-path md:scale-125 animate-in-out"
           />
         </div>
         <header className="flex flex-col items-center text-center relative z-50">
