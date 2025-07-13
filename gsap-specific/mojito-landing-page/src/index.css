@@ -79,10 +79,10 @@ body {
   }
 
   nav {
-    @apply fixed z-50 w-full md:flex md:items-center md:px-5;
+    @apply fixed z-50 w-full md:flex md:items-center md:px-5 md:justify-between container left-[50%] -translate-x-[50%];
 
     div {
-      @apply relative z-10 flex flex-row justify-between items-center gap-5 py-5 md:px-3 lg:px-2 px-5 container mx-auto;
+      @apply relative z-10 flex flex-row justify-between items-center gap-5 py-5 md:px-3 lg:px-2 px-5;
     }
 
     span {
