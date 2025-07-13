@@ -6,7 +6,6 @@ import { useMediaQuery } from "react-responsive";
 
 const Nav = ({ sectionRef }) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isAriaHidden, setIsAriaHidden] = useState(true);
   const [isNavClicked, setIsNavClicked] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const headerRef = useRef(null);
@@ -20,12 +19,8 @@ const Nav = ({ sectionRef }) => {
     const handleResize = () => {
       if (window.innerWidth > 1024) {
         setIsExpanded(false);
-        setIsAriaHidden(false);
-      } else {
-        setIsAriaHidden(true);
       }
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -60,7 +55,8 @@ const Nav = ({ sectionRef }) => {
               ? "h-[13.75rem] bg-white-400"
               : "h-0 overflow-hidden bg-transparent"
           }`}
-          aria-hidden={isAriaHidden}
+          id="nav-ul"
+          aria-hidden={!isMobile ? false : !isExpanded ? true : false}
         >
           {navLinks.map((link) => (
             <li key={link.label} className="px-4 py-2 text-center">
@@ -90,6 +86,7 @@ const Nav = ({ sectionRef }) => {
               setIsAriaHidden((prev) => !prev);
             }}
             aria-expanded={isExpanded}
+            aria-controls="nav-ul"
           >
             <img src={hamburger} alt="Hamburger" width={25} height={25} />
           </button>
