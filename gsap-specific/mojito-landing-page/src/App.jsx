@@ -16,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const App = () => {
   const sectionRef = useRef(
-    Object.fromEntries(navLinks.map(({ id }) => [id, createRef()]))
+    Object.fromEntries(navLinks.map(({ id }) => [id, createRef()])),
   ).current;
   const responsive = useResponsive();
 

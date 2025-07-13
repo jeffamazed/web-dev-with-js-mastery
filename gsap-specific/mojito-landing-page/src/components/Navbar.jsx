@@ -80,8 +80,8 @@ const Navbar = ({ sectionRef, responsive }) => {
     setIsNavExpanded((prev) => !prev);
   };
   return (
-    <header>
-      <nav ref={navRef}>
+    <header ref={navRef} className="fixed z-50 w-full">
+      <nav>
         <div>
           <a href="#hero" className="flex items-center gap-2">
             <img src="./images/logo.png" alt="Velvet Pour Logo" />
