@@ -1,8 +1,10 @@
+import { FaTwitch, FaGithub, FaTwitter, FaDiscord } from "react-icons/fa";
+
 export const navItems = [
   { name: "Nexus", target: "nexus" },
-  { name: "Vault", target: "vault" },
-  { name: "Prologue", target: "prologue" },
   { name: "About", target: "about" },
+  { name: "Features", target: "features" },
+  { name: "Prologue", target: "prologue" },
   { name: "Contact", target: "contact" },
 ];
 
@@ -55,4 +57,19 @@ export const featuresData = [
     description:
       "A cross-world AI Agent—elevating your gameplay to be more fun and productive.",
   },
+];
+
+export const galleryImg = [];
+for (let i = 1; i <= 5; i++) {
+  galleryImg.push({
+    src: `./img/gallery-${i}.webp`,
+    alt: `gallery image ${i}`,
+  });
+}
+
+export const footerLinks = [
+  { href: "https://discord.com", icon: <FaDiscord />, name: "Discord" },
+  { href: "https://twitter.com", icon: <FaTwitter />, name: "Twitter" },
+  { href: "https://github.com", icon: <FaGithub />, name: "Github" },
+  { href: "https://twitch.tv", icon: <FaTwitch />, name: "Twitch" },
 ];

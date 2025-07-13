@@ -3,6 +3,7 @@ import { featuresData } from "../constants";
 import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import CustomizedAnchor from "./CustomizedAnchor";
+import useAutoPauseVideo from "../customHooks/useAutoPauseVideo";
 
 const BentoTilt = ({ children, className = "", as = "div" }) => {
   const [transformStyle, setTransformStyle] = useState("");
@@ -20,11 +21,11 @@ const BentoTilt = ({ children, className = "", as = "div" }) => {
     const relativeX = (e.clientX - left) / width;
     const relativeY = (e.clientY - top) / height;
 
-    const tiltPower = 3;
+    const tiltPower = 5;
     const tiltX = (relativeY - 0.5) * tiltPower;
     const tiltY = (relativeX - 0.5) * -tiltPower;
 
-    const newTransform = `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3D(0.98, 0.98, 0.98)`;
+    const newTransform = `perspective(700px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3D(0.97, 0.97, 0.97)`;
     setTransformStyle(newTransform);
   };
 
@@ -56,13 +57,17 @@ const BentoTilt = ({ children, className = "", as = "div" }) => {
 };
 
 const BentoCard = ({ src, title, description }) => {
+  const videoRef = useAutoPauseVideo({ threshold: 0 });
+
   return (
     <article className="relative size-full">
       <video
+        ref={videoRef}
         src={src}
         loop
         muted
-        // autoPlay
+        autoPlay
+        playsInline
         className="absolute left-0 top-0 size-full object-cover object-center"
       />
       <div className="relative z-10 flex size-full flex-col justify-between p-5 text-blue-50">
@@ -85,9 +90,14 @@ const BentoCard = ({ src, title, description }) => {
   );
 };
 
-const Features = () => {
+const Features = ({ scrollRef }) => {
+  const videoRef = useAutoPauseVideo({ threshold: 0 });
   return (
-    <section className="bg-custom-black pb-52">
+    <section
+      className="bg-custom-black pb-42 md:pb-48"
+      ref={scrollRef}
+      id="features"
+    >
       <div className="mx-auto px-3 md:px-10">
         <div className="px-5 py-32">
           <h2 className="font-circular-web text-lg lg:text-xl text-blue-50 mb-1">
@@ -150,10 +160,12 @@ const Features = () => {
 
           <BentoTilt className="bento-tilt_2">
             <video
+              ref={videoRef}
               src="videos/feature-5.mp4"
               loop
               muted
-              // autoPlay
+              autoPlay
+              playsInline
               className="size-full object-cover object-center"
             ></video>
           </BentoTilt>

@@ -1,24 +1,16 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import AnimatedTitle from "./AnimatedTitle";
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { generateTitle } from "../utils/generateTitle";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useMediaQuery } from "react-responsive";
 
-const About = ({ scrollRef }) => {
+const About = ({ scrollRef, windowSize }) => {
   const clipRef = useRef(null);
   const aboutPreviewRef = useRef(null);
 
   const bp1 = useMediaQuery({ minWidth: 500 });
-  const bp2 = useMediaQuery({ minWidth: 640 });
-  const bp3 = useMediaQuery({ minWidth: 768 });
-  const bp4 = useMediaQuery({ minWidth: 1080 });
-  const imgWidth = useMemo(
-    () => (bp4 ? "40%" : bp3 ? "45%" : bp2 ? "60%" : bp1 ? "80%" : "90%"),
-    [bp1, bp2, bp3, bp4]
-  );
-  const imgHeight = "60%";
 
   useGSAP(
     () => {
@@ -30,6 +22,8 @@ const About = ({ scrollRef }) => {
       gsap.killTweensOf(about);
       ScrollTrigger.getById("about-trigger")?.kill();
 
+      const imgWidth = bp1 ? "55vh" : "90dvw";
+      const imgHeight = "55vh";
       const timeline = gsap.timeline({
         scrollTrigger: {
           id: "about-trigger",
@@ -59,7 +53,7 @@ const About = ({ scrollRef }) => {
 
     {
       scope: clipRef,
-      dependencies: [imgWidth, imgHeight],
+      dependencies: [windowSize, bp1],
     }
   );
 
@@ -87,7 +81,7 @@ const About = ({ scrollRef }) => {
               className="absolute left-0 top-0 size-full object-cover"
             />
           </div>
-          <figcaption className="pt-[63dvh] max-w-xl mx-auto text-custom-black text-xs lg:text-sm px-8">
+          <figcaption className="pt-[60dvh] max-w-xl mx-auto text-custom-black text-xs lg:text-sm px-8">
             <span className="block">
               The Game of Games begins—your life, now an epic MMORPG.
             </span>

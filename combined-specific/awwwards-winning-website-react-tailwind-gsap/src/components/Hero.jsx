@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import CustomizedAnchor from "./CustomizedAnchor";
 
-const Hero = () => {
+const Hero = ({ scrollRef }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,20 +43,25 @@ const Hero = () => {
 
   useGSAP(
     () => {
+      const nextVid = nextVideoRef.current;
+      const currentVid = currentVideoRef.current;
+      const bgVid = bgVideoRef.current;
+      if (!nextVid || !currentVid || !bgVid) return;
+
       if (hasClicked) {
-        gsap.set(nextVideoRef.current, { visibility: "visible" });
-        gsap.to(nextVideoRef.current, {
+        gsap.set(nextVid, { visibility: "visible" });
+        gsap.to(nextVid, {
           transformOrigin: "center center",
           scale: 1,
           width: "100%",
           height: "100%",
           duration: 1,
           ease: "power1.inOut",
-          onStart: () => nextVideoRef.current.play(),
-          onComplete: () => bgVideoRef.current.pause(),
+          onStart: () => nextVid.play(),
+          onComplete: () => bgVid.pause(),
         });
 
-        gsap.from(currentVideoRef.current, {
+        gsap.from(currentVid, {
           transformOrigin: "center center",
           scale: 0,
           duration: 1.5,
@@ -73,16 +78,19 @@ const Hero = () => {
 
   useGSAP(
     () => {
-      gsap.set(videoFrameRef.current, {
+      const video = videoFrameRef.current;
+      if (!video) return;
+
+      gsap.set(video, {
         clipPath: "polygon(0 0, 80% 0%, 93% 88%, 4% 97%)",
         borderRadius: "0 0 40% 18%",
       });
 
-      gsap.from(videoFrameRef.current, {
+      gsap.from(video, {
         clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
         borderRadius: "0 0 0 0",
         scrollTrigger: {
-          trigger: videoFrameRef.current,
+          trigger: video,
           start: "10% top",
           end: "bottom center",
           scrub: true,
@@ -99,7 +107,10 @@ const Hero = () => {
     <section
       id="hero"
       className="relative h-dvh w-full overflow-x-hidden"
-      ref={heroRef}
+      ref={(el) => {
+        heroRef.current = el;
+        scrollRef.current = el;
+      }}
     >
       {isLoading && (
         <div
@@ -126,7 +137,7 @@ const Hero = () => {
             ref={btnParentRef}
           >
             <button
-              className="origin-center scale-50 transition-all opacity-0 duration-300 ease-in hover:scale-100 hover:opacity-100 focus:scale-100 focus:opacity-100 cursor-pointer"
+              className="origin-center scale-50 transition-all opacity-0 duration-300 ease-in hover:scale-100 hover:opacity-100 focus-visible:scale-100 focus-visible:opacity-100 cursor-pointer"
               onClick={handleMiniVdClick}
               type="button"
               aria-label="Press to show the next video"
@@ -156,13 +167,15 @@ const Hero = () => {
             className="absolute-center z-20 invisible object-cover object-center"
             onLoadedData={handleVideoLoad}
             preload="auto"
+            playsInline
           />
 
           {/* back layer video */}
           <video
             ref={bgVideoRef}
             src={getVideoSrc(currentIndex)}
-            // autoPlay
+            autoPlay
+            playsInline
             loop
             muted
             className="absolute left-0 top-0 size-full object-cover object-center"

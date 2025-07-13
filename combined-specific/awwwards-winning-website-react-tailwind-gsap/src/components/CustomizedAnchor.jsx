@@ -1,4 +1,5 @@
 const CustomizedAnchor = ({
+  ref,
   href,
   id,
   title,
@@ -10,6 +11,7 @@ const CustomizedAnchor = ({
 }) => {
   return (
     <a
+      ref={ref}
       href={href}
       id={id}
       className={`relative z-10 w-fit cursor-pointer overflow-hidden rounded-full px-4 py-2 lg:px-5 lg:py-2.5 text-custom-black transition-colors duration-200 ease-in custom-ring text-xs 2xl:text-sm ${containerClass}`}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 const useWindowSize = () => {
   const [size, setSize] = useState({
@@ -9,10 +10,14 @@ const useWindowSize = () => {
   useEffect(() => {
     const handleResize = () => {
       setSize({ width: window.innerWidth, height: window.innerHeight });
+      ScrollTrigger.refresh();
     };
-
+    window.addEventListener("orientationchange", handleResize);
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
   }, []);
 
   return size;

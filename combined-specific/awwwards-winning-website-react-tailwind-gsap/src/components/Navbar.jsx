@@ -18,11 +18,13 @@ const Navbar = ({ sectionRef }) => {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isNavVisible, setisNavVisible] = useState(true);
+  const [isUserClickNav, setIsUserClickNav] = useState(false);
   const navContainerRef = useRef(null);
   const audioElementRef = useRef(null);
   const collapseBtnRef = useRef(null);
   const expandBtnRef = useRef(null);
   const userTogglingNav = useRef(false);
+
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const { y: currentScrollY } = useWindowScroll();
@@ -52,22 +54,11 @@ const Navbar = ({ sectionRef }) => {
     else setIsNavExpanded(false);
   }, [isMobile]);
 
+  // handle audio
   useEffect(() => {
     if (isAudioPlaying) audioElementRef.current.play();
     else audioElementRef.current.pause();
   }, [isAudioPlaying]);
-
-  useGSAP(
-    () => {
-      const movement = isNavVisible ? "0" : "-110%";
-      gsap.to(navContainerRef.current, {
-        y: movement,
-        opacity: isNavVisible ? 1 : 0,
-        duration: navCollapseDuration / 1000,
-      });
-    },
-    { scope: navContainerRef, dependencies: [isNavVisible] }
-  );
 
   // handle keyboard focus when nav is expanded
   useEffect(() => {
@@ -81,10 +72,33 @@ const Navbar = ({ sectionRef }) => {
     }
   }, [isNavExpanded, isMobile]);
 
+  // handle use click nav
+  useEffect(() => {
+    if (isMobile && isUserClickNav) setIsNavExpanded(false);
+    setIsUserClickNav(false);
+  }, [isUserClickNav, isMobile]);
+
+  useGSAP(
+    () => {
+      const nav = navContainerRef.current;
+      if (!nav) return;
+
+      const movement = isNavVisible ? "0" : "-110%";
+      gsap.to(nav, {
+        y: movement,
+        opacity: isNavVisible ? 1 : 0,
+        duration: navCollapseDuration / 1000,
+      });
+    },
+    { scope: navContainerRef, dependencies: [isNavVisible] }
+  );
+
   const handleScrollIntoView = (e, target) => {
     const section = sectionRef[target].current;
     if (!section) return;
     e.preventDefault();
+    setIsUserClickNav(true);
+
     const nav = navContainerRef.current;
     const navOffset = nav.getBoundingClientRect().bottom;
     const sectionTop = section.getBoundingClientRect().top + scrollY;
@@ -130,7 +144,7 @@ const Navbar = ({ sectionRef }) => {
                 href="#"
                 title="Products"
                 rightIcon={<TiLocationArrow aria-hidden="true" />}
-                containerClass="bg-violet-50 flex items-center justify-center gap-1 hover:bg-blue-75 focus:bg-blue-75"
+                containerClass="bg-violet-50 flex-center gap-1 hover:bg-blue-75 focus:bg-blue-75"
                 tabIndex={navAnchorTabIndex}
               />
             </div>

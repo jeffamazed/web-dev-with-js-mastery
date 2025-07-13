@@ -1,15 +1,18 @@
-import About from "./components/About";
-import Hero from "./components/Hero";
+import {
+  About,
+  Hero,
+  Navbar,
+  Features,
+  Story,
+  Gallery,
+  Contact,
+  Footer,
+} from "./components";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef, createRef } from "react";
-import Navbar from "./components/Navbar";
-
-import Features from "./components/Features";
 import { navItems } from "./constants";
-import Story from "./components/Story";
-import useScrollTriggerRefresh from "./customHooks/useScrollTriggerRefresh";
-import useWindowSize from "./customHooks/useWindowSize";
+import useResponsiveAnim from "./customHooks/useResponsiveAnim";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,18 +21,21 @@ const App = () => {
   const sectionRef = useRef(
     Object.fromEntries(navItems.map(({ target }) => [target, createRef()]))
   ).current;
+  console.log(sectionRef);
 
-  useScrollTriggerRefresh();
-  const windowSize = useWindowSize();
+  const windowSize = useResponsiveAnim();
 
   return (
     <>
       <Navbar sectionRef={sectionRef} />
       <main className="relative min-h-dvh w-full overflow-x-hidden">
-        <Hero />
-        <About scrollRef={sectionRef.about} />
-        <Features />
-        <Story windowSize={windowSize} />
+        <Hero scrollRef={sectionRef.nexus} />
+        <About scrollRef={sectionRef.about} windowSize={windowSize} />
+        <Features scrollRef={sectionRef.features} />
+        <Story scrollRef={sectionRef.prologue} windowSize={windowSize} />
+        <Gallery windowSize={windowSize} />
+        <Contact scrollRef={sectionRef.contact} windowSize={windowSize} />
+        <Footer />
       </main>
     </>
   );
