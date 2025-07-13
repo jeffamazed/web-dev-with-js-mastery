@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from "react";
 
 const useResponsive = (delay = 150) => {
   const [size, setSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
     cocktailsHeight: 0,
   });
   const timeoutRef = useRef(null);
