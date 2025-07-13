@@ -26,7 +26,7 @@ const App = () => {
       <div id="top" className="sr-only" />
 
       <TopLink />
-      <Navbar sectionRef={sectionRef} />
+      <Navbar sectionRef={sectionRef} responsive={responsive} />
       <main>
         <Hero responsive={responsive} />
         <Cocktails scrollRef={sectionRef.cocktails} />

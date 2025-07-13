@@ -4,8 +4,9 @@ import { useGSAP } from "@gsap/react";
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { BiCollapseAlt, BiExpandAlt } from "react-icons/bi";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const Navbar = ({ sectionRef }) => {
+const Navbar = ({ sectionRef, responsive }) => {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
   const [isNavClicked, setIsNavClicked] = useState(false);
   const navRef = useRef(null);
@@ -27,27 +28,38 @@ const Navbar = ({ sectionRef }) => {
       const ul = navRef.current.querySelector("ul");
       if (!nav || !ul) return;
 
+      gsap.killTweensOf([nav, ul]);
+      ScrollTrigger.getById("nav-trigger")?.kill();
+      if (!isMobile && ul) {
+        gsap.set(ul, { clearProps: "backgroundColor,backdropFilter" });
+      }
+
       const navTween = gsap.timeline({
         scrollTrigger: {
           trigger: nav,
+          id: "nav-trigger",
           start: "bottom top",
+          toggleActions: "play none none reverse",
         },
       });
 
+      const toAnimate = isMobile && ul ? [nav, ul] : [nav];
+
       navTween.fromTo(
-        [nav, ul],
+        toAnimate,
         { backgroundColor: "transparent" },
         {
           backgroundColor: "#00000050",
           backdropFilter: "blur(10px)",
-          duration: 1,
+          duration: 0.5,
           ease: "power1.inOut",
-        }
+        },
+        0
       );
     },
     {
       scope: navRef,
-      dependencies: [],
+      dependencies: [responsive, isMobile],
     }
   );
 
