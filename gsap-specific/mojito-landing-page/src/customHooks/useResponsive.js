@@ -1,14 +1,16 @@
 import { useEffect, useState, useRef } from "react";
 
 const useResponsive = (delay = 150) => {
-  const [size, setSize] = useState({
+  const [size, setSize] = useState(() => ({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
     cocktailsHeight: 0,
-  });
+  }));
   const timeoutRef = useRef(null);
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined")
+      return;
     const updateSize = () => {
       const cocktails = document.getElementById("cocktails");
 
@@ -29,7 +31,7 @@ const useResponsive = (delay = 150) => {
       window.removeEventListener("resize", updateSize);
       clearTimeout(timeoutRef.current);
     };
-  }, []);
+  }, [delay]);
 
   return size;
 };

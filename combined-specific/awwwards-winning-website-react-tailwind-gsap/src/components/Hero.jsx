@@ -186,10 +186,10 @@ const Hero = ({ scrollRef }) => {
         </div>
 
         <div className="absolute left-[50%] top-0 z-40 size-full container -translate-x-[50%]">
-          <div className="mt-24 px-5 sm:px-10 xl:px-0">
+          <div className="mt-24 px-5 sm:px-10 2xl:px-0">
             <h1 className="special-font hero-heading text-blue-100 select-none">
               redefi<b>n</b>e
-              <span className="special-font hero-heading absolute bottom-5 right-5 sm:right-10 xl:right-0 z-40 text-blue-75">
+              <span className="special-font hero-heading absolute bottom-5 right-5 sm:right-10 2xl:right-0 z-40 text-blue-75">
                 g<b>a</b>ming
               </span>
             </h1>
@@ -213,7 +213,7 @@ const Hero = ({ scrollRef }) => {
       </div>
       {/* for bottom layer GAMING */}
       <span
-        className="special-font hero-heading absolute bottom-5 left-[50%] -translate-x-[50%] text-custom-black select-none container block text-end px-5 sm:px-10 xl:px-0"
+        className="special-font hero-heading absolute bottom-5 left-[50%] -translate-x-[50%] text-custom-black select-none container block text-end px-5 sm:px-10 2xl:px-0"
         aria-hidden="true"
       >
         g<b>a</b>ming

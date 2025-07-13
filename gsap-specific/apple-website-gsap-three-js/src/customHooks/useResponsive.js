@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
 
-const useWindowSize = (delay = 150) => {
+const useResponsive = (delay = 150) => {
   const [size, setSize] = useState(() => ({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
     height: typeof window !== "undefined" ? window.innerHeight : 0,
@@ -9,27 +8,20 @@ const useWindowSize = (delay = 150) => {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    if (typeof window === "undefined" || typeof document === "undefined")
-      return;
     const handleResize = () => {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         setSize({ width: window.innerWidth, height: window.innerHeight });
-        ScrollTrigger.refresh();
       }, delay);
     };
-    window.addEventListener("orientationchange", handleResize);
+
     window.addEventListener("resize", handleResize);
 
     handleResize();
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
-      clearTimeout(timeoutRef.current);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, [delay]);
 
   return size;
 };
 
-export default useWindowSize;
+export default useResponsive;
