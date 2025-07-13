@@ -9,6 +9,15 @@ A modern, immersive web experience inspired by [JS Mastery](https://www.youtube.
 - **Tailwind CSS** – Utility-first styling for rapid, responsive design
 - **Vite** – Next-gen frontend tooling for blazing fast dev & build
 
+Clone the repo and run it locally:
+
+```bash
+git clone https://github.com/jeffamazed/web-dev-with-js-mastery.git
+cd web-dev-with-js-mastery/gsap-specific/mojito-landing-page
+npm install
+npm run dev
+```
+
 ## 🔥 Inspiration
 
 Built with the creative principles and animations seen in:
