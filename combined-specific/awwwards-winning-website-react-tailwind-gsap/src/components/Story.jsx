@@ -41,20 +41,23 @@ const Story = ({ windowSize, scrollRef }) => {
         story,
         { backgroundColor: "#0a0a0a" },
         { backgroundColor: "#F6E85D" },
-        "start"
+        "start",
       )
         .fromTo(para, { color: "#dfdff0" }, { color: "#0a0a0a" }, "start")
         .fromTo(
           anchor,
           { color: "#0a0a0a", backgroundColor: "#f5f3ff" },
-          { color: "#dfdff0", backgroundColor: "#0a0a0a" },
-          "start"
+          {
+            color: "#dfdff0",
+            backgroundColor: "#0a0a0a",
+          },
+          "start",
         );
     },
     {
       scope: storyRef,
       dependencies: [windowSize],
-    }
+    },
   );
 
   const handlePointerLeave = () => {
@@ -177,7 +180,6 @@ const Story = ({ windowSize, scrollRef }) => {
               href="#"
               id="realm-button"
               title="discover prologue"
-              containerClass="hover:bg-blue-75 focus:bg-blue-75"
             />
           </div>
         </div>

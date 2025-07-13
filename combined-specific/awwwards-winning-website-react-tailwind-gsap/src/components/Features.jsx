@@ -21,7 +21,7 @@ const BentoTilt = ({ children, className = "", as = "div" }) => {
     const relativeX = (e.clientX - left) / width;
     const relativeY = (e.clientY - top) / height;
 
-    const tiltPower = 5;
+    const tiltPower = 10;
     const tiltX = (relativeY - 0.5) * tiltPower;
     const tiltY = (relativeX - 0.5) * -tiltPower;
 

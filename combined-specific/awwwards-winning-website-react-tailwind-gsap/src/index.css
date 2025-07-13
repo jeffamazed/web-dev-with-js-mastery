@@ -116,7 +116,17 @@
 
   /* From Uiverse.io by G4b413l */
   /* https://uiverse.io/G4b413l/tidy-walrus-92 */
-  --animate-wobble1: wobble1 1s ease-in-out infinite;
+
+  @keyframes spin78236 {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
   @keyframes wobble1 {
     0%,
     100% {

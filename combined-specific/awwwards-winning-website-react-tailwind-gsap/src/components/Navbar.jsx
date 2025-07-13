@@ -90,7 +90,7 @@ const Navbar = ({ sectionRef }) => {
         duration: navCollapseDuration / 1000,
       });
     },
-    { scope: navContainerRef, dependencies: [isNavVisible] }
+    { scope: navContainerRef, dependencies: [isNavVisible] },
   );
 
   const handleScrollIntoView = (e, target) => {
@@ -119,8 +119,8 @@ const Navbar = ({ sectionRef }) => {
   const navAnchorTabIndex = !isMobile
     ? 1
     : !isNavExpanded && isNavVisible
-    ? 1
-    : -1;
+      ? 1
+      : -1;
 
   return (
     <div
@@ -144,7 +144,7 @@ const Navbar = ({ sectionRef }) => {
                 href="#"
                 title="Products"
                 rightIcon={<TiLocationArrow aria-hidden="true" />}
-                containerClass="bg-violet-50 flex-center gap-1 hover:bg-blue-75 focus:bg-blue-75"
+                containerClass="bg-violet-50 flex-center gap-1 hover:bg-blue-75 focus-visible:bg-blue-75"
                 tabIndex={navAnchorTabIndex}
               />
             </div>
