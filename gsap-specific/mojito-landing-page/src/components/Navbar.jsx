@@ -54,13 +54,13 @@ const Navbar = ({ sectionRef, responsive }) => {
           duration: 0.5,
           ease: "power1.inOut",
         },
-        0
+        0,
       );
     },
     {
       scope: navRef,
       dependencies: [responsive, isMobile],
-    }
+    },
   );
 
   const handleScrollIntoView = (e, target) => {
@@ -111,6 +111,7 @@ const Navbar = ({ sectionRef, responsive }) => {
           className={`size-full absolute top-[100%] transition duration-200 ${
             isNavExpanded ? "translate-y-0" : "-translate-y-[100%] opacity-0"
           } md:static md:w-fit`}
+          aria-hidden={!isNavExpanded}
         >
           {navLinks.map((link) => (
             <li key={link.id}>
