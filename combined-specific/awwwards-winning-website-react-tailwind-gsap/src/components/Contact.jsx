@@ -19,7 +19,7 @@ const Contact = ({ windowSize, scrollRef }) => {
       className="my-20 min-h-96 w-full px-8"
       ref={scrollRef}
     >
-      <div className="relative rounded-lg bg-custom-black py-24 text-blue-50 sm:overflow-hidden">
+      <div className="relative rounded-lg bg-custom-black py-24 text-blue-50 sm:overflow-hidden container mx-auto">
         <div className="absolute -left-20 top-0 hidden h-full w-72 overflow-hidden sm:block lg:left-20 lg:w-96">
           <ImageClipBox
             src="./img/contact-1.webp"
@@ -33,7 +33,7 @@ const Contact = ({ windowSize, scrollRef }) => {
           />
         </div>
 
-        <div className="absolute -top-40 left-20 w-60 sm:top-1/2 md:left-auto md:right-10 lg:top-20 lg:w-80">
+        <div className="absolute -top-40 left-20 w-60 sm:top-1/2 sm:left-auto sm:right-10 lg:top-20 lg:w-80">
           <ImageClipBox
             src="./img/swordman.webp"
             alt="Contact image 3"

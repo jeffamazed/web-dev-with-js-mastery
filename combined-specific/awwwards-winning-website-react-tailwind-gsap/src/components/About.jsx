@@ -22,7 +22,7 @@ const About = ({ scrollRef, windowSize }) => {
       gsap.killTweensOf(about);
       ScrollTrigger.getById("about-trigger")?.kill();
 
-      const imgWidth = bp1 ? "55vh" : "90dvw";
+      const imgWidth = bp1 ? "55vh" : "90vw";
       const imgHeight = "55vh";
       const timeline = gsap.timeline({
         scrollTrigger: {
@@ -47,14 +47,14 @@ const About = ({ scrollRef, windowSize }) => {
           width: "100%",
           height: "100%",
           borderRadius: 0,
-        }
+        },
       );
     },
 
     {
       scope: clipRef,
       dependencies: [windowSize, bp1],
-    }
+    },
   );
 
   const title = "Disc(o)ver the world's<br />l(a)rgest shared adventure";
@@ -81,7 +81,7 @@ const About = ({ scrollRef, windowSize }) => {
               className="absolute left-0 top-0 size-full object-cover"
             />
           </div>
-          <figcaption className="pt-[60dvh] max-w-xl mx-auto text-custom-black text-xs lg:text-sm px-8">
+          <figcaption className="pt-[60vh] max-w-xl mx-auto text-custom-black text-xs lg:text-sm px-8">
             <span className="block">
               The Game of Games begins—your life, now an epic MMORPG.
             </span>

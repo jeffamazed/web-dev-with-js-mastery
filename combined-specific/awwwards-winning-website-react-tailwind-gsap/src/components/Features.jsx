@@ -98,7 +98,7 @@ const Features = ({ scrollRef }) => {
       ref={scrollRef}
       id="features"
     >
-      <div className="mx-auto px-3 md:px-10">
+      <div className="mx-auto px-3 md:px-10 container">
         <div className="px-5 py-32">
           <h2 className="font-circular-web text-lg lg:text-xl text-blue-50 mb-1">
             Into the Metagame Layer

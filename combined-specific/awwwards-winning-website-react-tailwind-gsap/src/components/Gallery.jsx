@@ -77,17 +77,17 @@ const Gallery = ({ windowSize }) => {
               ease: "power1.out",
               immediateRender: false,
             },
-            0
+            0,
           );
         });
       }
     },
-    { scope: galleryRef, dependencies: [windowSize, isMobile] }
+    { scope: galleryRef, dependencies: [windowSize, isMobile] },
   );
 
   return (
     <section id="gallery" className="min-h-dvh bg-custom-black w-full py-32">
-      <div className="flex flex-col items-center gap-10">
+      <div className="flex flex-col items-center gap-10 container mx-auto">
         <header className="flex flex-col gap-5 w-full text-center">
           <h2 className="font-general text-blue-50 text-xs uppercase lg:text-sm">
             explore zentry

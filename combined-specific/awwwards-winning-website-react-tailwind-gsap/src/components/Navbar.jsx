@@ -125,7 +125,7 @@ const Navbar = ({ sectionRef }) => {
   return (
     <div
       ref={navContainerRef}
-      className="fixed top-4 z-50 h-16 transition-all duration-700 inset-x-2 sm:inset-x-6 rounded-lg"
+      className="fixed top-4 z-50 h-16 transition-all duration-700 inset-x-2 sm:inset-x-6 rounded-lg container mx-auto"
     >
       <header className="absolute top-1/2 w-full -translate-y-1/2 h-16 overflow-hidden">
         <nav className="flex size-full items-center justify-between p-4">

@@ -19,9 +19,8 @@ gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   // handle scroll positions
   const sectionRef = useRef(
-    Object.fromEntries(navItems.map(({ target }) => [target, createRef()]))
+    Object.fromEntries(navItems.map(({ target }) => [target, createRef()])),
   ).current;
-  console.log(sectionRef);
 
   const windowSize = useResponsiveAnim();
 

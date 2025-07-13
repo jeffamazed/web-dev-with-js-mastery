@@ -128,7 +128,7 @@ const Story = ({ windowSize, scrollRef }) => {
       id="prologue"
       className="min-h-dvh w-full text-blue-50"
     >
-      <div className="flex size-full flex-col items-center py-10 text-center relative">
+      <div className="flex size-full flex-col items-center py-10 text-center relative container mx-auto">
         <header className="flex flex-col gap-5 w-full">
           <h2 className="font-general text-xs uppercase lg:text-sm">
             the multiversal ip world
