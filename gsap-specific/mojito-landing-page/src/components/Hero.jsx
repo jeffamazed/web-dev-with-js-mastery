@@ -85,6 +85,7 @@ const Hero = ({ responsive }) => {
           trigger.kill();
         }
       });
+      gsap.killTweensOf(video);
 
       gsap
         .timeline({
@@ -136,7 +137,7 @@ const Hero = ({ responsive }) => {
     {
       scope: heroRef,
       dependencies: [responsive, isMobile],
-    }
+    },
   );
 
   return (

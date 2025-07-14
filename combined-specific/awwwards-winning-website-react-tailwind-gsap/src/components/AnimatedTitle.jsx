@@ -41,10 +41,10 @@ const AnimatedTitle = ({ title, containerClass, id, windowSize }) => {
           transformOrigin: "50% 50% -150px",
           ease: "power2.inOut",
           stagger: 0.02,
-        }
+        },
       );
     },
-    { scope: containerRef, dependencies: [windowSize] }
+    { scope: containerRef, dependencies: [windowSize] },
   );
 
   return (

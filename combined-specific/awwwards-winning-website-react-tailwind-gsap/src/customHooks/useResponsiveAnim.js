@@ -15,7 +15,6 @@ const useWindowSize = (delay = 150) => {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         setSize({ width: window.innerWidth, height: window.innerHeight });
-        ScrollTrigger.refresh();
       }, delay);
     };
     window.addEventListener("orientationchange", handleResize);

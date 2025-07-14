@@ -30,8 +30,9 @@ const Navbar = ({ sectionRef, responsive }) => {
 
       gsap.killTweensOf([nav, ul]);
       ScrollTrigger.getById("nav-trigger")?.kill();
-      if (!isMobile && ul) {
-        gsap.set(ul, { clearProps: "backgroundColor,backdropFilter" });
+      if (nav || ul) {
+        gsap.set(nav, { clearProps: "all" });
+        gsap.set(ul, { clearProps: "backgroundColor, backdropFilter" });
       }
 
       const navTween = gsap.timeline({
@@ -108,7 +109,7 @@ const Navbar = ({ sectionRef, responsive }) => {
         </div>
         <ul
           id="navbar-menu"
-          className={`size-full absolute top-[100%] transition duration-200 ${
+          className={`size-full left-0 absolute top-[100%] transition duration-200 ${
             isNavExpanded ? "translate-y-0" : "-translate-y-[100%] opacity-0"
           } md:static md:w-fit`}
           aria-hidden={!isNavExpanded}

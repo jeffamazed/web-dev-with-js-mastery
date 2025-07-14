@@ -37,7 +37,7 @@ const Cocktails = ({ scrollRef }) => {
     {
       scope: cocktailsRef,
       dependencies: [],
-    }
+    },
   );
 
   return (

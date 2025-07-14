@@ -23,7 +23,6 @@ const App = () => {
   ).current;
 
   const windowSize = useResponsiveAnim();
-  console.log(windowSize);
 
   return (
     <>
