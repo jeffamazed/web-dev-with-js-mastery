@@ -8,6 +8,8 @@ const useResponsive = (delay = 150) => {
   const timeoutRef = useRef(null);
 
   useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined")
+      return;
     const handleResize = () => {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
@@ -18,7 +20,10 @@ const useResponsive = (delay = 150) => {
     window.addEventListener("resize", handleResize);
 
     handleResize();
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timeoutRef.current);
+    };
   }, [delay]);
 
   return size;

@@ -5,11 +5,18 @@ import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const Navbar = ({ sectionRef }) => {
-  const [isNavExpanded, setIsNavExpanded] = useState(false);
-  const isMobile = useMediaQuery({ maxWidth: 767 });
+const Navbar = ({ sectionRef, responsive }) => {
+  const [isNavExpanded, setIsNavExpanded] = useState(
+    responsive.width > 768 ? true : false
+  );
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const navRef = useRef(null);
+  const ulContainerRef = useRef(null);
 
   useEffect(() => {
     if (!isMobile) setIsNavExpanded(true);
@@ -26,31 +33,63 @@ const Navbar = ({ sectionRef }) => {
     e.preventDefault();
   };
 
-  const headerShadow = !isMobile
-    ? "shadow-md shadow-zinc-800/30"
-    : isNavExpanded
-    ? ""
-    : "shadow-md shadow-zinc-800/30";
+  useGSAP(
+    () => {
+      const nav = navRef.current;
+      const ul = ulContainerRef.current;
+      if (!nav || !ul) return;
 
+      ScrollTrigger.getById("nav-trigger")?.kill();
+
+      gsap.fromTo(
+        [nav, ul],
+        {
+          backdropFilter: "blur(0px)",
+        },
+        {
+          backdropFilter: "blur(4px)",
+
+          scrollTrigger: {
+            id: "nav-trigger",
+            trigger: nav,
+            start: "bottom top",
+            toggleActions: "play none none reverse",
+            duration: 0.2,
+          },
+        }
+      );
+    },
+    { scope: navRef, dependencies: [responsive] }
+  );
+
+  const headerBg = !isMobile
+    ? "bg-transparent"
+    : isNavExpanded
+    ? "bg-black"
+    : "";
   return (
     <header
-      className={`w-full flex-center fixed z-50 bg-zinc/80 ${headerShadow}`}
+      ref={navRef}
+      className={`w-full px-5 sm:px-10 flex-center fixed z-50 ${headerBg} transition-colors duration-200`}
     >
-      <nav className="flex items-center justify-between w-full screen-max-width py-5 relative">
-        <a
-          href="https://www.apple.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block ms-5 sm:ms-10 custom-ring flex-1"
-          aria-label="Apple"
-        >
-          <img src={appleImg} alt="Apple logo" width={14} height={18} />
-        </a>
+      <nav className="flex items-center justify-between w-full container py-5">
+        <div className="block flex-1">
+          <a
+            href="https://www.apple.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Apple"
+            className="block w-fit"
+          >
+            <img src={appleImg} alt="Apple logo" width={14} height={18} />
+          </a>
+        </div>
 
         <div
-          className={`absolute top-[100%] -z-10 size-full flex-center transition-transform duration-200 bg-zinc/80 flex-1 ${
-            isNavExpanded ? "translate-y-0" : "-translate-y-[100%]"
-          } ${!isMobile && "static w-fit z-auto"}`}
+          ref={ulContainerRef}
+          className={`absolute top-[100%] -z-10 size-full left-0 flex-center transition-all duration-200 flex-1 ${
+            isNavExpanded ? "translate-y-0 bg-black" : "-translate-y-[100%]"
+          } ${!isMobile && "static w-fit z-auto bg-transparent"}`}
         >
           <ul
             id="nav-ul"
@@ -64,7 +103,7 @@ const Navbar = ({ sectionRef }) => {
                 <a
                   href={`#${target}`}
                   onClick={(e) => handleScrollIntoView(e, target)}
-                  className="custom-ring text-sm text-gray hover:text-custom-white transition-all duration-200"
+                  className="text-sm text-gray hover:text-custom-white focus-visible:text-custom-white transition-all duration-200 ease-in"
                   tabIndex={isNavExpanded ? 1 : -1}
                 >
                   {name}
@@ -80,7 +119,7 @@ const Navbar = ({ sectionRef }) => {
               aria-label={
                 isNavExpanded ? "Collapse navigation" : "Expand navigation"
               }
-              className="cursor-pointer absolute top-[100%] px-3 text-xs border-2 border-gray-200/10 hover:border-gray-200/40 transition-colors duration-200 rounded-sm custom-ring"
+              className="nav-expand-btn"
               onClick={handleNavExpand}
             >
               {isNavExpanded ? (
@@ -92,7 +131,7 @@ const Navbar = ({ sectionRef }) => {
           )}
         </div>
 
-        <div className="flex justify-end gap-7 me-5 sm:me-10 flex-1">
+        <div className="flex justify-end gap-7 flex-1">
           <img
             src={searchImg}
             alt="search"
