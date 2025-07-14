@@ -11,17 +11,10 @@ const Hero = ({ responsive }) => {
   const titleRef = useRef(null);
   const heroLeftLeafRef = useRef(null);
   const heroRightLeafRef = useRef(null);
-  const originalSubRef = useRef([]);
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const cocktailsHeight = responsive.cocktailsHeight;
-
-  useEffect(() => {
-    const subEls = heroRef.current?.querySelectorAll(".subtitle");
-
-    if (subEls) {
-      originalSubRef.current = Array.from(subEls).map((el) => el.innerHTML);
-    }
-  }, []);
+  const paragraphSplitRef = useRef(null);
+  const heroSplitRef = useRef(null);
 
   useGSAP(
     () => {
@@ -32,7 +25,6 @@ const Hero = ({ responsive }) => {
       const video = videoRef.current;
 
       if (
-        !originalSubRef.current.length ||
         !title ||
         !hero ||
         !rightLeaf ||
@@ -42,32 +34,33 @@ const Hero = ({ responsive }) => {
       )
         return;
 
-      let heroSplit;
-      let paragraphSplit;
-
-      heroRef.current
-        .querySelectorAll(".subtitle")
-        .forEach((el, i) => (el.innerHTML = originalSubRef.current[i]));
+      if (paragraphSplitRef.current) paragraphSplitRef.current.revert();
+      if (heroSplitRef.current) heroSplitRef.current.revert();
 
       document.fonts.ready.then(() => {
-        heroSplit = new SplitText(title, {
+        heroSplitRef.current = new SplitText(title, {
           type: "chars, words",
         });
-        paragraphSplit = new SplitText(hero.querySelectorAll(".subtitle"), {
-          type: "lines",
-        });
+        paragraphSplitRef.current = new SplitText(
+          hero.querySelectorAll(".subtitle"),
+          {
+            type: "lines",
+          },
+        );
 
         // applying class to each char because animating each char
-        heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
+        heroSplitRef.current.chars.forEach((char) =>
+          char.classList.add("text-gradient"),
+        );
 
-        gsap.from(heroSplit.chars, {
+        gsap.from(heroSplitRef.current.chars, {
           yPercent: 100,
           duration: 1.8,
           ease: "expo.out",
           stagger: 0.06,
         });
 
-        gsap.from(paragraphSplit.lines, {
+        gsap.from(paragraphSplitRef.current.lines, {
           opacity: 0,
           yPercent: 100,
           duration: 1.8,
@@ -115,22 +108,29 @@ const Hero = ({ responsive }) => {
         },
       });
 
-      video.onloadedmetadata = () => {
-        if (video.duration > 0) {
-          videoTimeline.to(video, {
-            currentTime: video.duration,
-          });
-        }
-      };
+      // prevent race condition, bcs video metadata is already loaded
+      if (video.readyState >= 1 && video.duration > 0) {
+        videoTimeline.to(video, {
+          currentTime: video.duration,
+        });
+      } else {
+        video.onloadedmetadata = () => {
+          if (video.duration > 0) {
+            videoTimeline.to(video, {
+              currentTime: video.duration,
+            });
+          }
+        };
+      }
 
       return () => {
-        if (heroSplit) {
-          heroSplit.revert();
-          heroSplit = null;
+        if (heroSplitRef.current) {
+          heroSplitRef.current.revert();
+          heroSplitRef.current = null;
         }
-        if (paragraphSplit) {
-          paragraphSplit.revert();
-          paragraphSplit = null;
+        if (paragraphSplitRef.current) {
+          paragraphSplitRef.current.revert();
+          paragraphSplitRef.current = null;
         }
       };
     },

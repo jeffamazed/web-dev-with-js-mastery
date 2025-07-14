@@ -7,12 +7,25 @@ const About = ({ scrollRef }) => {
   const aboutRef = useRef(null);
   const titleRef = useRef(null);
   const pictureGridRef = useRef(null);
+  const titleSplitRef = useRef(null);
 
   useGSAP(
     () => {
-      let titleSplit;
+      const gridChild = pictureGridRef.current.querySelectorAll(".grid-child");
+      if (
+        !aboutRef.current ||
+        !titleRef.current ||
+        !gridChild ||
+        !gridChild.length
+      )
+        return;
+
+      if (titleSplitRef.current) titleSplitRef.current.revert();
+
       document.fonts.ready.then(() => {
-        titleSplit = new SplitText(titleRef.current, { type: "words" });
+        titleSplitRef.current = new SplitText(titleRef.current, {
+          type: "words",
+        });
 
         const titleTimeline = gsap.timeline({
           scrollTrigger: {
@@ -21,7 +34,7 @@ const About = ({ scrollRef }) => {
           },
         });
 
-        titleTimeline.from(titleSplit.words, {
+        titleTimeline.from(titleSplitRef.current.words, {
           opacity: 0,
           duration: 1,
           yPercent: 100,
@@ -38,21 +51,18 @@ const About = ({ scrollRef }) => {
         },
       });
 
-      gridTimeline.from(
-        pictureGridRef.current.querySelectorAll(".grid-child"),
-        {
-          opacity: 0,
-          duration: 1.5,
-          ease: "power1.inOut",
-          stagger: 0.04,
-        }
-      );
+      gridTimeline.from(gridChild, {
+        opacity: 0,
+        duration: 1.5,
+        ease: "power1.inOut",
+        stagger: 0.04,
+      });
 
       return () => {
-        if (titleSplit) titleSplit.revert();
+        if (titleSplitRef.current) titleSplitRef.current.revert();
       };
     },
-    { scope: aboutRef, dependencies: [] }
+    { scope: aboutRef, dependencies: [] },
   );
 
   return (

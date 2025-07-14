@@ -10,20 +10,8 @@ const Contact = ({ scrollRef, responsive }) => {
   const titleRef = useRef(null);
   const footerLeftLeafRef = useRef(null);
   const footerRightLeafRef = useRef(null);
-  const originalContentRef = useRef([]);
-
-  useEffect(() => {
-    const contact = contactRef.current;
-    const title = titleRef.current;
-    if (!contact || !title) return;
-
-    const contentElements = contact.querySelectorAll("h3, p");
-
-    const allElements = [title, ...Array.from(contentElements)];
-
-    // Store their innerHTML into the ref
-    originalContentRef.current = allElements.map((el) => el.innerHTML);
-  }, []);
+  const titleSplitRef = useRef(null);
+  const contentSplitRef = useRef(null);
 
   useGSAP(
     () => {
@@ -32,17 +20,8 @@ const Contact = ({ scrollRef, responsive }) => {
       const leftLeaf = footerLeftLeafRef.current;
       const rightLeaf = footerRightLeafRef.current;
       if (!contact || !title || !leftLeaf || !rightLeaf) return;
-
-      const contentElements = [
-        titleRef.current,
-        ...contactRef.current.querySelectorAll("h3, p"),
-      ];
-
-      contentElements.forEach((el, i) => {
-        if (originalContentRef.current[i]) {
-          el.innerHTML = originalContentRef.current[i];
-        }
-      });
+      if (titleSplitRef.current) titleSplitRef.current.revert();
+      if (contentSplitRef.current) contentSplitRef.current.revert();
 
       ScrollTrigger.getAll().forEach((trigger) => {
         if (trigger.vars.group === "contact-trigger") {
@@ -50,16 +29,16 @@ const Contact = ({ scrollRef, responsive }) => {
         }
       });
 
-      let titleSplit;
-      let contentSplit;
-
       const initAnimations = async () => {
         await document.fonts.ready;
 
-        titleSplit = new SplitText(title, { type: "words" });
-        contentSplit = new SplitText(contact.querySelectorAll("h3, p"), {
-          type: "lines",
-        });
+        titleSplitRef.current = new SplitText(title, { type: "words" });
+        contentSplitRef.current = new SplitText(
+          contact.querySelectorAll("h3, p"),
+          {
+            type: "lines",
+          },
+        );
 
         setTimeout(() => {
           const splitTimeline = gsap.timeline({
@@ -73,7 +52,7 @@ const Contact = ({ scrollRef, responsive }) => {
 
           splitTimeline
             .fromTo(
-              titleSplit.words,
+              titleSplitRef.current.words,
               {
                 opacity: 0,
                 yPercent: -100,
@@ -82,10 +61,10 @@ const Contact = ({ scrollRef, responsive }) => {
               {
                 opacity: 1,
                 yPercent: 0,
-              }
+              },
             )
             .fromTo(
-              contentSplit.lines,
+              contentSplitRef.current.lines,
               {
                 opacity: 0,
                 yPercent: 100,
@@ -94,7 +73,7 @@ const Contact = ({ scrollRef, responsive }) => {
               {
                 opacity: 1,
                 yPercent: 0,
-              }
+              },
             );
 
           // animate leaves
@@ -111,20 +90,20 @@ const Contact = ({ scrollRef, responsive }) => {
             })
             .fromTo(rightLeaf, { y: 0 }, { y: -100 })
             .fromTo(leftLeaf, { y: 0 }, { y: -100 });
-        }, 200);
+        }, 150);
       };
 
       initAnimations();
 
       return () => {
-        if (titleSplit) titleSplit.revert();
-        if (contentSplit) contentSplit.revert();
+        if (titleSplitRef.current) titleSplitRef.current.revert();
+        if (contentSplitRef.current) contentSplitRef.current.revert();
       };
     },
     {
       scope: contactRef,
       dependencies: [responsive],
-    }
+    },
   );
 
   return (
