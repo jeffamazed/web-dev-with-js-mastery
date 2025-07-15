@@ -95,11 +95,11 @@ const Navbar = ({ sectionRef }) => {
 
   const handleScrollIntoView = (e, target) => {
     const section = sectionRef[target].current;
-    if (!section) return;
+    const nav = navContainerRef.current;
+    if (!section || !nav) return;
     e.preventDefault();
     setIsUserClickNav(true);
 
-    const nav = navContainerRef.current;
     const navOffset = nav.getBoundingClientRect().bottom;
     const sectionTop = section.getBoundingClientRect().top + scrollY;
 
