@@ -111,13 +111,13 @@ const Hero = ({ scrollRef }) => {
         heroRef.current = el;
         scrollRef.current = el;
       }}
+      aria-busy={isLoading}
+      aria-live="polite"
     >
       {isLoading && (
         <div
           className="flex-center absolute z-[100] size-full overflow-hidden bg-violet-50"
           role="status"
-          aria-live="polite"
-          aria-busy="true"
         >
           <span className="sr-only">Loading...</span>
           <div className="three-body" aria-hidden="true">
