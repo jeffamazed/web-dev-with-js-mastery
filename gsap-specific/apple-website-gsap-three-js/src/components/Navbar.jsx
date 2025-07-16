@@ -9,13 +9,13 @@ import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import handleScrollIntoView from "../utils/handleScrollIntoView";
 
-const Navbar = ({ sectionRef, responsive }) => {
+const Navbar = ({ sectionRef, responsive, navRef }) => {
   const [isNavExpanded, setIsNavExpanded] = useState(
     responsive.width > 768 ? true : false
   );
   const isMobile = useMediaQuery({ maxWidth: 768 });
-  const navRef = useRef(null);
   const ulContainerRef = useRef(null);
 
   useEffect(() => {
@@ -25,12 +25,6 @@ const Navbar = ({ sectionRef, responsive }) => {
 
   const handleNavExpand = () => {
     setIsNavExpanded((prev) => !prev);
-  };
-
-  const handleScrollIntoView = (e, target) => {
-    const section = sectionRef[target].current;
-    if (!section) return;
-    e.preventDefault();
   };
 
   useGSAP(
@@ -47,7 +41,7 @@ const Navbar = ({ sectionRef, responsive }) => {
           backdropFilter: "blur(0px)",
         },
         {
-          backdropFilter: "blur(4px)",
+          backdropFilter: "blur(8px)",
 
           scrollTrigger: {
             id: "nav-trigger",
@@ -73,7 +67,7 @@ const Navbar = ({ sectionRef, responsive }) => {
       className={`w-full px-5 sm:px-10 flex-center fixed z-50 ${headerBg} transition-colors duration-200`}
     >
       <nav className="flex items-center justify-between w-full container py-5">
-        <div className="block flex-1">
+        <div className="flex-1">
           <a
             href="https://www.apple.com/"
             target="_blank"
@@ -88,21 +82,32 @@ const Navbar = ({ sectionRef, responsive }) => {
         <div
           ref={ulContainerRef}
           className={`absolute top-[100%] -z-10 size-full left-0 flex-center transition-all duration-200 flex-1 ${
-            isNavExpanded ? "translate-y-0 bg-black" : "-translate-y-[100%]"
-          } ${!isMobile && "static w-fit z-auto bg-transparent"}`}
+            !isMobile
+              ? "static w-fit z-auto bg-transparent"
+              : isNavExpanded
+              ? "translate-y-0 bg-black"
+              : "-translate-y-[100%]"
+          }`}
         >
           <ul
             id="nav-ul"
-            className={`flex justify-evenly gap-5 md:gap-10 transition-opacity duration-75 w-full ${
-              isNavExpanded ? "opacity-100" : "opacity-0"
-            } ${!isMobile && "opacity-100"}`}
+            className={`flex justify-evenly max-md:flex-wrap items-center gap-5 md:gap-10 transition-opacity duration-75 w-full ${
+              !isMobile
+                ? "opacity-100"
+                : isNavExpanded
+                ? "opacity-100"
+                : "opacity-0"
+            }`}
             aria-hidden={!isNavExpanded}
           >
             {navItems.map(({ name, target }) => (
               <li key={name}>
                 <a
                   href={`#${target}`}
-                  onClick={(e) => handleScrollIntoView(e, target)}
+                  onClick={(e) => {
+                    const section = sectionRef[target];
+                    handleScrollIntoView(e, navRef, section);
+                  }}
                   className="text-sm text-gray hover:text-custom-white focus-visible:text-custom-white transition-all duration-200 ease-in"
                   tabIndex={isNavExpanded ? 1 : -1}
                 >
