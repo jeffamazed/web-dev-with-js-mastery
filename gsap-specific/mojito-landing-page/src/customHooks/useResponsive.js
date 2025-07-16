@@ -13,22 +13,26 @@ const useResponsive = (delay = 150) => {
       return;
     const updateSize = () => {
       const cocktails = document.getElementById("cocktails");
-
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        setSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-          cocktailsHeight: cocktails?.getBoundingClientRect().height || 0,
-        });
-      }, delay);
+      if (document.visibilityState === "visible") {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+          setSize({
+            width: window.innerWidth,
+            height: window.innerHeight,
+            cocktailsHeight: cocktails?.getBoundingClientRect().height || 0,
+          });
+        }, delay);
+      }
     };
 
     updateSize();
     window.addEventListener("resize", updateSize);
+    document.addEventListener("visibilitychange", updateSize);
 
     return () => {
       window.removeEventListener("resize", updateSize);
+      document.removeEventListener("visibilitychange", updateSize);
+
       clearTimeout(timeoutRef.current);
     };
   }, [delay]);

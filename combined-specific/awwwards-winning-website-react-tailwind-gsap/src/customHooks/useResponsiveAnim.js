@@ -12,18 +12,20 @@ const useWindowSize = (delay = 150) => {
     if (typeof window === "undefined" || typeof document === "undefined")
       return;
     const handleResize = () => {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        setSize({ width: window.innerWidth, height: window.innerHeight });
-      }, delay);
+      if (document.visibilityState === "visible") {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+          setSize({ width: window.innerWidth, height: window.innerHeight });
+        }, delay);
+      }
     };
-    window.addEventListener("orientationchange", handleResize);
-    window.addEventListener("resize", handleResize);
 
+    window.addEventListener("resize", handleResize);
+    document.addEventListener("visibilitychange", handleResize);
     handleResize();
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
+
       clearTimeout(timeoutRef.current);
     };
   }, [delay]);
