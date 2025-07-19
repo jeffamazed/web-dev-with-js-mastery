@@ -9,12 +9,17 @@ import useVisibilityChange from "./customHooks/useVisibilityChange";
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
+  // for handling sectionRef for linking purposes
   const sectionRef = useRef(
     Object.fromEntries(navItems.map(({ target }) => [target, createRef()]))
   ).current;
+
+  // for responsiveness of gsap animation
   const responsive = useResponsive();
   const navRef = useRef(null);
   const highlightsRef = useRef(null);
+
+  // for handling multiple video refs for later use
   const totalVideos = 5;
   const videosRef = useRef(
     Array.from({ length: totalVideos }, () => createRef())

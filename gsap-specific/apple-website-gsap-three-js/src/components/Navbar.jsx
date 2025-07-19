@@ -14,6 +14,7 @@ const Navbar = ({ sectionRef, responsive, navRef }) => {
   );
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
+  // handling responsive navbar
   useEffect(() => {
     if (!isMobile) setIsNavExpanded(true);
     else setIsNavExpanded(false);
@@ -23,6 +24,7 @@ const Navbar = ({ sectionRef, responsive, navRef }) => {
     setIsNavExpanded((prev) => !prev);
   };
 
+  // handle nav bg for mobile
   const headerBg = !isMobile
     ? "bg-transparent"
     : isNavExpanded

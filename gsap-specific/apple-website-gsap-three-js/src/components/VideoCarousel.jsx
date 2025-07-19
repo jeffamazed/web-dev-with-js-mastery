@@ -27,6 +27,7 @@ const VideoCarousel = ({ responsive }) => {
 
   const { isEnd, isLastVideo, startPlay, videoId, isPlaying } = video;
 
+  // handling init of video playing
   useGSAP(
     () => {
       const videos = videoRef.current;
@@ -63,6 +64,7 @@ const VideoCarousel = ({ responsive }) => {
     { scope: sectionRef, dependencies: [isEnd, videoId, responsive] }
   );
 
+  // for handling init of videos
   useEffect(() => {
     if (loadedData.length > 3) {
       if (!isPlaying) {
@@ -132,6 +134,7 @@ const VideoCarousel = ({ responsive }) => {
     if (isPlaying) gsap.ticker.add(animUpdate);
     else gsap.ticker.remove(animUpdate);
 
+    // to prevent animUpdate from being called repeatedly
     if (isLastVideo) {
       setTimeout(() => {
         gsap.ticker.remove(animUpdate);
@@ -153,6 +156,7 @@ const VideoCarousel = ({ responsive }) => {
     };
   }, [videoId, startPlay, isPlaying, progressBarWidth, isLastVideo]);
 
+  // switch for handling proccess of videos' states
   const handleProcess = (type, i) => {
     switch (type) {
       case "video-end":

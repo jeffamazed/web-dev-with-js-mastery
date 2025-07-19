@@ -11,6 +11,7 @@ const Highlights = ({ highlightsRef, responsive }) => {
   const linkContainerRef = useRef(null);
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
+  // handle animation for titles
   useGSAP(
     () => {
       const title = titleRef.current;
