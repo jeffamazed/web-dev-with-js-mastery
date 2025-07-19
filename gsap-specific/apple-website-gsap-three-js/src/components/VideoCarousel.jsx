@@ -90,6 +90,7 @@ const VideoCarousel = ({ responsive }) => {
         // use 97 to avoid glitching when video is about to end
         if (progress < threshold && isPlaying) {
           const offset = ((100 - threshold) * progress) / threshold;
+          const lValue = 100 - (42 * (progress + offset)) / 100;
 
           gsap.to(videoDiv, {
             width: progressBarWidth,
@@ -97,7 +98,7 @@ const VideoCarousel = ({ responsive }) => {
 
           gsap.to(span, {
             width: `${progress + offset}%`,
-            backgroundColor: "white",
+            backgroundColor: `hsl(209, 100%, ${lValue}%)`,
           });
         }
       },
@@ -235,9 +236,7 @@ const VideoCarousel = ({ responsive }) => {
       {/* progress bars */}
       <div className="relative flex-center mt-10 gap-6">
         <div
-          className={`flex items-center justify-evenly py-3 bg-gray-300 backdrop-blur-xs rounded-full h-full ${
-            isMobile ? "w-[10rem]" : "w-[14rem]"
-          }`}
+          className={`flex items-center justify-evenly py-3 bg-gray-300 backdrop-blur-xs rounded-full h-full w-[9.25rem] md:w-[10.25rem]`}
         >
           {videoRef.current.map((_, i) => (
             <span
