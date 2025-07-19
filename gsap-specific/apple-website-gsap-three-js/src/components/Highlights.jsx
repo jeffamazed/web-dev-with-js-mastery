@@ -1,15 +1,13 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
-import { useMediaQuery } from "react-responsive";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import VideoCarousel from "./VideoCarousel";
 
-const Highlights = ({ highlightsRef, responsive }) => {
+const Highlights = ({ highlightsRef, responsive, isMobile }) => {
   const titleRef = useRef(null);
   const linkContainerRef = useRef(null);
-  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   // handle animation for titles
   useGSAP(
@@ -79,7 +77,7 @@ const Highlights = ({ highlightsRef, responsive }) => {
           </div>
         </div>
 
-        <VideoCarousel responsive={responsive} />
+        <VideoCarousel responsive={responsive} isMobile={isMobile} />
       </div>
     </section>
   );

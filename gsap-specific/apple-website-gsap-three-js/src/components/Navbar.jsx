@@ -1,4 +1,3 @@
-import { useMediaQuery } from "react-responsive";
 import { navItems } from "../constants";
 import { appleImg, bagImg, searchImg } from "../utils";
 import {
@@ -8,11 +7,10 @@ import {
 import { useEffect, useState } from "react";
 import handleScrollIntoView from "../utils/handleScrollIntoView";
 
-const Navbar = ({ sectionRef, responsive, navRef }) => {
+const Navbar = ({ sectionRef, responsive, navRef, isMobile }) => {
   const [isNavExpanded, setIsNavExpanded] = useState(
     responsive.width > 768 ? true : false
   );
-  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   // handling responsive navbar
   useEffect(() => {

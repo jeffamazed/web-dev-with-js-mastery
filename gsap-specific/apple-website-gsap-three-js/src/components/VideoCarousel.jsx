@@ -4,10 +4,10 @@ import gsap from "gsap";
 import { CiPlay1, CiPause1 } from "react-icons/ci";
 import { CiRedo } from "react-icons/ci";
 import { useGSAP } from "@gsap/react";
-import { useMediaQuery } from "react-responsive";
+
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const VideoCarousel = ({ responsive }) => {
+const VideoCarousel = ({ responsive, isMobile }) => {
   const videoRef = useRef([]);
   const videoSpanRef = useRef([]);
   const videoDivRef = useRef([]);
@@ -22,7 +22,7 @@ const VideoCarousel = ({ responsive }) => {
     isLastVideo: false,
     isPlaying: false,
   });
-  const isMobile = useMediaQuery({ maxWidth: 768 });
+
   const progressBarWidth = isMobile ? "2rem" : "3rem";
 
   const { isEnd, isLastVideo, startPlay, videoId, isPlaying } = video;

@@ -5,6 +5,7 @@ import useResponsive from "./customHooks/useResponsive";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import useVisibilityChange from "./customHooks/useVisibilityChange";
+import { useMediaQuery } from "react-responsive";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,9 +27,17 @@ const App = () => {
   ).current;
   useVisibilityChange(videosRef);
 
+  // parent level isMobile
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+
   return (
     <>
-      <Navbar sectionRef={sectionRef} responsive={responsive} navRef={navRef} />
+      <Navbar
+        sectionRef={sectionRef}
+        responsive={responsive}
+        navRef={navRef}
+        isMobile={isMobile}
+      />
       <main className="w-full overflow-x-hidden">
         <Hero
           responsive={responsive}
