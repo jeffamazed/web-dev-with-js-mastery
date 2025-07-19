@@ -85,15 +85,18 @@ const VideoCarousel = ({ responsive }) => {
     const anim = gsap.to(span, {
       onUpdate: () => {
         const progress = anim.progress() * 100;
+        const threshold = 97;
 
         // use 97 to avoid glitching when video is about to end
-        if (progress < 97 && isPlaying) {
+        if (progress < threshold && isPlaying) {
+          const offset = ((100 - threshold) * progress) / threshold;
+
           gsap.to(videoDiv, {
             width: progressBarWidth,
           });
 
           gsap.to(span, {
-            width: `${progress}%`,
+            width: `${progress + offset}%`,
             backgroundColor: "white",
           });
         }
@@ -178,7 +181,11 @@ const VideoCarousel = ({ responsive }) => {
         <h3 className="sr-only">iPhone Video Carousel</h3>
         <div className="flex items-center w-fit" ref={trackRef}>
           {hightlightsSlides.map((list, i) => (
-            <article key={list.id} className="sm:pr-20 pr-10">
+            <article
+              key={list.id}
+              className="sm:pr-20 pr-10"
+              aria-hidden={i !== videoId}
+            >
               <div className="video-carousel_container">
                 <div className="size-full flex-center rounded-3xl overflow-hidden bg-black">
                   <video
@@ -186,6 +193,7 @@ const VideoCarousel = ({ responsive }) => {
                       list.id === 2 &&
                       "translate-x-10 sm:translate-x-20 md:translate-x-30"
                     }`}
+                    role="presentation"
                     playsInline
                     tabIndex={-1}
                     preload="auto"
