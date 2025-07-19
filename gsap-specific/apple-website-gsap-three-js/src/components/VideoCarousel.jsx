@@ -83,21 +83,12 @@ const VideoCarousel = ({ responsive }) => {
     const video = videoRef.current[videoId];
     if (!span || !videoDiv || !video) return;
 
-    // clean up first
-    gsap.set(span, { width: "0%", backgroundColor: "#afafaf" });
-    gsap.set(videoDiv, {
-      width: progressBarWidth,
-    });
-
-    let currentProgress = 0;
-
     const anim = gsap.to(span, {
       onUpdate: () => {
-        const progress = Math.ceil(anim.progress() * 100);
+        const progress = anim.progress() * 100;
 
-        if (progress !== currentProgress) {
-          currentProgress = progress;
-
+        // use 98 to avoid glitching when video is about to end
+        if (progress < 98 && isPlaying) {
           gsap.to(videoDiv, {
             width: progressBarWidth,
           });
@@ -114,7 +105,8 @@ const VideoCarousel = ({ responsive }) => {
             width: "0.75rem",
           });
           gsap.to(span, {
-            backgroundColor: "#afafaf",
+            backgroundColor: "transparent",
+            width: "0%",
           });
         }
       },
@@ -145,8 +137,10 @@ const VideoCarousel = ({ responsive }) => {
 
     // handle pausing the video when tab is out of focus
     const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") video.play();
-      else video.pause();
+      if (!isLastVideo) {
+        if (document.visibilityState === "visible") video.play();
+        else video.pause();
+      }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
