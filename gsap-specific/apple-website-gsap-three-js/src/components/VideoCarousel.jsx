@@ -23,8 +23,7 @@ const VideoCarousel = ({ responsive }) => {
     isPlaying: false,
   });
   const isMobile = useMediaQuery({ maxWidth: 768 });
-  const isTablet = useMediaQuery({ maxWidth: 1080 });
-  const progressBarWidth = isMobile ? "10vw" : isTablet ? "6vw" : "4vw";
+  const progressBarWidth = isMobile ? "2rem" : "3rem";
 
   const { isEnd, isLastVideo, startPlay, videoId, isPlaying } = video;
 
@@ -225,13 +224,18 @@ const VideoCarousel = ({ responsive }) => {
         </div>
       </section>
 
+      {/* progress bars */}
       <div className="relative flex-center mt-10 gap-6">
-        <div className="flex-center px-5 py-3 bg-gray-300 backdrop-blur-xs rounded-full h-full">
+        <div
+          className={`flex items-center justify-evenly py-3 bg-gray-300 backdrop-blur-xs rounded-full h-full ${
+            isMobile ? "w-[10rem]" : "w-[14rem]"
+          }`}
+        >
           {videoRef.current.map((_, i) => (
             <span
               key={i}
               ref={(el) => (videoDivRef.current[i] = el)}
-              className="mx-2 w-3 h-3 bg-gray-200 rounded-full relative"
+              className="w-3 h-3 bg-gray-200 rounded-full relative"
             >
               <span
                 className="absolute size-full rounded-full"
