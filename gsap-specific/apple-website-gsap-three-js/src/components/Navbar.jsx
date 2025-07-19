@@ -5,10 +5,7 @@ import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useState } from "react";
 import handleScrollIntoView from "../utils/handleScrollIntoView";
 
 const Navbar = ({ sectionRef, responsive, navRef }) => {
@@ -16,7 +13,6 @@ const Navbar = ({ sectionRef, responsive, navRef }) => {
     responsive.width > 768 ? true : false
   );
   const isMobile = useMediaQuery({ maxWidth: 768 });
-  const ulContainerRef = useRef(null);
 
   useEffect(() => {
     if (!isMobile) setIsNavExpanded(true);
@@ -27,35 +23,6 @@ const Navbar = ({ sectionRef, responsive, navRef }) => {
     setIsNavExpanded((prev) => !prev);
   };
 
-  useGSAP(
-    () => {
-      const nav = navRef.current;
-      const ul = ulContainerRef.current;
-      if (!nav || !ul) return;
-
-      ScrollTrigger.getById("nav-trigger")?.kill();
-
-      gsap.fromTo(
-        [nav, ul],
-        {
-          backdropFilter: "blur(0px)",
-        },
-        {
-          backdropFilter: "blur(8px)",
-
-          scrollTrigger: {
-            id: "nav-trigger",
-            trigger: nav,
-            start: "bottom top",
-            toggleActions: "play none none reverse",
-            duration: 0.2,
-          },
-        }
-      );
-    },
-    { scope: navRef, dependencies: [responsive] }
-  );
-
   const headerBg = !isMobile
     ? "bg-transparent"
     : isNavExpanded
@@ -64,7 +31,7 @@ const Navbar = ({ sectionRef, responsive, navRef }) => {
   return (
     <header
       ref={navRef}
-      className={`w-full px-5 sm:px-10 flex-center fixed z-50 ${headerBg} transition-colors duration-200`}
+      className={`w-full px-5 sm:px-10 flex-center fixed z-50 backdrop-blur-md ${headerBg} transition-colors duration-200`}
     >
       <nav className="flex items-center justify-between w-full container py-5">
         <div className="flex-1">
@@ -80,7 +47,6 @@ const Navbar = ({ sectionRef, responsive, navRef }) => {
         </div>
 
         <div
-          ref={ulContainerRef}
           className={`absolute top-[100%] -z-10 size-full left-0 flex-center transition-all duration-200 flex-1 ${
             !isMobile
               ? "static w-fit z-auto bg-transparent"
