@@ -4,6 +4,7 @@ import { navItems } from "./constants";
 import useResponsive from "./customHooks/useResponsive";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
+import useVisibilityChange from "./customHooks/useVisibilityChange";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +15,11 @@ const App = () => {
   const responsive = useResponsive();
   const navRef = useRef(null);
   const highlightsRef = useRef(null);
+  const totalVideos = 5;
+  const videosRef = useRef(
+    Array.from({ length: totalVideos }, () => createRef())
+  ).current;
+  useVisibilityChange(videosRef);
 
   return (
     <>
@@ -23,6 +29,7 @@ const App = () => {
           responsive={responsive}
           navRef={navRef}
           highlightsRef={highlightsRef}
+          videosRef={videosRef}
         />
         <Highlights highlightsRef={highlightsRef} responsive={responsive} />
         <div className="h-dvh"></div>

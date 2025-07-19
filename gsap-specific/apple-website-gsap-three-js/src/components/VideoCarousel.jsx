@@ -6,7 +6,6 @@ import { CiRedo } from "react-icons/ci";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import useVisibilityChange from "../customHooks/useVisibilityChange";
 
 const VideoCarousel = ({ responsive }) => {
   const videoRef = useRef([]);
@@ -76,8 +75,6 @@ const VideoCarousel = ({ responsive }) => {
   }, [startPlay, videoId, isPlaying, loadedData]);
 
   const handleCanPlayThrough = (e) => setLoadedData((prev) => [...prev, e]);
-
-  useVisibilityChange(videoRef.current[videoId]);
 
   // animate the progress of the video
   useEffect(() => {

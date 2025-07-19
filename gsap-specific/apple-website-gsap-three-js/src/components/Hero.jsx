@@ -6,15 +6,16 @@ import LoadingIcon from "./LoadingIcon";
 import useAutoPauseVideo from "../customHooks/useAutoPausevideo";
 import handleScrollIntoView from "../utils/handleScrollIntoView";
 
-const Hero = ({ responsive, navRef, highlightsRef }) => {
+const Hero = ({ responsive, navRef, highlightsRef, videosRef }) => {
   const [videoSrc, setVideoSrc] = useState(
     responsive.width < 768 ? smallHeroVideo : heroVideo
   );
+
   const [isVideoLoading, setIsVideoLoading] = useState(true);
   const heroRef = useRef(null);
   const h1Ref = useRef(null);
   const ctaRef = useRef(null);
-  const videoRef = useAutoPauseVideo({ threshold: 0 });
+  const autoPauseVideoRef = useAutoPauseVideo({ threshold: 0 });
 
   // handle video changing
   useEffect(() => {
@@ -57,10 +58,13 @@ const Hero = ({ responsive, navRef, highlightsRef }) => {
           {isVideoLoading && <LoadingIcon />}
           <video
             className="pointer-events-none"
-            ref={videoRef}
+            ref={(el) => {
+              autoPauseVideoRef.current = el;
+              videosRef[0].current = el;
+            }}
             tabIndex={-1}
             autoPlay
-            // loop
+            loop
             muted
             playsInline
             key={videoSrc}

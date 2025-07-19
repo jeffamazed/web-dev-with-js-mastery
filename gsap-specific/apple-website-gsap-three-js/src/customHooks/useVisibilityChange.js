@@ -1,17 +1,23 @@
 import { useEffect } from "react";
 
-const useVisibilityChange = (video) => {
+const useVisibilityChange = (videosRef) => {
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") video.play();
-      else video.pause();
+      videosRef.forEach((videoRef) => {
+        const video = videoRef.current;
+
+        if (video) {
+          if (document.visibilityState === "visible") video.play();
+          else video.pause();
+        }
+      });
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () =>
       document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, [video]);
+  }, [videosRef]);
 };
 
 export default useVisibilityChange;
