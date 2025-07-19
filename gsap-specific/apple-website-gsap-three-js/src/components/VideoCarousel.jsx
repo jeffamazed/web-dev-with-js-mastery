@@ -143,9 +143,16 @@ const VideoCarousel = ({ responsive }) => {
       }, 100);
     }
 
+    // handle pausing the video when tab is out of focus
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") video.play();
+      else video.pause();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
       gsap.ticker.remove(animUpdate);
       anim.kill();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [videoId, startPlay, isPlaying, progressBarWidth, isLastVideo]);
 
