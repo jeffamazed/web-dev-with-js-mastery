@@ -86,8 +86,8 @@ const VideoCarousel = ({ responsive }) => {
       onUpdate: () => {
         const progress = anim.progress() * 100;
 
-        // use 98 to avoid glitching when video is about to end
-        if (progress < 98 && isPlaying) {
+        // use 97 to avoid glitching when video is about to end
+        if (progress < 97 && isPlaying) {
           gsap.to(videoDiv, {
             width: progressBarWidth,
           });
