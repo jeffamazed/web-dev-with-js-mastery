@@ -45,7 +45,11 @@ const App = () => {
           highlightsRef={highlightsRef}
           videosRef={videosRef}
         />
-        <Highlights highlightsRef={highlightsRef} responsive={responsive} />
+        <Highlights
+          highlightsRef={highlightsRef}
+          responsive={responsive}
+          isMobile={isMobile}
+        />
         <div className="h-dvh"></div>
       </main>
     </>

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import VideoCarousel from "./VideoCarousel";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Highlights = ({ highlightsRef, responsive, isMobile }) => {
   const titleRef = useRef(null);
@@ -16,6 +17,8 @@ const Highlights = ({ highlightsRef, responsive, isMobile }) => {
       const highlights = highlightsRef.current;
       const links = linkContainerRef.current.querySelectorAll(".link");
       if (!title || !highlights || !links || !links.length) return;
+      // ensures fresh scroll trigger
+      ScrollTrigger.getById("highlights-trigger")?.kill();
 
       const startValue = isMobile ? "top 70%" : "top 50%";
 
