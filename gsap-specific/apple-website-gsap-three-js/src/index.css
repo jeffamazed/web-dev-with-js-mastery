@@ -11,6 +11,20 @@
   --color-zinc: #101010;
 
   --color-custom-white: #f5f5f5;
+
+  --animate-bop: bop 1s ease-in-out infinite;
+
+  @keyframes bop {
+    0% {
+      transform: scale(0.97);
+    }
+    50% {
+      transform: scale(1.03);
+    }
+    100% {
+      transform: scale(0.97);
+    }
+  }
 }
 
 body,
@@ -62,15 +76,15 @@ canvas {
 }
 
 @utility color-container {
-  @apply flex items-center justify-center px-4 py-4 rounded-full bg-gray-300 backdrop-blur;
+  @apply flex-center gap-4 px-4 py-4 rounded-full bg-gray-300 backdrop-blur;
 }
 
 @utility size-btn-container {
-  @apply flex items-center justify-center p-1 rounded-full bg-gray-300 backdrop-blur ml-3 gap-1;
+  @apply flex-center p-2 rounded-full bg-gray-300 backdrop-blur gap-2;
 }
 
 @utility size-btn {
-  @apply w-10 h-10 text-sm flex justify-center items-center bg-white text-black rounded-full transition-all;
+  @apply w-10 h-10 text-sm cursor-pointer flex justify-center items-center bg-white text-black rounded-full transition-all hover:animate-bop focus-visible:animate-bop will-change-transform active:scale-95;
 }
 
 @utility common-padding {
