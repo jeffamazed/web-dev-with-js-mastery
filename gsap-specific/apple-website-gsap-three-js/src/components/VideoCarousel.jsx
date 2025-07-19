@@ -6,12 +6,14 @@ import { CiRedo } from "react-icons/ci";
 import { useGSAP } from "@gsap/react";
 import { useMediaQuery } from "react-responsive";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useVisibilityChange from "../customHooks/useVisibilityChange";
 
 const VideoCarousel = ({ responsive }) => {
   const videoRef = useRef([]);
   const videoSpanRef = useRef([]);
   const videoDivRef = useRef([]);
   const trackRef = useRef(null);
+  const sectionRef = useRef(null);
 
   const [loadedData, setLoadedData] = useState([]);
   const [video, setVideo] = useState({
@@ -60,7 +62,7 @@ const VideoCarousel = ({ responsive }) => {
         ease: "power4.out",
       });
     },
-    { dependencies: [isEnd, videoId, responsive] }
+    { scope: sectionRef, dependencies: [isEnd, videoId, responsive] }
   );
 
   useEffect(() => {
@@ -74,6 +76,8 @@ const VideoCarousel = ({ responsive }) => {
   }, [startPlay, videoId, isPlaying, loadedData]);
 
   const handleCanPlayThrough = (e) => setLoadedData((prev) => [...prev, e]);
+
+  useVisibilityChange(videoRef.current[videoId]);
 
   // animate the progress of the video
   useEffect(() => {
@@ -102,7 +106,7 @@ const VideoCarousel = ({ responsive }) => {
           });
 
           gsap.to(span, {
-            width: `${currentProgress}%`,
+            width: `${progress}%`,
             backgroundColor: "white",
           });
         }
@@ -110,7 +114,7 @@ const VideoCarousel = ({ responsive }) => {
       onComplete: () => {
         if (isPlaying) {
           gsap.to(videoDiv, {
-            width: "12px",
+            width: "0.75rem",
           });
           gsap.to(span, {
             backgroundColor: "#afafaf",
@@ -133,22 +137,20 @@ const VideoCarousel = ({ responsive }) => {
       }
     };
 
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        animUpdate(); // re-sync GSAP progress
-      }
-    };
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-
     if (isPlaying) gsap.ticker.add(animUpdate);
     else gsap.ticker.remove(animUpdate);
+
+    if (isLastVideo) {
+      setTimeout(() => {
+        gsap.ticker.remove(animUpdate);
+      }, 100);
+    }
 
     return () => {
       gsap.ticker.remove(animUpdate);
       anim.kill();
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [videoId, startPlay, isPlaying, progressBarWidth]);
+  }, [videoId, startPlay, isPlaying, progressBarWidth, isLastVideo]);
 
   const handleProcess = (type, i) => {
     switch (type) {
@@ -174,7 +176,7 @@ const VideoCarousel = ({ responsive }) => {
 
   return (
     <>
-      <section>
+      <section ref={sectionRef}>
         {/* for sr users */}
         <h3 className="sr-only">iPhone Video Carousel</h3>
         <div className="flex items-center w-fit" ref={trackRef}>
