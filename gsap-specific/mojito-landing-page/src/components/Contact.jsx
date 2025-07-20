@@ -130,10 +130,10 @@ const Contact = ({ scrollRef, responsive }) => {
       <div className="content">
         <h2 ref={titleRef}>Step Into Our World</h2>
 
-        <section>
+        <address>
           <h3>Visit Our Bar</h3>
           <p>88 Velvet Oak Ct. #501, Los Angeles, CA 90038</p>
-        </section>
+        </address>
 
         <section>
           <h3>Contact Us</h3>
