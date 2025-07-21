@@ -39,6 +39,24 @@ export const headingTimeline = (trigger, id, startValue) => {
       trigger,
       id,
       start: startValue,
+      toggleActions: "play none none reverse",
+    },
+  });
+};
+
+export const animateWithGsap = (
+  target,
+  animationProps,
+  scrollTriggerTarget,
+  scrollProps
+) => {
+  gsap.to(target, {
+    ...animationProps,
+    scrollTrigger: {
+      trigger: scrollTriggerTarget,
+      toggleActions: "play none none reverse",
+      start: "top 85%",
+      ...scrollProps,
     },
   });
 };

@@ -1,5 +1,5 @@
 import { useRef, createRef } from "react";
-import { Navbar, Hero, Highlights, Model } from "./components";
+import { Navbar, Hero, Highlights, Model, Features } from "./components";
 import { navItems } from "./constants";
 import useResponsive from "./customHooks/useResponsive";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -45,19 +45,24 @@ const App = () => {
         isMobile={isMobile}
       />
       <main className="w-full overflow-x-hidden">
-        <Hero
+        {/* not rendered to reduce lag */}
+        {/* <Hero
           responsive={responsive}
           navRef={navRef}
           highlightsRef={highlightsRef}
           videoRefs={videoRefs}
         />
-        <div className="h-dvh"></div>
-        {/* <Highlights
+        <Highlights
           highlightsRef={highlightsRef}
           responsive={responsive}
           isMobile={isMobile}
         />
         <Model isMobile={isMobile} /> */}
+        <Features
+          isMobile={isMobile}
+          videoRefs={videoRefs}
+          responsive={responsive}
+        />
       </main>
     </>
   );

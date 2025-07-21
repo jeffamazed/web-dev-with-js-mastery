@@ -104,7 +104,7 @@ canvas {
 }
 
 @utility feature-text-container {
-  @apply w-full flex-center flex-col md:flex-row mt-10 md:mt-16 gap-5;
+  @apply w-full flex justify-center items-center flex-col md:flex-row md:items-start mt-10 md:mt-16 gap-5;
 }
 
 @utility feature-video {
