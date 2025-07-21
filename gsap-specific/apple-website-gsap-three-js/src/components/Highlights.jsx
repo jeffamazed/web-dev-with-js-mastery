@@ -1,10 +1,10 @@
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import { useRef } from "react";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import VideoCarousel from "./VideoCarousel";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { headingTimeline } from "../utils/animations";
 
 const Highlights = ({ highlightsRef, responsive, isMobile }) => {
   const titleRef = useRef(null);
@@ -22,13 +22,7 @@ const Highlights = ({ highlightsRef, responsive, isMobile }) => {
 
       const startValue = isMobile ? "top 70%" : "top 50%";
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: highlights,
-          id: "highlights-trigger",
-          start: startValue,
-        },
-      });
+      const tl = headingTimeline(highlights, "highlights-trigger", startValue);
 
       tl.to(
         title,
