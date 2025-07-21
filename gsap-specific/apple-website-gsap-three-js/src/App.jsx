@@ -39,7 +39,7 @@ const App = () => {
         isMobile={isMobile}
       />
       <main className="w-full overflow-x-hidden">
-        <Hero
+        {/* <Hero
           responsive={responsive}
           navRef={navRef}
           highlightsRef={highlightsRef}
@@ -49,7 +49,7 @@ const App = () => {
           highlightsRef={highlightsRef}
           responsive={responsive}
           isMobile={isMobile}
-        />
+        /> */}
         <Model isMobile={isMobile} />
       </main>
     </>

@@ -49,7 +49,7 @@ const ModelView = ({
         {/* make sure to check the fallback later, LoadingIcon doesn't seem to work as expected */}
         <Suspense
           fallback={
-            <Html>
+            <Html fullscreen>
               <LoadingIcon />
             </Html>
           }
