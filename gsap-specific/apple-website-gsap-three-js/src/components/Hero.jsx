@@ -3,10 +3,9 @@ import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 import { heroVideo, smallHeroVideo } from "../utils";
 import LoadingIcon from "./LoadingIcon";
-import useAutoPauseVideo from "../customHooks/useAutoPausevideo";
 import handleScrollIntoView from "../utils/handleScrollIntoView";
 
-const Hero = ({ responsive, navRef, highlightsRef, videosRef }) => {
+const Hero = ({ responsive, navRef, highlightsRef, videoRefs }) => {
   const [videoSrc, setVideoSrc] = useState(
     responsive.width < 768 ? smallHeroVideo : heroVideo
   );
@@ -15,7 +14,6 @@ const Hero = ({ responsive, navRef, highlightsRef, videosRef }) => {
   const heroRef = useRef(null);
   const h1Ref = useRef(null);
   const ctaRef = useRef(null);
-  const autoPauseVideoRef = useAutoPauseVideo({ threshold: 0 });
 
   // handle video changing
   useEffect(() => {
@@ -58,10 +56,7 @@ const Hero = ({ responsive, navRef, highlightsRef, videosRef }) => {
           {isVideoLoading && <LoadingIcon />}
           <video
             className="pointer-events-none"
-            ref={(el) => {
-              autoPauseVideoRef.current = el;
-              videosRef[0].current = el;
-            }}
+            ref={videoRefs[0]}
             tabIndex={-1}
             autoPlay
             loop
