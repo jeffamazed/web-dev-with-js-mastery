@@ -5,10 +5,12 @@ const useVisibilityChange = (videosRef) => {
     const handleVisibilityChange = () => {
       videosRef.forEach((videoRef) => {
         const video = videoRef.current;
+        if (!video) return;
 
-        if (video) {
-          if (document.visibilityState === "visible") video.play();
-          else video.pause();
+        if (document.visibilityState === "visible") {
+          if (video.paused && !video.ended) video.play();
+        } else {
+          if (!video.paused) video.pause();
         }
       });
     };
