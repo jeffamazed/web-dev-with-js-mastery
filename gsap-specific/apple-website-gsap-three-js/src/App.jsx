@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 import useVisibilityChange from "./customHooks/useVisibilityChange";
 import { useMediaQuery } from "react-responsive";
+import useAutoPauseVideo from "./customHooks/useAutoPauseVideo";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,10 +23,15 @@ const App = () => {
 
   // for handling multiple video refs for later use
   const totalVideos = 5;
-  const videosRef = useRef(
+  const videoRefs = useRef(
     Array.from({ length: totalVideos }, () => createRef())
   ).current;
-  useVisibilityChange(videosRef);
+
+  // handle pausing the video when tab is out of focus
+  useVisibilityChange(videoRefs);
+
+  // handle pausing the video when out of sight
+  useAutoPauseVideo({ videoRefs, threshold: 0, responsive });
 
   // parent level isMobile
   const isMobile = useMediaQuery({ maxWidth: 768 });
@@ -39,13 +45,14 @@ const App = () => {
         isMobile={isMobile}
       />
       <main className="w-full overflow-x-hidden">
-        {/* <Hero
+        <Hero
           responsive={responsive}
           navRef={navRef}
           highlightsRef={highlightsRef}
-          videosRef={videosRef}
+          videoRefs={videoRefs}
         />
-        <Highlights
+        <div className="h-dvh"></div>
+        {/* <Highlights
           highlightsRef={highlightsRef}
           responsive={responsive}
           isMobile={isMobile}
