@@ -49,8 +49,8 @@ const App = () => {
           highlightsRef={highlightsRef}
           responsive={responsive}
           isMobile={isMobile}
-        /> */}
-        <Model isMobile={isMobile} />
+        />
+        <Model isMobile={isMobile} /> */}
       </main>
     </>
   );

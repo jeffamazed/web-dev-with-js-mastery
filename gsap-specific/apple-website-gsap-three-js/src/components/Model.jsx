@@ -8,7 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
 import { models, sizes } from "../constants/index";
-import { animateWithGsapTimeline } from "../utils/animations";
+import { animateWithGsapTimeline, headingTimeline } from "../utils/animations";
 
 const Model = ({ isMobile }) => {
   const [size, setSize] = useState("small");
@@ -67,13 +67,7 @@ const Model = ({ isMobile }) => {
 
       const startValue = isMobile ? "top 70%" : "top 50%";
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: model,
-          id: "model-trigger",
-          start: startValue,
-        },
-      });
+      const tl = headingTimeline(model, "model-trigger", startValue);
 
       tl.to(heading, { y: 0, opacity: 1 });
     },

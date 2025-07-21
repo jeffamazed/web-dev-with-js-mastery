@@ -1,3 +1,5 @@
+import gsap from "gsap";
+
 export const animateWithGsapTimeline = (
   tl,
   rotationRef,
@@ -29,4 +31,14 @@ export const animateWithGsapTimeline = (
     },
     "<"
   );
+};
+
+export const headingTimeline = (trigger, id, startValue) => {
+  return gsap.timeline({
+    scrollTrigger: {
+      trigger,
+      id,
+      start: startValue,
+    },
+  });
 };
