@@ -1,5 +1,5 @@
 import { useRef, createRef } from "react";
-import { Navbar, Hero, Highlights } from "./components";
+import { Navbar, Hero, Highlights, Model } from "./components";
 import { navItems } from "./constants";
 import useResponsive from "./customHooks/useResponsive";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -50,7 +50,7 @@ const App = () => {
           responsive={responsive}
           isMobile={isMobile}
         />
-        <div className="h-dvh"></div>
+        <Model isMobile={isMobile} />
       </main>
     </>
   );
