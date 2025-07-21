@@ -6,17 +6,23 @@ const useAutoPauseVideo = ({ videoRefs, threshold = 0.5, responsive }) => {
       (entries) => {
         entries.forEach((entry) => {
           const video = entry.target;
+
+          if (!(video instanceof HTMLVideoElement)) return;
+
           if (entry.isIntersecting) {
-            video.play().catch(() => {});
+            if (video.paused && !video.ended) {
+              video.play().catch(() => {});
+            }
           } else {
-            video.pause();
+            if (!video.paused) {
+              video.pause();
+            }
           }
         });
       },
       { threshold }
     );
 
-    // Filter out nulls just in case
     const validVideos = videoRefs
       .map((ref) => ref.current)
       .filter((video) => video instanceof HTMLVideoElement);
