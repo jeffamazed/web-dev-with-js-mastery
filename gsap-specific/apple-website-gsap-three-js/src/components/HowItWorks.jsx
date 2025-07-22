@@ -66,7 +66,12 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
       );
 
       // animate video
-      videoAnimation(howItWorksVideo, "how-it-works-video-trigger");
+      videoAnimation(
+        howItWorksVideo,
+        "how-it-works-video-trigger",
+        "top bottom",
+        "bottom top"
+      );
     },
     {
       scope: howItWorksRef,

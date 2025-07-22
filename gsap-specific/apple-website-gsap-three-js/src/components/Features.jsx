@@ -60,7 +60,12 @@ const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
       tl.to(heading, { y: 0, opacity: 1 });
 
       // video animation
-      videoAnimation(exploreVideo, "explore-video-trigger");
+      videoAnimation(
+        exploreVideo,
+        "explore-video-trigger",
+        "top bottom",
+        "bottom top"
+      );
 
       // images animation
       animateWithGsap(

@@ -61,13 +61,14 @@ export const animateWithGsap = (
   });
 };
 
-export const videoAnimation = (target, id) => {
+export const videoAnimation = (target, id, start, end) => {
   gsap.to(target, {
     scrollTrigger: {
       id,
       trigger: target,
-      start: "top bottom",
-      end: "bottom top",
+      start,
+      end,
+      markers: true,
       onEnter: () => {
         if (target.paused) target.play();
       },
