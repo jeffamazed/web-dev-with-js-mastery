@@ -1,12 +1,12 @@
 const handleScrollIntoView = (e, navRef, sectionRef) => {
-  const highlights = sectionRef.current;
+  const section = sectionRef.current;
   const nav = navRef.current;
-  if (!highlights || !nav) return;
+  if (!section || !nav) return;
   e.preventDefault();
   const navHeight = nav.getBoundingClientRect().height;
-  const highlightsTop = highlights.getBoundingClientRect().top + scrollY;
+  const sectionTop = section.getBoundingClientRect().top + scrollY;
 
-  window.scrollTo({ top: highlightsTop - navHeight, behavior: "smooth" });
+  window.scrollTo({ top: sectionTop - navHeight, behavior: "smooth" });
 };
 
 export default handleScrollIntoView;
