@@ -27,7 +27,6 @@ const App = () => {
   // for responsiveness of gsap animation
   const responsive = useResponsive();
   const navRef = useRef(null);
-  const highlightsRef = useRef(null);
 
   // for handling multiple video refs for later use
   const totalVideos = 5;
@@ -56,21 +55,26 @@ const App = () => {
         <Hero
           responsive={responsive}
           navRef={navRef}
-          highlightsRef={highlightsRef}
+          highlightsRef={sectionRef.highlights}
           videoRefs={videoRefs}
         />
         <Highlights
-          highlightsRef={highlightsRef}
+          highlightsRef={sectionRef.highlights}
           responsive={responsive}
           isMobile={isMobile}
         />
-        <Model isMobile={isMobile} />
+        <Model isMobile={isMobile} modelRef={sectionRef.iphone} />
         <Features
           isMobile={isMobile}
           videoRefs={videoRefs}
           responsive={responsive}
+          featuresRef={sectionRef.features}
         />
-        <HowItWorks responsive={responsive} videoRefs={videoRefs} />
+        <HowItWorks
+          responsive={responsive}
+          videoRefs={videoRefs}
+          howItWorksRef={sectionRef.discover}
+        />
         <Footer />
       </main>
     </>

@@ -11,6 +11,17 @@ const Navbar = ({ sectionRef, responsive, navRef, isMobile }) => {
   const [isNavExpanded, setIsNavExpanded] = useState(
     responsive.width > 768 ? true : false
   );
+  const [isNavClicked, setIsNavClicked] = useState(false);
+
+  // handling when nav is clicked for mobile
+  useEffect(() => {
+    if (isMobile) {
+      if (isNavClicked) {
+        setIsNavExpanded(false);
+        setIsNavClicked(false);
+      }
+    }
+  }, [isNavClicked, isMobile]);
 
   // handling responsive navbar
   useEffect(() => {
@@ -23,15 +34,11 @@ const Navbar = ({ sectionRef, responsive, navRef, isMobile }) => {
   };
 
   // handle nav bg for mobile
-  const headerBg = !isMobile
-    ? "bg-transparent"
-    : isNavExpanded
-    ? "bg-black"
-    : "";
+  const headerBg = !isMobile ? "bg-black/50" : isNavExpanded ? "bg-black" : "";
   return (
     <header
       ref={navRef}
-      className={`w-full px-5 sm:px-10 flex-center fixed z-50 backdrop-blur-md ${headerBg} transition-colors duration-200`}
+      className={`w-full px-5 sm:px-10 flex-center fixed z-50 backdrop-blur-lg ${headerBg} transition-colors duration-200`}
     >
       <nav className="flex items-center justify-between w-full container py-5">
         <div className="flex-1">
@@ -73,6 +80,7 @@ const Navbar = ({ sectionRef, responsive, navRef, isMobile }) => {
                   onClick={(e) => {
                     const section = sectionRef[target];
                     handleScrollIntoView(e, navRef, section);
+                    if (isMobile) setIsNavClicked(true);
                   }}
                   className="text-sm text-gray hover:text-custom-white focus-visible:text-custom-white transition-all duration-200 ease-in"
                   tabIndex={isNavExpanded ? 1 : -1}

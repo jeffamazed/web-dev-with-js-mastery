@@ -10,10 +10,10 @@ import {
 } from "../utils";
 
 export const navItems = [
-  { name: "Store", target: "store" },
-  { name: "Mac", target: "mac" },
+  { name: "Highlights", target: "highlights" },
   { name: "iPhone", target: "iphone" },
-  { name: "Support", target: "Support" },
+  { name: "Features", target: "features" },
+  { name: "Discover", target: "discover" },
 ];
 
 export const hightlightsSlides = [
