@@ -9,8 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { explore1Img, explore2Img, exploreVideo } from "../utils";
 import gsap from "gsap";
 
-const Features = ({ isMobile, videoRefs, responsive }) => {
-  const featuresRef = useRef(null);
+const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
   const headingRef = useRef(null);
   const imgContainerRef = useRef(null);
   const textContainerRef = useRef(null);

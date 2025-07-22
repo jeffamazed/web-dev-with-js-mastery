@@ -10,7 +10,7 @@ import { View } from "@react-three/drei";
 import { models, sizes } from "../constants/index";
 import { animateWithGsapTimeline, headingTimeline } from "../utils/animations";
 
-const Model = ({ isMobile }) => {
+const Model = ({ isMobile, modelRef }) => {
   const [size, setSize] = useState("small");
   const [model, setModel] = useState({
     title: "iPhone 15 Pro in Natural Titanium",
@@ -36,7 +36,6 @@ const Model = ({ isMobile }) => {
   const [largeRotation, setLargeRotation] = useState(0);
 
   const headingRef = useRef(null);
-  const modelRef = useRef(null);
 
   // animation for changing iphone size
   const tl = gsap.timeline();

@@ -5,9 +5,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { animateWithGsap, videoAnimation } from "../utils/animations";
 
-const HowItWorks = ({ responsive, videoRefs }) => {
+const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
   const chipContainerRef = useRef(null);
-  const howItWorksRef = useRef(null);
   const textContainerRef = useRef(null);
 
   useGSAP(
