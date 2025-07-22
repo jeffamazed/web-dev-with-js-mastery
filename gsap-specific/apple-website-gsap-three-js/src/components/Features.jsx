@@ -62,6 +62,7 @@ const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
       // video animation
       videoAnimation(
         exploreVideo,
+        exploreVideo,
         "explore-video-trigger",
         "top bottom",
         "bottom top"
