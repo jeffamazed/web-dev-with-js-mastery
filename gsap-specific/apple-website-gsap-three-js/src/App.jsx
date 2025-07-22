@@ -1,5 +1,12 @@
 import { useRef, createRef } from "react";
-import { Navbar, Hero, Highlights, Model, Features } from "./components";
+import {
+  Navbar,
+  Hero,
+  Highlights,
+  Model,
+  Features,
+  HowItWorks,
+} from "./components";
 import { navItems } from "./constants";
 import useResponsive from "./customHooks/useResponsive";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -57,12 +64,13 @@ const App = () => {
           responsive={responsive}
           isMobile={isMobile}
         />
-        <Model isMobile={isMobile} /> */}
+        <Model isMobile={isMobile} />
         <Features
           isMobile={isMobile}
           videoRefs={videoRefs}
           responsive={responsive}
-        />
+        /> */}
+        <HowItWorks responsive={responsive} videoRefs={videoRefs} />
       </main>
     </>
   );
