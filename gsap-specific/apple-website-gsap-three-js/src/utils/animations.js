@@ -60,3 +60,22 @@ export const animateWithGsap = (
     },
   });
 };
+
+export const videoAnimation = (target, id) => {
+  gsap.to(target, {
+    scrollTrigger: {
+      id,
+      trigger: target,
+      start: "top bottom",
+      end: "bottom top",
+      onEnter: () => {
+        if (target.paused) target.play();
+      },
+      onLeave: () => target.pause(),
+      onLeaveBack: () => target.pause(),
+      onEnterBack: () => {
+        if (target.paused) target.play();
+      },
+    },
+  });
+};

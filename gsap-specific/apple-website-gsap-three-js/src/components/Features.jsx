@@ -1,6 +1,10 @@
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
-import { animateWithGsap, headingTimeline } from "../utils/animations";
+import {
+  animateWithGsap,
+  headingTimeline,
+  videoAnimation,
+} from "../utils/animations";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { explore1Img, explore2Img, exploreVideo } from "../utils";
 import gsap from "gsap";
@@ -57,22 +61,7 @@ const Features = ({ isMobile, videoRefs, responsive }) => {
       tl.to(heading, { y: 0, opacity: 1 });
 
       // video animation
-      gsap.to(exploreVideo, {
-        scrollTrigger: {
-          id: "explore-video-trigger",
-          trigger: exploreVideo,
-          start: "top bottom",
-          end: "bottom top",
-          onEnter: () => {
-            if (exploreVideo.paused) exploreVideo.play();
-          },
-          onLeave: () => exploreVideo.pause(),
-          onLeaveBack: () => exploreVideo.pause(),
-          onEnterBack: () => {
-            if (exploreVideo.paused) exploreVideo.play();
-          },
-        },
-      });
+      videoAnimation(exploreVideo, "explore-video-trigger");
 
       // images animation
       animateWithGsap(
