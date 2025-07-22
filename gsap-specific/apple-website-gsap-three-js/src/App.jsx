@@ -6,6 +6,7 @@ import {
   Model,
   Features,
   HowItWorks,
+  Footer,
 } from "./components";
 import { navItems } from "./constants";
 import useResponsive from "./customHooks/useResponsive";
@@ -52,8 +53,7 @@ const App = () => {
         isMobile={isMobile}
       />
       <main className="w-full overflow-x-hidden">
-        {/* not rendered to reduce lag */}
-        {/* <Hero
+        <Hero
           responsive={responsive}
           navRef={navRef}
           highlightsRef={highlightsRef}
@@ -69,8 +69,9 @@ const App = () => {
           isMobile={isMobile}
           videoRefs={videoRefs}
           responsive={responsive}
-        /> */}
+        />
         <HowItWorks responsive={responsive} videoRefs={videoRefs} />
+        <Footer />
       </main>
     </>
   );
