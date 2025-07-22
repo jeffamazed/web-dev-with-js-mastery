@@ -74,7 +74,7 @@ const Model = ({ isMobile, modelRef }) => {
   );
 
   return (
-    <section className="common-padding" ref={modelRef}>
+    <section id="iphone" className="common-padding" ref={modelRef}>
       <div className="container mx-auto">
         <h2 ref={headingRef} className="section-heading">
           Take a closer look.
