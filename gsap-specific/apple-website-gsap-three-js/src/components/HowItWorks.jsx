@@ -80,7 +80,7 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
     }
   );
   return (
-    <section ref={howItWorksRef} className="common-padding">
+    <section id="discover" ref={howItWorksRef} className="common-padding">
       <div className="container mx-auto">
         <div ref={chipContainerRef} className="flex-center w-full my-20">
           <img src={chipImg} alt="iPhone chip" width={180} height={180} />

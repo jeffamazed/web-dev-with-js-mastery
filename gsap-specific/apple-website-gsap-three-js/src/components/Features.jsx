@@ -97,6 +97,7 @@ const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
 
   return (
     <section
+      id="features"
       className="common-padding h-full bg-zinc relative overflow-hidden"
       ref={featuresRef}
     >
