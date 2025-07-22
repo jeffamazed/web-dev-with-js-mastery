@@ -126,7 +126,7 @@ const Features = ({ isMobile, videoRefs, responsive }) => {
               ref={videoRefs[1]}
               playsInline
               className="size-full object-cover object-center"
-              preload="auto"
+              preload="none"
               muted
               tabIndex={-1}
             >
