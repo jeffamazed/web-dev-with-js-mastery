@@ -61,7 +61,10 @@ const VideoCarousel = ({ responsive, isMobile }) => {
         ease: "power4.out",
       });
     },
-    { scope: sectionRef, dependencies: [isEnd, videoId, responsive] }
+    {
+      scope: sectionRef,
+      dependencies: [isEnd, videoId, responsive.width, responsive.height],
+    }
   );
 
   // for handling init of videos

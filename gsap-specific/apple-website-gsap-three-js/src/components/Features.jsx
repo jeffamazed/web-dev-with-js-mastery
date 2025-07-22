@@ -95,8 +95,12 @@ const Features = ({ isMobile, videoRefs, responsive }) => {
         { id: "texts-trigger" }
       );
     },
-    { scope: featuresRef, dependencies: [isMobile, responsive] }
+    {
+      scope: featuresRef,
+      dependencies: [isMobile, responsive.width, responsive.height],
+    }
   );
+
   return (
     <section
       className="common-padding h-full bg-zinc relative overflow-hidden"
