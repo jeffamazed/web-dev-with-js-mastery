@@ -7,6 +7,7 @@ import {
   Features,
   HowItWorks,
   Footer,
+  TopLink,
 } from "./components";
 import { navItems } from "./constants";
 import useResponsive from "./customHooks/useResponsive";
@@ -51,7 +52,8 @@ const App = () => {
         navRef={navRef}
         isMobile={isMobile}
       />
-      <main className="w-full overflow-x-hidden">
+      <main id="top" className="w-full overflow-x- relative">
+        <TopLink />
         <Hero
           responsive={responsive}
           navRef={navRef}
