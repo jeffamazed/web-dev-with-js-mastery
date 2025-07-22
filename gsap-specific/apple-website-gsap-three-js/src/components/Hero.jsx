@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { heroVideo, smallHeroVideo } from "../utils";
 import LoadingIcon from "./LoadingIcon";
 import handleScrollIntoView from "../utils/handleScrollIntoView";
+import { videoAnimation } from "../utils/animations";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Hero = ({ responsive, navRef, highlightsRef, videoRefs }) => {
   const [videoSrc, setVideoSrc] = useState(
@@ -25,7 +27,12 @@ const Hero = ({ responsive, navRef, highlightsRef, videoRefs }) => {
     () => {
       const h1 = h1Ref.current;
       const cta = ctaRef.current;
-      if (!h1 || !cta || isVideoLoading) return;
+      const video = videoRefs[0].current;
+      const hero = heroRef.current;
+      if (!h1 || !cta || isVideoLoading || !video || !hero) return;
+
+      // fresh scrolltrigger
+      ScrollTrigger.getById("hero-trigger")?.kill();
 
       gsap.to(h1, {
         opacity: 1,
@@ -37,8 +44,18 @@ const Hero = ({ responsive, navRef, highlightsRef, videoRefs }) => {
         y: -80,
         delay: 2,
       });
+
+      videoAnimation(video, video, "hero-trigger", "top center", "bottom top");
     },
-    { scope: heroRef, dependencies: [isVideoLoading] }
+    {
+      scope: heroRef,
+      dependencies: [
+        isVideoLoading,
+        responsive.width,
+        responsive.height,
+        videoSrc,
+      ],
+    }
   );
 
   return (
@@ -59,7 +76,6 @@ const Hero = ({ responsive, navRef, highlightsRef, videoRefs }) => {
             ref={videoRefs[0]}
             tabIndex={-1}
             autoPlay
-            loop
             muted
             playsInline
             key={videoSrc}
