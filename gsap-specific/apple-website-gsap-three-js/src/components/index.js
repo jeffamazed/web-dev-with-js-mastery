@@ -4,3 +4,4 @@ export { default as Highlights } from "./Highlights";
 export { default as Model } from "./Model";
 export { default as Features } from "./Features";
 export { default as HowItWorks } from "./HowItWorks";
+export { default as Footer } from "./Footer";

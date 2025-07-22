@@ -116,7 +116,7 @@ canvas {
 }
 
 @utility link {
-  @apply text-custom-white flex items-center gap-2 text-sm md:text-base xl:text-lg opacity-0 translate-y-20 hover:text-blue focus-visible:text-blue transition-colors duration-200 ease-in;
+  @apply text-custom-white flex items-center gap-2 text-sm md:text-base xl:text-lg opacity-0 translate-y-20 hover:text-blue focus-visible:text-blue transition-colors duration-200 ease-in underline;
 }
 
 @utility control-btn {
@@ -157,4 +157,8 @@ canvas {
 
 @utility g_fadeIn {
   @apply opacity-0 translate-y-[100px];
+}
+
+@utility footer-link {
+  @apply hover:text-blue focus-visible:text-blue transition-colors duration-200 ease-in underline;
 }
