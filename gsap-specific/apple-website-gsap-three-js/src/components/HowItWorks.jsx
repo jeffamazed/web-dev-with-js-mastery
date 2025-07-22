@@ -110,7 +110,7 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
             <div className="hiw-video">
               <video
                 ref={videoRefs[2]}
-                className="pointer-events-none"
+                className="pointer-events-none size-full"
                 playsInline
                 preload="none"
                 muted

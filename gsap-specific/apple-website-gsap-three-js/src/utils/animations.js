@@ -68,7 +68,6 @@ export const videoAnimation = (target, id, start, end) => {
       trigger: target,
       start,
       end,
-      markers: true,
       onEnter: () => {
         if (target.paused) target.play();
       },
