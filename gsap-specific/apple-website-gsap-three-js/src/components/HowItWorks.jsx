@@ -140,11 +140,11 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
               <p className="hiw-text g_fadeIn">
                 Mobile{" "}
                 <span className="text-custom-white">
-                  games will look and feel so immersive,{" "}
+                  games become breathtakingly immersive
                 </span>
-                with incredibly detailed environments and characters and more
-                realistic characters. And with industry-leading speed and
-                efficiency, A17 Pro takes fast and runs with it.
+                —with stunning environments, lifelike characters, and incredible
+                detail. Powered by the A17 Pro, it's not just fast. It's
+                next-level.
               </p>
             </div>
 
