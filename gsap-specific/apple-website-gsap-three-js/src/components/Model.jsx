@@ -76,6 +76,17 @@ const Model = ({ isMobile, modelRef }) => {
   return (
     <section id="iphone" className="common-padding" ref={modelRef}>
       <div className="container mx-auto">
+        {/* instruction for sr users */}
+        <div
+          role="region"
+          aria-label="3D model viewer status"
+          className="sr-only"
+          aria-live="polite"
+        >
+          Currently displaying: {model.title}. Rotate view is only available via
+          mouse or touch.
+        </div>
+
         <h2 ref={headingRef} className="section-heading">
           Take a closer look.
         </h2>
