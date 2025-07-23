@@ -62,7 +62,7 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
           ease: "power2.inOut",
         },
         textContainer,
-        { id: "texts-trigger-2" }
+        { id: "texts-trigger-2" },
       );
 
       // animate video
@@ -71,13 +71,13 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
         howItWorksVideo,
         "how-it-works-video-trigger",
         "top bottom",
-        "bottom top"
+        "bottom top",
       );
     },
     {
       scope: howItWorksRef,
       dependencies: [responsive.width, responsive.height],
-    }
+    },
   );
   return (
     <section id="discover" ref={howItWorksRef} className="common-padding">
@@ -117,9 +117,15 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
                 muted
                 autoPlay
                 tabIndex={-1}
+                role="presentation"
               >
                 <source src={frameVideo} type="video/mp4" />
               </video>
+              {/* for sr */}
+              <p className="sr-only">
+                Demonstration of GPU performance with gameplay from Honkai: Star
+                Rail.
+              </p>
             </div>
           </div>
           <p className="text-gray font-semibold text-center mt-3">
