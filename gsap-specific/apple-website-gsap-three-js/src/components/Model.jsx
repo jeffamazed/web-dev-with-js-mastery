@@ -70,7 +70,7 @@ const Model = ({ isMobile, modelRef }) => {
 
       tl.to(heading, { y: 0, opacity: 1 });
     },
-    { scope: modelRef, dependencies: [isMobile] }
+    { scope: modelRef, dependencies: [isMobile] },
   );
 
   return (
@@ -169,6 +169,9 @@ const Model = ({ isMobile, modelRef }) => {
                       role="radio"
                       aria-checked={size === value}
                       onClick={() => setSize(value)}
+                      aria-label={
+                        value === "small" ? "6 point 1 inch" : "6 point 7 inch"
+                      }
                     >
                       {label}
                     </button>
