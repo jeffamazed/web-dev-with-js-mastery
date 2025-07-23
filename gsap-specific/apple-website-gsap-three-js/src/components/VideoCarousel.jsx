@@ -64,7 +64,7 @@ const VideoCarousel = ({ responsive, isMobile }) => {
     {
       scope: sectionRef,
       dependencies: [isEnd, videoId, responsive.width, responsive.height],
-    }
+    },
   );
 
   // for handling init of videos
@@ -260,7 +260,7 @@ const VideoCarousel = ({ responsive, isMobile }) => {
         </div>
 
         {/* for sr users */}
-        <div className="sr-only" aria-live="polite">
+        <div className="sr-only" aria-live="polite" aria-atomic="true">
           Showing feature {videoId + 1} of {hightlightsSlides.length}
         </div>
 
@@ -276,8 +276,8 @@ const VideoCarousel = ({ responsive, isMobile }) => {
               isLastVideo
                 ? () => handleProcess("video-reset")
                 : !isPlaying
-                ? () => handleProcess("play")
-                : () => handleProcess("pause")
+                  ? () => handleProcess("play")
+                  : () => handleProcess("pause")
             }
             aria-label={isLastVideo ? "Replay" : !isPlaying ? "Play" : "Pause"}
           >
