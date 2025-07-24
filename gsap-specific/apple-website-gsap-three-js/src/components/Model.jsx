@@ -18,6 +18,7 @@ const Model = ({ isMobile, modelRef }) => {
     colorName: ["Natural Titanium", "Warm Alloy", "Earth Titanium"],
     img: yellowImg,
   });
+  const [isLoading, setIsLoading] = useState(true);
 
   // ref for views
   const view1Ref = useRef(null);
@@ -83,8 +84,9 @@ const Model = ({ isMobile, modelRef }) => {
           className="sr-only"
           aria-live="polite"
         >
-          Currently displaying: {model.title}. Rotate view is only available via
-          mouse or touch.
+          {isLoading
+            ? "3D model is loading. Please wait."
+            : `3D model loaded: ${model.title}. You may rotate it using mouse or touch.`}
         </div>
 
         <h2 ref={headingRef} className="section-heading">
@@ -102,6 +104,7 @@ const Model = ({ isMobile, modelRef }) => {
               setRotationState={setSmallRotation}
               item={model}
               size={size}
+              onLoaded={() => setIsLoading(false)}
             />
             <ModelView
               index={2}
@@ -111,6 +114,7 @@ const Model = ({ isMobile, modelRef }) => {
               setRotationState={setLargeRotation}
               item={model}
               size={size}
+              onLoaded={() => setIsLoading(false)}
             />
 
             <Canvas

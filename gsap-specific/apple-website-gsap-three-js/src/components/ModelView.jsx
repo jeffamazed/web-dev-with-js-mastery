@@ -18,6 +18,7 @@ const ModelView = ({
   setRotationState,
   size,
   item,
+  onLoaded,
 }) => {
   return (
     <View
@@ -58,6 +59,7 @@ const ModelView = ({
             scale={index === 1 ? [15, 15, 15] : [17, 17, 17]}
             item={item}
             size={size}
+            onLoaded={onLoaded}
           />
         </Suspense>
       </group>

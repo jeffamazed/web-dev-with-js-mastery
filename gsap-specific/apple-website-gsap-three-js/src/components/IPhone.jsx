@@ -28,8 +28,11 @@ const IPhone = (props) => {
         material[1].color = new Color(props.item.color[0]);
       }
       material[1].needsUpdate = true;
+
+      // calls onloaded when IPhone finishes loading
+      props.onLoaded?.();
     });
-  }, [materials, props.item]);
+  }, [materials, props.item, props.onLoaded]);
 
   return (
     <group {...props} dispose={null}>
