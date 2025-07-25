@@ -41,7 +41,7 @@ const Footer = () => {
             &copy; {year} Apple Inc. All rights reserved.
           </p>
 
-          <ul className="flex">
+          <ul className="flex flex-col sm:flex-row gap-1">
             {footerLinks.map((link, i) => (
               <li key={link} className="font-semibold text-gray text-xs">
                 <a
@@ -52,7 +52,7 @@ const Footer = () => {
                 >
                   {link}
                   {i !== footerLinks.length - 1 && (
-                    <span className="mx-2">|</span>
+                    <span className="mx-2 max-sm:hidden">|</span>
                   )}
                 </a>
               </li>
