@@ -34,8 +34,8 @@ const App = () => {
         <Story scrollRef={sectionRef.prologue} windowSize={windowSize} />
         <Gallery windowSize={windowSize} />
         <Contact scrollRef={sectionRef.contact} windowSize={windowSize} />
-        <Footer />
       </main>
+      <Footer />
     </>
   );
 };
