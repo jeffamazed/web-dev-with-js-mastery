@@ -33,8 +33,8 @@ const App = () => {
         <About scrollRef={sectionRef.about} />
         <Art scrollRef={sectionRef.art} responsive={responsive} />
         <Menu />
-        <Contact scrollRef={sectionRef.contact} responsive={responsive} />
       </main>
+      <Contact scrollRef={sectionRef.contact} responsive={responsive} />
     </>
   );
 };
