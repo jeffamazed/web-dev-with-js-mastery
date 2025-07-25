@@ -22,7 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   // for handling sectionRef for linking purposes
   const sectionRef = useRef(
-    Object.fromEntries(navItems.map(({ target }) => [target, createRef()]))
+    Object.fromEntries(navItems.map(({ target }) => [target, createRef()])),
   ).current;
 
   // for responsiveness of gsap animation
@@ -32,7 +32,7 @@ const App = () => {
   // for handling multiple video refs for later use
   const totalVideos = 5;
   const videoRefs = useRef(
-    Array.from({ length: totalVideos }, () => createRef())
+    Array.from({ length: totalVideos }, () => createRef()),
   ).current;
 
   // handle pausing the video when tab is out of focus
@@ -52,7 +52,7 @@ const App = () => {
         navRef={navRef}
         isMobile={isMobile}
       />
-      <main id="top" className="w-full overflow-x- relative">
+      <main id="top" className="w-full overflow-x-hidden relative">
         <TopLink />
         <Hero
           responsive={responsive}
@@ -77,8 +77,8 @@ const App = () => {
           videoRefs={videoRefs}
           howItWorksRef={sectionRef.discover}
         />
-        <Footer />
       </main>
+      <Footer />
     </>
   );
 };
