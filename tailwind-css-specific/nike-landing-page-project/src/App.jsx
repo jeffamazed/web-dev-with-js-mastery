@@ -15,7 +15,7 @@ import { navLinks } from "./constants";
 
 const App = () => {
   const sectionRef = useRef(
-    Object.fromEntries(navLinks.map(({ target }) => [target, createRef()]))
+    Object.fromEntries(navLinks.map(({ target }) => [target, createRef()])),
   ).current;
 
   return (
@@ -45,10 +45,10 @@ const App = () => {
         <div ref={sectionRef.contact} className="padding-x py-16 sm:py-32">
           <Subscribe />
         </div>
-        <div className="bg-gray-950 padding-x padding-t pb-8">
-          <Footer />
-        </div>
       </main>
+      <div className="bg-gray-950 padding-x padding-t pb-8">
+        <Footer />
+      </div>
     </>
   );
 };
