@@ -5,7 +5,7 @@
 
 @theme {
   --color-primary: #eceeff;
-  --color-coral-red: #ff6452;
+  --color-coral-red: #c94434;
   --color-slate-gray: #6d6d6d;
   --color-pale-blue: #edf0ff;
   --color-white-400: rgba(255, 255, 255, 0.8);
@@ -97,7 +97,9 @@
   }
 
   .nav-transition {
-    transition: height 0.2s ease, background-color 0.2s ease;
+    transition:
+      height 0.2s ease,
+      background-color 0.2s ease;
   }
 
   .nav-below-md {
