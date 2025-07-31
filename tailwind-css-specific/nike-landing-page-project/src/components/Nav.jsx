@@ -28,14 +28,23 @@ const Nav = ({ sectionRef }) => {
   const handleScrollIntoView = (e, target) => {
     const section = sectionRef[target];
     if (!section?.current) return;
+
     e.preventDefault();
 
     const headerHeight = headerRef.current.getBoundingClientRect().height;
     const sectionTop =
       section.current.getBoundingClientRect().top + window.scrollY;
 
-    window.scrollTo({ top: sectionTop - headerHeight, behavior: "smooth" });
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    window.scrollTo({
+      top: sectionTop - headerHeight,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   };
+
   const handleTabIndex = !isMobile ? 1 : isExpanded ? 1 : -1;
 
   return (
