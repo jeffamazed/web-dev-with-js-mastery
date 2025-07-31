@@ -74,7 +74,14 @@ const Navbar = ({ sectionRef, responsive }) => {
       section.current.getBoundingClientRect().top + window.scrollY;
     const navHeight = navRef.current.getBoundingClientRect().height;
 
-    window.scrollTo({ top: sectionTop - navHeight, behavior: "smooth" });
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    window.scrollTo({
+      top: sectionTop - navHeight,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   };
 
   const handleExpand = () => {
