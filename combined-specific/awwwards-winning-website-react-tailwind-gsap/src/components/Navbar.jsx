@@ -94,16 +94,24 @@ const Navbar = ({ sectionRef }) => {
   );
 
   const handleScrollIntoView = (e, target) => {
-    const section = sectionRef[target].current;
+    const section = sectionRef[target]?.current;
     const nav = navContainerRef.current;
     if (!section || !nav) return;
+
     e.preventDefault();
     setIsUserClickNav(true);
 
     const navOffset = nav.getBoundingClientRect().bottom;
-    const sectionTop = section.getBoundingClientRect().top + scrollY;
+    const sectionTop = section.getBoundingClientRect().top + window.scrollY;
 
-    window.scrollTo({ top: sectionTop - navOffset, behavior: "smooth" });
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    window.scrollTo({
+      top: sectionTop - navOffset,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
   };
 
   const toggleAudioIndicator = () => {
