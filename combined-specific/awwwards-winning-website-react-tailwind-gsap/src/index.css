@@ -156,7 +156,7 @@
 
 body,
 #root {
-  width: 100dvw;
+  width: 100%;
   overflow-x: hidden;
 }
 
