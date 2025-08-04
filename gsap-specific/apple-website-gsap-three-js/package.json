@@ -1,5 +1,13 @@
 {
-  "name": "apple-website-gsap-three-js",
+  "name": "Apple iPhone Landing Page",
+  "author": "jeffamazed",
+  "description": "New iPhone interactive product landing page",
+  "keywords": [
+    "iphone",
+    "apple",
+    "interactive",
+    "awesome"
+  ],
   "private": true,
   "version": "0.0.0",
   "type": "module",
