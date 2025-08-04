@@ -1,5 +1,12 @@
 {
-  "name": "mojito-landing-page",
+  "name": "Mojito Bar Landing Page",
+  "author": "jeffamazed",
+  "description": "Animation-heavy landing page for a new bar in town",
+  "keywords": [
+    "mojito",
+    "bar",
+    "animation"
+  ],
   "private": true,
   "version": "0.0.0",
   "type": "module",
