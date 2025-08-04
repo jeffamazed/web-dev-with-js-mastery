@@ -1,5 +1,12 @@
 {
-  "name": "awwwards-winning-website-react-tailwind-gsap",
+  "name": "Awwwards Winning Website Zentry",
+  "author": "jeffamazed",
+  "description": "Zentry-inspired gaming landing page",
+  "keywords": [
+    "zentry",
+    "gaming",
+    "awwwards"
+  ],
   "private": true,
   "version": "0.0.0",
   "type": "module",
