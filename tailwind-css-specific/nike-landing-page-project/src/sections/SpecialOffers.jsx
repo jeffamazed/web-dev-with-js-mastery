@@ -12,6 +12,7 @@ const SpecialOffers = () => {
           width={773}
           height={687}
           className="object-contain w-full"
+          loading="lazy"
         />
       </div>
       <div className="flex flex-1 flex-col items-center xl:items-start text-center xl:text-start">
