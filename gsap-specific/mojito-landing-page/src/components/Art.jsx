@@ -54,11 +54,11 @@ const Art = ({ scrollRef, responsive }) => {
                   const opacity = parseFloat(getComputedStyle(el).opacity);
                   el.setAttribute(
                     "aria-hidden",
-                    opacity < 0.05 ? "true" : "false"
+                    opacity < 0.05 ? "true" : "false",
                   );
                 });
               },
-            }
+            },
           );
         } else {
           gsap.set(willFades, { opacity: 1 });
@@ -76,7 +76,7 @@ const Art = ({ scrollRef, responsive }) => {
             maskSize: "400%",
             duration: 1,
             ease: "power1.inOut",
-          }
+          },
         );
 
         if (!isMobile) {
@@ -89,7 +89,7 @@ const Art = ({ scrollRef, responsive }) => {
               opacity: 1,
               duration: 1,
               ease: "power1.inOut",
-            }
+            },
           );
         } else {
           gsap.set(content, { opacity: 1 });
@@ -106,7 +106,7 @@ const Art = ({ scrollRef, responsive }) => {
     {
       scope: artRef,
       dependencies: [responsive],
-    }
+    },
   );
 
   return (
@@ -126,7 +126,7 @@ const Art = ({ scrollRef, responsive }) => {
             <ul className="space-y-4 will-fade">
               {goodLists.map((feature, i) => (
                 <li key={i} className="flex items-center gap-2">
-                  <img src="./images/check.png" alt="check" />
+                  <img src="./images/check.png" alt="check" loading="lazy" />
                   <span>{feature}</span>
                 </li>
               ))}
@@ -139,6 +139,7 @@ const Art = ({ scrollRef, responsive }) => {
               alt="cocktail"
               className="abs-center masked-img size-full object-contain"
               ref={maskedImageRef}
+              loading="lazy"
             />
           </div>
 
@@ -151,6 +152,7 @@ const Art = ({ scrollRef, responsive }) => {
                     src="./images/check.png"
                     alt="check"
                     aria-hidden="true"
+                    loading="lazy"
                   />
                   <span className="md:w-fit w-60">{feature}</span>
                 </li>
