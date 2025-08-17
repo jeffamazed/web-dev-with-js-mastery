@@ -10,7 +10,13 @@ const Footer = () => {
           <h2 className="sr-only">Back to School Starts at Nike</h2>
 
           <a href="/" aria-label="Go to Nike homepage">
-            <img src={footerLogo} alt="Nike logo" width={150} height={47} />
+            <img
+              src={footerLogo}
+              alt="Nike logo"
+              width={150}
+              height={47}
+              loading="lazy"
+            />
           </a>
           <p className="mt-6 text-base leading-7 font-montserrat text-white-400 sm:max-w-sm">
             Gear up for the new term at your local Nike store—find your perfect
@@ -26,7 +32,13 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="flex justify-center items-center w-12 h-12 bg-white rounded-full"
               >
-                <img src={icon.src} alt={icon.alt} width={24} height={24} />
+                <img
+                  src={icon.src}
+                  alt={icon.alt}
+                  width={24}
+                  height={24}
+                  loading="lazy"
+                />
               </a>
             ))}
           </div>
@@ -67,6 +79,7 @@ const Footer = () => {
             width={20}
             height={20}
             className="rounded-full m-0"
+            loading="lazy"
           />
           Copyright. All rights reserved.
         </a>
