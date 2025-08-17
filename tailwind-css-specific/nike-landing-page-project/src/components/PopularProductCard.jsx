@@ -5,7 +5,7 @@ const PopularProductCard = ({ imgURL, name, price, rating }) => {
     <article className="flex flex-1 flex-col border-2 border-transparent hover:border-coral-red duration-200 transition-colors ease-in cursor-pointer p-3 rounded-lg ">
       <img src={imgURL} alt={name} className="" />
       <div className="mt-8 flex justify-start items-center gap-2.5">
-        <img src={star} alt="rating" width={24} height={24} />
+        <img src={star} alt="rating" width={24} height={24} loading="lazy" />
         <p className="font-monserrat text-xl text-slate-gray leading-0">
           ({rating})
         </p>
