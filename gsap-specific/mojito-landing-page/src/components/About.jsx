@@ -108,32 +108,48 @@ const About = ({ scrollRef }) => {
           <div className="lg:col-span-3 w-full grid-child">
             {/* overlay */}
             <div className="noisy" />
-            <img src="./images/abt1.png" alt="Bartender bartending" />
+            <img
+              src="./images/abt1.png"
+              alt="Bartender bartending"
+              loading="lazy"
+            />
           </div>
 
           <div className="lg:col-span-6 grid-child">
             {/* overlay */}
             <div className="noisy" />
-            <img src="./images/abt2.png" alt="People having fun" />
+            <img
+              src="./images/abt2.png"
+              alt="People having fun"
+              loading="lazy"
+            />
           </div>
 
           <div className="lg:col-span-3 grid-child">
             {/* overlay */}
             <div className="noisy" />
-            <img src="./images/abt5.png" alt="Pro bartender styling" />
+            <img
+              src="./images/abt5.png"
+              alt="Pro bartender styling "
+              loading="lazy"
+            />
           </div>
         </div>
         <div className="bottom-grid">
           <div className="lg:col-span-8 grid-child">
             {/* overlay */}
             <div className="noisy" />
-            <img src="./images/abt3.png" alt="Drinks in style" />
+            <img src="./images/abt3.png" alt="Drinks in style" loading="lazy" />
           </div>
 
           <div className="lg:col-span-4 grid-child">
             {/* overlay */}
             <div className="noisy" />
-            <img src="./images/abt4.png" alt="Favorite cocktail" />
+            <img
+              src="./images/abt4.png"
+              alt="Favorite cocktail"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
