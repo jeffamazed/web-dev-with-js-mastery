@@ -158,6 +158,7 @@ const Story = ({ windowSize, scrollRef }) => {
                 src="/img/entrance.webp"
                 alt="Entrance"
                 className="object-contain"
+                loading="lazy"
               />
             </div>
           </div>
