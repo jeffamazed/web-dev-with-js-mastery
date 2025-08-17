@@ -6,7 +6,7 @@ import { IoMdCall } from "react-icons/io";
 const ImageClipBox = ({ src, alt, clipClass }) => {
   return (
     <div className={clipClass}>
-      <img src={src} alt={alt} />
+      <img src={src} alt={alt} loading="lazy" />
     </div>
   );
 };
