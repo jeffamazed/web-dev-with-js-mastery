@@ -79,6 +79,7 @@ const About = ({ scrollRef, windowSize }) => {
               src="./img/about.webp"
               alt="Zentry background"
               className="absolute left-0 top-0 size-full object-cover"
+              loading="lazy"
             />
           </div>
           <figcaption className="pt-[60vh] max-w-xl mx-auto text-custom-black text-xs lg:text-sm px-8">
