@@ -119,12 +119,14 @@ const Contact = ({ scrollRef, responsive }) => {
         alt="right leaf"
         id="f-right-leaf"
         ref={footerRightLeafRef}
+        loading="lazy"
       />
       <img
         src="./images/footer-left-leaf.png"
         alt="left leaf"
         id="f-left-leaf"
         ref={footerLeftLeafRef}
+        loading="lazy"
       />
 
       <div className="content">
@@ -165,6 +167,7 @@ const Contact = ({ scrollRef, responsive }) => {
                   className="hover:animate-pulse will-change-transform transition-transform duration-200"
                   src={social.icon}
                   alt={social.name}
+                  loading="lazy"
                 />
               </a>
             ))}
