@@ -110,6 +110,7 @@ const Gallery = ({ windowSize }) => {
               src={img.src}
               alt={img.alt}
               className="gallery-img-4 gallery-child"
+              loading="lazy"
             />
           ))}
         </div>
