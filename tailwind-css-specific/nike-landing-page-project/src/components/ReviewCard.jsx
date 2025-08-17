@@ -7,6 +7,7 @@ const ReviewCard = ({ imgURL, customerName, rating, feedback }) => {
         src={imgURL}
         alt="customer"
         className="rounded-full object-cover w-[120px] h-[120px]"
+        loading="lazy"
       />
       <blockquote>
         <p className="mt-6 max-w-sm text-center info-text">{feedback}</p>
@@ -18,6 +19,7 @@ const ReviewCard = ({ imgURL, customerName, rating, feedback }) => {
           width={24}
           height={24}
           className="object-contain m-0"
+          loading="lazy"
         />
         <p className="text-xl font-montserrat text-slate-gray leading-0">
           ({rating})
