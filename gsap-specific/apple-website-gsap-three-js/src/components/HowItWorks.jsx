@@ -83,7 +83,13 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
     <section id="discover" ref={howItWorksRef} className="common-padding">
       <div className="container mx-auto">
         <div ref={chipContainerRef} className="flex-center w-full my-20">
-          <img src={chipImg} alt="iPhone chip" width={180} height={180} />
+          <img
+            src={chipImg}
+            alt="iPhone chip"
+            width={180}
+            height={180}
+            loading="lazy"
+          />
         </div>
 
         <div className="flex flex-col items-center ">
@@ -105,6 +111,7 @@ const HowItWorks = ({ responsive, videoRefs, howItWorksRef }) => {
                 src={frameImg}
                 alt="iPhone frame"
                 className="bg-transparent relative z-10"
+                loading="lazy"
               />
             </div>
             {/* video */}
