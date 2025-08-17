@@ -204,7 +204,7 @@ const VideoCarousel = ({ responsive, isMobile }) => {
                     role="presentation"
                     playsInline
                     tabIndex={-1}
-                    preload="auto"
+                    preload="metadata"
                     muted
                     ref={(el) => (videoRef.current[i] = el)}
                     onPlay={() =>
