@@ -33,26 +33,26 @@ const Menu = () => {
         gsap.fromTo(
           cocktailImg,
           { opacity: 0, xPercent: direction === "left" ? -100 : 100 },
-          { xPercent: 0, opacity: 1, duration: 0.8, ease: "power1.inOut" }
+          { xPercent: 0, opacity: 1, duration: 0.8, ease: "power1.inOut" },
         );
       }
 
       gsap.fromTo(
         titleRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.8 }
+        { opacity: 1, duration: 0.8 },
       );
 
       gsap.fromTo(
         cocktailRecipeDetailRef.map((ref) => ref.current),
         { yPercent: 100, opacity: 0 },
-        { yPercent: 0, opacity: 0.8, ease: "power1.inOut" }
+        { yPercent: 0, opacity: 0.8, ease: "power1.inOut" },
       );
     },
     {
       scope: menuRef,
       dependencies: [currentI],
-    }
+    },
   );
 
   // leaves
@@ -72,13 +72,13 @@ const Menu = () => {
           menuLeftLeafRef.current,
           { scale: 1 },
           { scale: 1.5 },
-          isMobile ? 0.4 : 0.15
+          isMobile ? 0.4 : 0.15,
         );
     },
     {
       scope: menuRef,
       dependencies: [isMobile],
-    }
+    },
   );
 
   const goToSlide = (i, direction, source) => {
@@ -107,12 +107,14 @@ const Menu = () => {
         alt="left leaf"
         id="m-left-leaf"
         ref={menuLeftLeafRef}
+        loading="lazy"
       />
       <img
         src="./images/slider-right-leaf.png"
         alt="right leaf"
         id="m-right-leaf"
         ref={menuRightLeafRef}
+        loading="lazy"
       />
 
       <h2 className="sr-only">Cocktail Menu</h2>
@@ -142,7 +144,7 @@ const Menu = () => {
         })}
       </div>
 
-      <div className="content">
+      <div className="content overflow-hidden">
         <div className="arrows">
           <button
             className="text-left"
@@ -155,6 +157,7 @@ const Menu = () => {
               src="./images/left-arrow.png"
               alt="left arrow"
               aria-hidden="true"
+              loading="lazy"
             />
           </button>
 
@@ -169,6 +172,7 @@ const Menu = () => {
               src="./images/right-arrow.png"
               alt="right arrow"
               aria-hidden="true"
+              loading="lazy"
             />
           </button>
         </div>
@@ -184,6 +188,7 @@ const Menu = () => {
             alt={currentCocktail.name}
             className="object-contain"
             ref={cockTailImageRef}
+            loading="lazy"
           />
         </div>
 
