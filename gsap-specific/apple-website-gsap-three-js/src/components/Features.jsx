@@ -65,7 +65,7 @@ const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
         exploreVideo,
         "explore-video-trigger",
         "top bottom",
-        "bottom top"
+        "bottom top",
       );
 
       // images animation
@@ -73,7 +73,7 @@ const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
         images,
         { scale: 1, opacity: 1, ease: "power1" },
         imgContainer,
-        { scrub: 5.5, id: "images-trigger" }
+        { scrub: 5.5, id: "images-trigger" },
       );
 
       // text animation
@@ -86,13 +86,13 @@ const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
           duration: 1,
         },
         textContainer,
-        { id: "texts-trigger" }
+        { id: "texts-trigger" },
       );
     },
     {
       scope: featuresRef,
       dependencies: [isMobile, responsive.width, responsive.height],
-    }
+    },
   );
 
   return (
@@ -137,6 +137,7 @@ const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
                   src={explore1Img}
                   alt="titanium"
                   className="feature-video g_grow"
+                  loading="lazy"
                 />
               </div>
               <div className="overflow-hidden flex-1 h-[50vh]">
@@ -144,6 +145,7 @@ const Features = ({ isMobile, videoRefs, responsive, featuresRef }) => {
                   src={explore2Img}
                   alt="titanium 2"
                   className="feature-video g_grow"
+                  loading="lazy"
                 />
               </div>
             </div>
