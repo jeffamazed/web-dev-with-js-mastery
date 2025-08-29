@@ -9,6 +9,7 @@
     "express",
     "backend"
   ],
+  "main": "app.js",
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
