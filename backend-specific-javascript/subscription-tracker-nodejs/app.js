@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.routes.js";
 import connectDB from "./database/mongodb.js";
 import startApp from "./utils/startApp.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
+import notFoundMiddleware from "./middlewares/notFound.middleware.js";
 
 const app = express();
 
@@ -17,6 +18,9 @@ app.use("/api/v1/subscriptions", subscriptionRouter);
 app.get("/", (req, res) => {
   res.send("Welcome to the Subscription Tracker API!");
 });
+
+// not found handler
+app.use(notFoundMiddleware);
 
 // global error handler
 app.use(errorMiddleware);
