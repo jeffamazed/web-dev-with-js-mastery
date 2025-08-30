@@ -133,6 +133,7 @@ SubscriptionSchema.set("toJSON", {
   },
 });
 
+/** @type {import('mongoose').Model<any, {}, {}, {}, any>} */
 const Subscription = model("Subscription", SubscriptionSchema);
 
 export default Subscription;
