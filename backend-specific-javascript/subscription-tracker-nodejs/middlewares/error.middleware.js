@@ -5,7 +5,9 @@ const errorMiddleware = (err, req, res, next) => {
   if (err.name === "ValidationError") {
     const error = Object.values(err.errors).map((e) => ({
       field: e.path,
-      message: e.message,
+      message: `Validation failed: ${e.kind}.${
+        e.path !== "password" ? ` ${e.properties.message}` : ""
+      }`,
     }));
 
     console.error(error);
