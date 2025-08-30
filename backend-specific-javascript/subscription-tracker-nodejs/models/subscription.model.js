@@ -124,6 +124,15 @@ SubscriptionSchema.pre("save", function (next) {
   next();
 });
 
+SubscriptionSchema.set("toJSON", {
+  transform: (doc, returnedObj) => {
+    returnedObj.id = returnedObj._id;
+    delete returnedObj._id;
+    delete returnedObj.__v;
+    return returnedObj;
+  },
+});
+
 const Subscription = model("Subscription", SubscriptionSchema);
 
 export default Subscription;
