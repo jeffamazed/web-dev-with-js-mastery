@@ -16,6 +16,7 @@
     "dev": "nodemon app.js"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "mongodb": "^6.19.0",
