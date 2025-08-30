@@ -7,7 +7,9 @@ const errorMiddleware = (err, req, res, next) => {
       field: e.path,
       message: e.message,
     }));
+
     console.error(error);
+
     return res.status(400).json({ success: false, error });
   }
 
@@ -28,6 +30,8 @@ const errorMiddleware = (err, req, res, next) => {
       field: f,
       message: `Duplicate value for ${f}: ${err.keyValue[f]}.`,
     }));
+
+    console.error(error);
 
     return res.status(400).json({ success: false, error });
   }
