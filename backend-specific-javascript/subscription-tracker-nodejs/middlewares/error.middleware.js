@@ -17,7 +17,7 @@ const errorMiddleware = (err, req, res, next) => {
 
   // cast error
   if (err.name === "CastError") {
-    const error = `${err.value} is not a valid ${err.kind} for field ${err.path}.`;
+    const error = `ID ${err.value} is invalid.`;
 
     console.error(error);
 
