@@ -46,7 +46,10 @@ UserSchema.methods.comparePassword = async function (candidatePassword) {
 // for hiding sensitive info such as password when querying
 UserSchema.set("toJSON", {
   transform: (doc, returnedObj) => {
+    returnedObj.id = returnedObj._id;
+    delete returnedObj._id;
     delete returnedObj.password;
+    delete returnedObj.__v;
     return returnedObj;
   },
 });
