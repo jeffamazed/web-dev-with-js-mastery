@@ -34,15 +34,19 @@ const UserSchema = new Schema(
       default: "user",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
-  const salt = await genSalt(10);
-  this.password = await hash(this.password, salt);
-  next();
+  try {
+    const salt = await genSalt(10);
+    this.password = await hash(this.password, salt);
+    next();
+  } catch (error) {
+    next(error);
+  }
 });
 
 UserSchema.methods.comparePassword = async function (candidatePassword) {
