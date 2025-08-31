@@ -10,17 +10,18 @@ import {
   updateSubscription,
 } from "../controllers/subscription.controller.js";
 import authorize from "../middlewares/auth.middleware.js";
+import adminCheck from "../middlewares/admin.middleware.js";
 
 const subscriptionRouter = Router();
 
 subscriptionRouter
   .route("/")
-  .get(authorize, getAllSubscriptions)
+  .get(authorize, adminCheck, getAllSubscriptions)
   .post(authorize, createSubscription);
 
 subscriptionRouter
   .route("/upcoming-renewals")
-  .get(authorize, getUpcomingRenewals);
+  .get(authorize, adminCheck, getUpcomingRenewals);
 
 subscriptionRouter
   .route("/:id")

@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
 
 export const signUp = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, role } = req.body;
 
   // check if a user already exists
   const existingUser = await User.findOne({ email });
@@ -15,8 +15,11 @@ export const signUp = async (req, res) => {
     );
   }
 
-  const newUser = await User.create({ name, email, password });
-  const accessToken = generateToken({ userId: newUser._id });
+  const newUser = await User.create({ name, email, password, role });
+  const accessToken = generateToken({
+    userId: newUser._id,
+    role: newUser.role,
+  });
 
   res.status(201).json({
     success: true,
@@ -50,7 +53,7 @@ export const signIn = async (req, res) => {
     );
   }
 
-  const accessToken = generateToken({ userId: user._id });
+  const accessToken = generateToken({ userId: user._id, role: user.role });
 
   res.status(200).json({
     success: true,

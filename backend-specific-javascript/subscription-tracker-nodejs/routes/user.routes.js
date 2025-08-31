@@ -6,10 +6,11 @@ import {
   updateUser,
 } from "../controllers/user.controller.js";
 import authorize from "../middlewares/auth.middleware.js";
+import adminCheck from "../middlewares/admin.middleware.js";
 
 const userRouter = Router();
 
-userRouter.route("/").get(authorize, getUsers);
+userRouter.route("/").get(authorize, adminCheck, getUsers);
 
 userRouter
   .route("/:id")
