@@ -128,13 +128,11 @@ export const deleteSubscription = async (req, res) => {
 
   const deletedSub = await Subscription.findByIdAndDelete(subId);
 
-  res
-    .status(200)
-    .json({
-      success: true,
-      message: "Subscription deleted successfully.",
-      data: deletedSub,
-    });
+  res.status(200).json({
+    success: true,
+    message: "Subscription deleted successfully.",
+    data: deletedSub,
+  });
 };
 
 export const getUserSubscriptions = async (req, res) => {
@@ -150,4 +148,46 @@ export const getUserSubscriptions = async (req, res) => {
   const subscriptions = await Subscription.find({ user: req.params.id });
 
   res.status(200).json({ success: true, data: subscriptions });
+};
+
+export const cancelSubscription = async (req, res) => {
+  const subId = req.params.id;
+  const subscription = await Subscription.findById(subId);
+  if (!subscription) {
+    throw new CustomAPIError(
+      "Subscription not found.",
+      404,
+      `Subscription with id ${subId} is not found.`
+    );
+  }
+
+  const userId = subscription.user.toString();
+
+  if (userId !== req.user.id) {
+    throw new CustomAPIError(
+      "You are not authorized to cancel this subscription.",
+      403,
+      `User with id ${req.user.id} tries to cancel subscription with id ${subId}.`
+    );
+  }
+
+  const canceledSub = await Subscription.findByIdAndUpdate(
+    subId,
+    { status: "canceled" },
+    { new: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Subscription canceled successfully.",
+    data: canceledSub,
+  });
+};
+
+export const getUpcomingRenewals = async (req, res) => {
+  const upcomingSubs = await Subscription.find({ status: "active" })
+    .select("name user renewalDate status")
+    .sort({ renewalDate: 1 });
+
+  res.status(200).json({ success: true, data: upcomingSubs });
 };

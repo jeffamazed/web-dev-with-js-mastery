@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {
+  cancelSubscription,
   createSubscription,
   deleteSubscription,
   getAllSubscriptions,
   getSubscriptionDetails,
+  getUpcomingRenewals,
   getUserSubscriptions,
   updateSubscription,
 } from "../controllers/subscription.controller.js";
@@ -17,6 +19,10 @@ subscriptionRouter
   .post(authorize, createSubscription);
 
 subscriptionRouter
+  .route("/upcoming-renewals")
+  .get(authorize, getUpcomingRenewals);
+
+subscriptionRouter
   .route("/:id")
   .get(authorize, getSubscriptionDetails)
   .patch(authorize, updateSubscription)
@@ -24,12 +30,6 @@ subscriptionRouter
 
 subscriptionRouter.route("/user/:id").get(authorize, getUserSubscriptions);
 
-subscriptionRouter
-  .route("/:id/cancel")
-  .put((req, res) => res.json({ title: "CANCEL subscription" }));
-
-subscriptionRouter
-  .route("/upcoming-renewals")
-  .get((req, res) => res.json({ title: "GET upcoming renewals" }));
+subscriptionRouter.route("/:id/cancel").patch(authorize, cancelSubscription);
 
 export default subscriptionRouter;
