@@ -126,8 +126,8 @@ export const getUserSubscriptions = async (req, res) => {
   // check if te user is the same as the one in the token
   if (req.user.id !== req.params.id) {
     throw new CustomAPIError(
-      "You are not the owner of this account.",
-      401,
+      "You are not authorized to view the subscription details.",
+      403,
       `IDs ${req.user.id} and ${req.params.id} not match for getting subscription info.`
     );
   }
