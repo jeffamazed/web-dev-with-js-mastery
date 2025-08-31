@@ -26,7 +26,12 @@ export const createSubscription = async (req, res) => {
     retries: 0,
   });
 
-  res.status(201).json({ success: true, data: subscription, workflowRunId });
+  res.status(201).json({
+    success: true,
+    message: "Subscription created successfully.",
+    data: subscription,
+    workflowRunId,
+  });
 };
 
 export const getSubscriptionDetails = async (req, res) => {
@@ -93,7 +98,11 @@ export const updateSubscription = async (req, res) => {
     runValidators: true,
   });
 
-  res.status(200).json({ success: true, data: updatedSub });
+  res.status(200).json({
+    success: true,
+    message: "Subscription updated successfully.",
+    data: updatedSub,
+  });
 };
 
 export const deleteSubscription = async (req, res) => {
@@ -119,7 +128,13 @@ export const deleteSubscription = async (req, res) => {
 
   const deletedSub = await Subscription.findByIdAndDelete(subId);
 
-  res.status(200).json({ success: true, data: deletedSub });
+  res
+    .status(200)
+    .json({
+      success: true,
+      message: "Subscription deleted successfully.",
+      data: deletedSub,
+    });
 };
 
 export const getUserSubscriptions = async (req, res) => {
