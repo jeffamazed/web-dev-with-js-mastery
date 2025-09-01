@@ -2,6 +2,7 @@ import CustomAPIError from "../classes/CustomAPIError.js";
 import RefreshToken from "../models/refreshToken.model.js";
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
+import { NODE_ENV } from "../config/env.js";
 
 export const signUp = async (req, res) => {
   const { name, email, password, role } = req.body;
@@ -12,7 +13,7 @@ export const signUp = async (req, res) => {
     throw new CustomAPIError(
       "User already exists.",
       409,
-      `User with id ${existingUser._id} already exists.`
+      `User with id ${existingUser._id} already exists.`,
     );
   }
 
@@ -22,13 +23,20 @@ export const signUp = async (req, res) => {
     role: newUser.role,
   });
 
+  // res ref token through cookie
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
   res.status(201).json({
     success: true,
     message: "User created successfully.",
     data: {
       user: newUser,
       accessToken,
-      refreshToken,
     },
   });
 };
@@ -42,7 +50,7 @@ export const signIn = async (req, res) => {
     throw new CustomAPIError(
       "User not found.",
       404,
-      `User with email ${email} not found.`
+      `User with email ${email} not found.`,
     );
   }
 
@@ -51,7 +59,7 @@ export const signIn = async (req, res) => {
     throw new CustomAPIError(
       "Invalid password.",
       401,
-      `Invalid password for email ${email}.`
+      `Invalid password for email ${email}.`,
     );
   }
 
@@ -60,27 +68,34 @@ export const signIn = async (req, res) => {
     role: user.role,
   });
 
+  // res ref token through cookie
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
   res.status(200).json({
     success: true,
     message: "User signed in successfully.",
     data: {
       user,
       accessToken,
-      refreshToken,
     },
   });
 };
 
 export const refresh = async (req, res) => {
-  if (!req.body?.refreshToken) {
+  if (!req.cookies?.refreshToken) {
     throw new CustomAPIError(
       "Missing refresh token.",
       400,
-      "Missing refresh token at refresh."
+      "Missing refresh token at refresh.",
     );
   }
 
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.cookies;
 
   const storedToken = await RefreshToken.findOne({
     refreshToken,
@@ -90,7 +105,7 @@ export const refresh = async (req, res) => {
     throw new CustomAPIError(
       "Invalid or expired refresh token.",
       401,
-      `Invalid or expired refresh token ${refreshToken}.`
+      `Invalid or expired refresh token ${refreshToken}.`,
     );
   }
 
@@ -100,7 +115,7 @@ export const refresh = async (req, res) => {
     throw new CustomAPIError(
       "Invalid or expired refresh token.",
       401,
-      `Invalid or expired refresh token ${refreshToken}`
+      `Invalid or expired refresh token ${refreshToken}`,
     );
   }
 
@@ -113,23 +128,32 @@ export const refresh = async (req, res) => {
   // delete the old refresh token
   await RefreshToken.deleteOne({ _id: storedToken._id });
 
+  // send new ref token
+  res.cookie("refreshToken", newRefreshToken, {
+    httpOnly: true,
+    secure: NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    path: "/",
+  });
+
   res.status(200).json({
     success: true,
     message: "Tokens generated successfully.",
-    data: { accessToken: newAccessToken, refreshToken: newRefreshToken },
+    data: { accessToken: newAccessToken },
   });
 };
 
 export const signOut = async (req, res) => {
-  if (!req.body?.refreshToken) {
+  if (!req.cookies?.refreshToken) {
     throw new CustomAPIError(
       "Missing refresh token.",
       400,
-      "Missing refresh token at sign out."
+      "Missing refresh token at sign out.",
     );
   }
 
-  const { refreshToken } = req.body;
+  const { refreshToken } = req.cookies;
 
   const result = await RefreshToken.deleteOne({
     refreshToken: refreshToken,
@@ -138,9 +162,11 @@ export const signOut = async (req, res) => {
     throw new CustomAPIError(
       "Refresh token not found or already invalidated.",
       401,
-      `Attempted to delete non-existent refresh token ${refreshToken}.`
+      `Attempted to delete non-existent refresh token ${refreshToken}.`,
     );
   }
+
+  res.clearCookie("refreshToken", { path: "/" });
 
   res.status(200).json({ success: true, message: "Signed out successfully." });
 };

@@ -27,5 +27,8 @@
     "mongodb": "^6.19.0",
     "mongoose": "^8.18.0",
     "nodemailer": "^7.0.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
