@@ -10,7 +10,7 @@ import {
 } from "./sections";
 import Nav from "./components/Nav";
 import { createRef, useRef } from "react";
-import TopLink from "./components/TopLink";
+import TopButton from "./components/TopButton";
 import { navLinks } from "./constants";
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
     <>
       <div id="top" className="sr-only" />
       <Nav sectionRef={sectionRef} />
-      <TopLink />
+      <TopButton />
       <main className="relative">
         <div ref={sectionRef.home} className="padding-b xl:pl-16 wide:pr-16">
           <Hero />

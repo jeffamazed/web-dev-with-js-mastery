@@ -8,7 +8,7 @@ import Art from "./components/Art";
 import Menu from "./components/Menu";
 import Contact from "./components/Contact";
 import { useRef, createRef } from "react";
-import TopLink from "./components/TopLink";
+import TopButton from "./components/TopButton";
 import { navLinks } from "./constants";
 import useResponsive from "./customHooks/useResponsive";
 
@@ -25,7 +25,7 @@ const App = () => {
       {/* dummy top */}
       <div id="top" className="sr-only" />
 
-      <TopLink />
+      <TopButton />
       <Navbar sectionRef={sectionRef} responsive={responsive} />
       <main>
         <Hero responsive={responsive} />
