@@ -1,4 +1,4 @@
-# 🍎 Apple-Inspired Awwwards-Winning Website
+# 🍎 Apple-Inspired Website
 
 A stunning, immersive web experience inspired by **JS Mastery** and the refined visual language of **Apple**. This high-performance, design-forward website blends smooth interactions, premium product aesthetics, and fully responsive design—engineered with **React**, **Three.js**, **GSAP**, **Tailwind CSS**, and powered by **Vite**.
 
