@@ -1,8 +1,8 @@
-import { useRef, useState } from "react";
-import { allCocktails } from "../constants/index";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { allCocktails } from "../constants/index";
 
 const Menu = () => {
   const contentRef = useRef(null);
@@ -100,6 +100,17 @@ const Menu = () => {
   const prevCocktail = getCocktailAt(-1);
   const nextCocktail = getCocktailAt(1);
 
+  const handleKeydown = (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+
+    switch (e.key) {
+      case "ArrowRight":
+        return goToSlide(currentI + 1, "right", "button");
+      case "ArrowLeft":
+        return goToSlide(currentI - 1, "left", "button");
+    }
+  };
+
   return (
     <section ref={menuRef} id="menu">
       <img
@@ -129,14 +140,17 @@ const Menu = () => {
               id={`tab-${cocktail.id}`}
               aria-selected={isActive}
               aria-controls={`panel-${cocktail.id}`}
-              className={`${
+              aria-orientation="horizontal"
+              className={`outline-none ${
                 isActive
-                  ? "text-white border-white"
-                  : "text-white/50 border-white/50"
+                  ? "text-white border-white bg-white/5"
+                  : "text-white/50 border-transparent"
               }`}
               type="button"
               key={cocktail.id}
               onClick={() => goToSlide(i, "", "tab")}
+              tabIndex={isActive ? 0 : -1}
+              onKeyDown={handleKeydown}
             >
               {cocktail.name}
             </button>
